@@ -2,7 +2,7 @@
 import { onMounted } from 'vue'
 import NavBar from '../components/NavBar.vue'
 import HeroSection from '../components/HeroSection.vue'
-import ProductsSection from '../components/ProductsSection.vue'
+import ProductsShowcase from '../components/ProductsShowcase.vue'
 import WhyUsSection from '../components/WhyUsSection.vue'
 import IndustriesSection from '../components/IndustriesSection.vue'
 import FactorySection from '../components/FactorySection.vue'
@@ -57,7 +57,7 @@ onMounted(() => {
   <div class="min-h-screen bg-surface">
     <NavBar :config="siteConfig" />
     <HeroSection :config="siteConfig" :stats="stats" />
-    <ProductsSection />
+    <ProductsShowcase />
     <WhyUsSection />
     <IndustriesSection />
     <FactorySection />
