@@ -48,12 +48,12 @@ const submitForm = () => {
 </script>
 
 <template>
-  <section id="contact" class="py-24 bg-primary">
+  <section id="contact" class="py-16 bg-primary">
     <div class="max-w-4xl mx-auto px-6">
-      <div class="text-center mb-12 section-reveal">
-        <span class="text-accent font-semibold text-sm tracking-wider uppercase">{{ sectionTitle.title }}</span>
-        <h2 class="text-4xl font-bold text-white mt-3 mb-4">{{ sectionTitle.subtitle }}</h2>
-        <p class="text-white/60">{{ sectionTitle.desc }}</p>
+      <div class="text-center mb-10">
+        <span class="text-accent font-semibold text-sm tracking-wider uppercase">Contact Us</span>
+        <h2 class="text-4xl font-bold text-white mt-3">获取报价</h2>
+        <p class="text-white/60 mt-3">24小时内回复 · 专业团队对接</p>
       </div>
 
       <form @submit.prevent="submitForm" class="bg-white rounded-2xl p-8 shadow-2xl">

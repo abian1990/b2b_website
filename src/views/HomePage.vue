@@ -57,13 +57,14 @@ onMounted(() => {
   <div class="min-h-screen bg-surface">
     <NavBar :config="siteConfig" />
     <HeroSection :config="siteConfig" :stats="stats" />
+    <FactorySection />
     <ProductsShowcase />
     <WhyUsSection />
     <IndustriesSection />
-    <FactorySection />
-    <TestimonialSection />
-    <ProcessSection />
-    <ContactSection />
+    
+    <!-- <TestimonialSection /> -->
+    <!-- <ProcessSection /> -->
+    <!-- <ContactSection /> -->
     <FooterSection :config="siteConfig" />
   </div>
 </template>

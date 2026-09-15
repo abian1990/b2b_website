@@ -1,10 +1,4 @@
 <script setup>
-const whyUsSection = {
-  title: 'Why Choose Us',
-  subtitle: '为什么要选择我们',
-  desc: 'Precision engineering meets reliable performance'
-}
-
 const whyUsItems = [
   {
     title: 'German Technology',
@@ -30,23 +24,23 @@ const whyUsItems = [
 </script>
 
 <template>
-  <section id="why-us" class="py-24 bg-primary">
+  <section id="why-us" class="py-16 bg-primary">
     <div class="max-w-7xl mx-auto px-6">
-      <div class="text-center mb-16 section-reveal">
-        <span class="text-accent font-semibold text-sm tracking-wider uppercase">{{ whyUsSection.title }}</span>
-        <h2 class="text-4xl font-bold text-white mt-3 mb-4">{{ whyUsSection.subtitle }}</h2>
-        <p class="text-white/60 max-w-2xl mx-auto">{{ whyUsSection.desc }}</p>
+      <div class="text-center mb-10">
+        <span class="text-accent font-semibold text-sm tracking-wider uppercase">Why Choose Us</span>
+        <h2 class="text-4xl font-bold text-white mt-3">为什么要选择我们</h2>
+        <p class="text-white/60 mt-3">Precision engineering meets reliable performance</p>
       </div>
 
-      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-8">
-        <div v-for="item in whyUsItems" :key="item.title" class="bg-white/5 backdrop-blur-sm rounded-2xl p-8 border border-white/10 hover:border-accent/50 transition-all">
-          <div class="w-14 h-14 bg-accent/20 rounded-xl flex items-center justify-center mb-6">
-            <svg class="w-7 h-7 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <div class="grid md:grid-cols-2 lg:grid-cols-4 gap-4">
+        <div v-for="item in whyUsItems" :key="item.title" class="bg-white/5 border border-white/10 p-6 hover:border-accent/50 transition-all">
+          <div class="w-12 h-12 bg-accent/20 flex items-center justify-center mb-4">
+            <svg class="w-6 h-6 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" :d="item.icon"/>
             </svg>
           </div>
-          <h3 class="text-xl font-bold text-white mb-3">{{ item.title }}</h3>
-          <p class="text-white/60">{{ item.desc }}</p>
+          <h3 class="text-lg font-bold text-white mb-2">{{ item.title }}</h3>
+          <p class="text-white/60 text-sm">{{ item.desc }}</p>
         </div>
       </div>
     </div>

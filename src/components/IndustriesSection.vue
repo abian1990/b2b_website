@@ -1,9 +1,4 @@
 <script setup>
-const sectionTitle = {
-  title: 'Industries',
-  subtitle: '应用行业'
-}
-
 const industries = [
   { name: '汽车配件', icon: 'M13 10V3L4 14h7v7l9-11h-7z' },
   { name: '航空航天', icon: 'M12 6.253v13m0-13C10.832 5.477 9.246 5 7.5 5S4.168 5.477 3 6.253v13C4.168 18.477 5.754 18 7.5 18s3.332.477 4.5 1.253m0-13C13.168 5.477 14.754 5 16.5 5c1.747 0 3.332.477 4.5 1.253v13C19.832 18.477 18.247 18 16.5 18c-1.746 0-3.332.477-4.5 1.253' },
@@ -16,21 +11,21 @@ const industries = [
 </script>
 
 <template>
-  <section class="py-24 bg-surface">
+  <section class="py-16 bg-surface">
     <div class="max-w-7xl mx-auto px-6">
-      <div class="text-center mb-16 section-reveal">
-        <span class="text-accent font-semibold text-sm tracking-wider uppercase">{{ sectionTitle.title }}</span>
-        <h2 class="text-4xl font-bold text-primary mt-3 mb-4">{{ sectionTitle.subtitle }}</h2>
+      <div class="text-center mb-10">
+        <span class="text-accent font-semibold text-sm tracking-wider uppercase">Industries</span>
+        <h2 class="text-4xl font-bold text-primary mt-3">应用行业</h2>
       </div>
 
-      <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-4">
-        <div v-for="industry in industries" :key="industry.name" class="bg-white rounded-xl p-6 text-center shadow-md hover:shadow-xl transition-shadow border border-border">
-          <div class="w-12 h-12 mx-auto mb-3 bg-slate-100 rounded-lg flex items-center justify-center">
-            <svg class="w-6 h-6 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+      <div class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-7 gap-3">
+        <div v-for="industry in industries" :key="industry.name" class="bg-white border border-border p-4 text-center hover:shadow-lg hover:-translate-y-1 transition-all">
+          <div class="w-10 h-10 mx-auto mb-2 bg-slate-100 flex items-center justify-center">
+            <svg class="w-5 h-5 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" :d="industry.icon"/>
             </svg>
           </div>
-          <span class="text-sm font-medium text-slate-700">{{ industry.name }}</span>
+          <span class="text-xs font-medium text-slate-700">{{ industry.name }}</span>
         </div>
       </div>
     </div>

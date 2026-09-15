@@ -8,8 +8,8 @@ defineProps({
 <template>
   <section class="relative min-h-screen bg-primary overflow-hidden">
     <div class="absolute inset-0">
-      <img :src="config.heroImage" alt="Industrial Machine" class="w-full h-full object-cover opacity-40">
-      <div class="gradient-overlay absolute inset-0"></div>
+      <img :src="config.heroImage" alt="Industrial Machine" class="w-full h-full object-cover ">
+      <div class="gradient-overlay absolute inset-0 opacity-45"></div>
     </div>
 
     <div class="relative z-10 min-h-screen flex items-center">
