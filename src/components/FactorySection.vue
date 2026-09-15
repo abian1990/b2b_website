@@ -6,6 +6,7 @@ import factory3 from '../assets/factory3.png'
 import factory4 from '../assets/factory4.png'
 import factory5 from '../assets/factory5.png'
 import factory6 from '../assets/factory6.png'
+import bg1 from '../assets/bg1.png'
 
 const scrollContainer = ref(null)
 let animationId = null
@@ -51,76 +52,117 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <section id="factory" class="py-16 bg-white">
-    <div class="max-w-7xl mx-auto px-6">
-      <div class="text-center mb-10">
+  <section id="factory" class="bg-white">
+    <!-- Section Title -->
+    <div class="bg-white pt-8 pb-4">
+      <div class="max-w-7xl mx-auto px-6 text-center">
         <span class="text-accent font-semibold text-sm tracking-wider uppercase">Our Factory</span>
-        <h2 class="text-4xl font-bold text-primary mt-3">智造实力</h2>
-        <p class="text-muted mt-3">智能化生产 · 精密制造 · 品质保障</p>
+        <h2 class="text-3xl font-bold text-primary mt-2">智造实力</h2>
+        <p class="text-muted mt-2">智能化生产 · 精密制造 · 品质保障</p>
       </div>
+    </div>
 
-      <!-- Factory Image Carousel -->
-      <div class="mb-8">
-        <div class="relative">
-          <div class="absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none"></div>
-          <div class="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none"></div>
+    <!-- Top Banner - Full Width -->
+    <div class="relative overflow-hidden" style="height: 280px;">
+      <img :src="bg1" alt="Factory" class="w-full h-full object-cover">
+      <div class="absolute inset-0 bg-gradient-to-r from-primary/90 via-primary/70 to-transparent"></div>
+      <div class="absolute inset-0 flex items-center">
+        <div class="max-w-7xl mx-auto px-8 w-full">
+          <div class="inline-flex items-center gap-2 bg-accent/20 text-white px-4 py-1.5 text-sm mb-4">
+            <span class="w-2 h-2 bg-accent rounded-full animate-pulse"></span>
+            20+ Years Experience
+          </div>
+          <h2 class="text-4xl md:text-5xl font-bold text-white mb-3">
+            Precision Manufacturing <span class="text-accent">At Scale</span>
+          </h2>
+          <p class="text-white/80 text-lg max-w-lg">
+            State-of-the-art production facilities with automated assembly lines
+          </p>
+        </div>
+      </div>
+    </div>
 
+    <!-- Factory Carousel - Full Width -->
+    <div class="bg-white">
+      <div class="relative">
+        <div class="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none"></div>
+        <div class="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none"></div>
+
+        <div
+          ref="scrollContainer"
+          class="flex gap-4 overflow-x-hidden py-6"
+          style="height: 360px;"
+          @mouseenter="isPaused = true"
+          @mouseleave="isPaused = false"
+        >
           <div
-            ref="scrollContainer"
-            class="flex gap-4 overflow-x-hidden py-4"
-            @mouseenter="isPaused = true"
-            @mouseleave="isPaused = false"
+            v-for="(img, index) in duplicatedImages"
+            :key="index"
+            class="flex-shrink-0 relative overflow-hidden group cursor-pointer"
+            style="width: calc(50% - 8px);"
           >
-            <div
-              v-for="(img, index) in duplicatedImages"
-              :key="index"
-              class="flex-shrink-0 relative overflow-hidden group cursor-pointer"
-              style="width: calc(50% - 8px);"
+            <img
+              :src="img.src"
+              :alt="img.title"
+              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
             >
-              <img
-                :src="img.src"
-                :alt="img.title"
-                class="w-full h-56 object-cover transition-transform duration-500 group-hover:scale-105"
-              >
-              <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/20 to-transparent opacity-0 group-hover:opacity-100 transition-opacity">
-                <div class="absolute bottom-4 left-4">
-                  <h4 class="text-white font-bold text-base">{{ img.title }}</h4>
-                  <p class="text-white/80 text-sm">{{ img.subtitle }}</p>
-                </div>
+            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent">
+              <div class="absolute bottom-6 left-6">
+                <span class="text-accent text-sm font-semibold uppercase tracking-wider">{{ img.subtitle }}</span>
+                <h4 class="text-white text-xl font-bold mt-1">{{ img.title }}</h4>
+              </div>
+            </div>
+            <!-- Corner decoration -->
+            <div class="absolute top-4 right-4 w-8 h-8 border-t-2 border-r-2 border-white/50 opacity-0 group-hover:opacity-100 transition-opacity"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Stats & Certifications -->
+    <div class="bg-surface py-12">
+      <div class="max-w-7xl mx-auto px-6">
+        <div class="grid md:grid-cols-2 gap-6">
+          <!-- Production Scale -->
+          <div class="bg-white p-8 border-l-4 border-accent">
+            <h3 class="text-xl font-bold text-primary mb-6 flex items-center gap-3">
+              <svg class="w-6 h-6 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+              </svg>
+              生产规模
+            </h3>
+            <div class="grid grid-cols-3 gap-6">
+              <div class="text-center p-4 bg-slate-50">
+                <div class="text-3xl font-bold text-accent">50,000<span class="text-base">㎡</span></div>
+                <div class="text-muted text-sm mt-1">生产面积</div>
+              </div>
+              <div class="text-center p-4 bg-slate-50">
+                <div class="text-3xl font-bold text-accent">200<span class="text-base">+</span></div>
+                <div class="text-muted text-sm mt-1">生产设备</div>
+              </div>
+              <div class="text-center p-4 bg-slate-50">
+                <div class="text-3xl font-bold text-accent">500<span class="text-base">+</span></div>
+                <div class="text-muted text-sm mt-1">员工数量</div>
               </div>
             </div>
           </div>
-        </div>
-      </div>
 
-      <!-- Stats & Certifications -->
-      <div class="grid md:grid-cols-2 gap-4">
-        <div class="bg-slate-50 p-5">
-          <h3 class="text-lg font-bold text-primary mb-4">生产规模</h3>
-          <div class="grid grid-cols-3 gap-4">
-            <div class="text-center">
-              <div class="text-2xl font-bold text-accent">50,000<span class="text-sm">㎡</span></div>
-              <div class="text-muted text-sm">生产面积</div>
+          <!-- Certifications -->
+          <div class="bg-white p-8 border-l-4 border-primary">
+            <h3 class="text-xl font-bold text-primary mb-6 flex items-center gap-3">
+              <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+              </svg>
+              国际认证
+            </h3>
+            <div class="flex flex-wrap gap-3">
+              <span class="bg-primary text-white px-5 py-2.5 font-bold text-sm">CE</span>
+              <span class="bg-primary text-white px-5 py-2.5 font-bold text-sm">ISO 9001</span>
+              <span class="bg-primary text-white px-5 py-2.5 font-bold text-sm">SGS</span>
+              <span class="bg-primary text-white px-5 py-2.5 font-bold text-sm">TUV</span>
+              <span class="bg-primary text-white px-5 py-2.5 font-bold text-sm">FDA</span>
             </div>
-            <div class="text-center">
-              <div class="text-2xl font-bold text-accent">200<span class="text-sm">+</span></div>
-              <div class="text-muted text-sm">生产设备</div>
-            </div>
-            <div class="text-center">
-              <div class="text-2xl font-bold text-accent">500<span class="text-sm">+</span></div>
-              <div class="text-muted text-sm">员工数量</div>
-            </div>
-          </div>
-        </div>
-
-        <div class="bg-slate-50 p-5">
-          <h3 class="text-lg font-bold text-primary mb-4">国际认证</h3>
-          <div class="flex flex-wrap gap-2">
-            <span class="bg-accent/10 text-accent px-3 py-1 font-semibold text-sm">CE</span>
-            <span class="bg-accent/10 text-accent px-3 py-1 font-semibold text-sm">ISO 9001</span>
-            <span class="bg-accent/10 text-accent px-3 py-1 font-semibold text-sm">SGS</span>
-            <span class="bg-accent/10 text-accent px-3 py-1 font-semibold text-sm">TUV</span>
-            <span class="bg-accent/10 text-accent px-3 py-1 font-semibold text-sm">FDA</span>
+            <p class="text-muted text-sm mt-4">Quality management system certified by international standards</p>
           </div>
         </div>
       </div>
