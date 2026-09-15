@@ -8,21 +8,17 @@ const props = defineProps({
   }
 })
 
-const activeTab = ref('specs')
-const selectedModel = ref(props.product.models[0]?.name || '')
 const form = reactive({
   name: '',
   email: '',
   company: '',
   country: '',
-  message: `I'm interested in ${props.product.name} (${selectedModel.value}). `
+  message: ''
 })
 
-const tabs = [
-  { id: 'specs', label: 'Specifications' },
-  { id: 'features', label: 'Features' },
-  { id: 'applications', label: 'Applications' }
-]
+const submitForm = () => {
+  alert('Quote request submitted! We will contact you within 24 hours.')
+}
 
 const getSeriesBadge = (series) => {
   const badges = {
@@ -39,212 +35,103 @@ const getSeriesBadge = (series) => {
   }
   return badges[series] || 'Standard'
 }
-
-const submitForm = () => {
-  alert('Quote request submitted! We will contact you within 24 hours.')
-}
 </script>
 
 <template>
-  <div class="min-h-screen bg-surface pt-24 pb-16">
-    <!-- Breadcrumb -->
-    <div class="max-w-7xl mx-auto px-6 mb-8">
-      <nav class="flex items-center gap-2 text-sm">
-        <a href="/" class="text-muted hover:text-accent">Home</a>
-        <span class="text-muted">/</span>
-        <a href="/products" class="text-muted hover:text-accent">Products</a>
-        <span class="text-muted">/</span>
-        <span class="text-primary font-medium">{{ product.name }}</span>
-      </nav>
-    </div>
+  <div class="min-h-screen bg-surface pt-20">
+    <!-- Hero Image -->
+    <div class="relative" style="height: 60vh; min-height: 400px;">
+      <img
+        :src="product.image"
+        :alt="product.name"
+        class="w-full h-full object-cover"
+      >
+      <div class="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/40 to-transparent"></div>
 
-    <div class="max-w-7xl mx-auto px-6">
-      <div class="grid lg:grid-cols-2 gap-12">
-        <!-- Product Images -->
-        <div class="space-y-4">
-          <div class="relative aspect-square bg-slate-100 rounded-2xl overflow-hidden">
-            <img
-              :src="product.image"
-              :alt="product.name"
-              class="w-full h-full object-cover"
-            >
-            <div class="absolute top-4 left-4 flex gap-2">
-              <span class="bg-accent text-white text-sm font-bold px-4 py-2 rounded-full">
-                {{ product.series }} Series
-              </span>
-              <span class="bg-primary text-white text-sm font-bold px-4 py-2 rounded-full">
-                {{ getSeriesBadge(product.series) }}
-              </span>
-            </div>
-          </div>
-          <div class="grid grid-cols-4 gap-4">
-            <div
-              v-for="(img, idx) in product.gallery"
-              :key="idx"
-              class="aspect-square bg-slate-100 rounded-lg overflow-hidden cursor-pointer hover:ring-2 hover:ring-accent transition-all"
-            >
-              <img :src="img" :alt="`${product.name} view ${idx + 1}`" class="w-full h-full object-cover">
-            </div>
-          </div>
-        </div>
-
-        <!-- Product Info -->
-        <div>
-          <div class="text-accent font-semibold mb-2">{{ product.category }}</div>
-          <h1 class="text-3xl md:text-4xl font-bold text-primary mb-4">{{ product.name }}</h1>
-          <p class="text-lg text-muted mb-6">{{ product.description }}</p>
-
-          <!-- Model Selection -->
-          <div class="mb-6">
-            <label class="block text-sm font-medium text-slate-700 mb-3">Select Model</label>
-            <div class="grid grid-cols-3 gap-3">
-              <button
-                v-for="model in product.models"
-                :key="model.name"
-                @click="selectedModel = model.name"
-                :class="[
-                  'px-4 py-3 rounded-lg border-2 text-center transition-all',
-                  selectedModel === model.name
-                    ? 'border-accent bg-accent/10 text-accent'
-                    : 'border-border bg-white text-slate-700 hover:border-accent/50'
-                ]"
-              >
-                <div class="font-semibold text-sm">{{ model.name }}</div>
-                <div class="text-xs text-muted mt-1">{{ model.power }}</div>
-              </button>
-            </div>
-          </div>
-
-          <!-- Key Features Pills -->
-          <div class="flex flex-wrap gap-2 mb-8">
-            <span
-              v-for="feature in product.features"
-              :key="feature"
-              class="bg-slate-100 text-slate-700 px-4 py-2 rounded-full text-sm flex items-center gap-2"
-            >
-              <svg class="w-4 h-4 text-accent" fill="currentColor" viewBox="0 0 20 20">
-                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
-              </svg>
-              {{ feature }}
+      <!-- Content overlay -->
+      <div class="absolute bottom-0 left-0 right-0 p-8">
+        <div class="max-w-7xl mx-auto">
+          <div class="flex items-center gap-3 mb-4">
+            <span class="bg-accent text-white text-sm font-bold px-4 py-1.5 rounded-full">
+              {{ product.series }} Series
+            </span>
+            <span class="bg-white/20 backdrop-blur-sm text-white text-sm font-bold px-4 py-1.5 rounded-full">
+              {{ getSeriesBadge(product.series) }}
+            </span>
+            <span class="bg-white/20 backdrop-blur-sm text-white text-sm font-bold px-4 py-1.5 rounded-full">
+              {{ product.powerRange }}
             </span>
           </div>
+          <h1 class="text-4xl md:text-5xl font-bold text-white mb-4">{{ product.name }}</h1>
+          <p class="text-white/80 text-lg max-w-2xl">{{ product.description }}</p>
+        </div>
+      </div>
 
-          <!-- Quick Specs -->
-          <div class="bg-primary rounded-2xl p-6 mb-8">
-            <h3 class="text-white font-bold mb-4">Quick Specs</h3>
-            <div class="grid grid-cols-2 gap-4">
-              <div v-for="spec in product.keySpecs" :key="spec.label">
-                <div class="text-white/60 text-sm">{{ spec.label }}</div>
-                <div class="text-white font-semibold">{{ spec.value }}</div>
-              </div>
-            </div>
-          </div>
+      <!-- Back button -->
+      <a href="/" class="absolute top-6 left-6 flex items-center gap-2 text-white bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full hover:bg-white/20 transition-all">
+        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+        </svg>
+        Back
+      </a>
+    </div>
 
-          <!-- CTA -->
-          <div class="flex flex-wrap gap-4">
-            <a href="#inquiry" class="btn-primary px-8 py-4 rounded-lg text-white font-semibold text-lg flex-1 text-center">
-              Request Quote
-            </a>
-            <a href="tel:+864008328321" class="px-8 py-4 rounded-lg border-2 border-primary text-primary font-semibold text-lg hover:bg-primary hover:text-white transition-all">
-              Call Now
-            </a>
+    <!-- Product Info Cards -->
+    <div class="max-w-7xl mx-auto px-6 -mt-16 relative z-10">
+      <div class="grid md:grid-cols-4 gap-4 mb-8">
+        <div v-for="spec in product.keySpecs" :key="spec.label" class="bg-white rounded-xl p-5 shadow-lg">
+          <div class="text-muted text-sm mb-1">{{ spec.label }}</div>
+          <div class="text-xl font-bold text-primary">{{ spec.value }}</div>
+        </div>
+      </div>
+
+      <!-- Features -->
+      <div class="bg-white rounded-2xl p-8 mb-8">
+        <h2 class="text-2xl font-bold text-primary mb-6">Key Features</h2>
+        <div class="flex flex-wrap gap-3">
+          <span
+            v-for="feature in product.features"
+            :key="feature"
+            class="bg-accent/10 text-accent px-4 py-2 rounded-full text-sm font-semibold flex items-center gap-2"
+          >
+            <svg class="w-4 h-4" fill="currentColor" viewBox="0 0 20 20">
+              <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+            </svg>
+            {{ feature }}
+          </span>
+        </div>
+      </div>
+
+      <!-- Models -->
+      <div class="bg-white rounded-2xl p-8 mb-8">
+        <h2 class="text-2xl font-bold text-primary mb-6">Available Models</h2>
+        <div class="grid md:grid-cols-3 gap-4">
+          <div v-for="model in product.models" :key="model.name" class="bg-slate-50 rounded-xl p-5 text-center">
+            <div class="text-xl font-bold text-primary mb-1">{{ model.name }}</div>
+            <div class="text-muted">{{ model.power }}</div>
           </div>
         </div>
       </div>
 
-      <!-- Tabs Section -->
-      <div class="mt-16">
-        <div class="flex border-b border-border">
-          <button
-            v-for="tab in tabs"
-            :key="tab.id"
-            @click="activeTab = tab.id"
-            :class="[
-              'px-6 py-4 font-semibold transition-all',
-              activeTab === tab.id
-                ? 'text-accent border-b-2 border-accent'
-                : 'text-muted hover:text-primary'
-            ]"
-          >
-            {{ tab.label }}
-          </button>
+      <!-- CTA -->
+      <div class="bg-primary rounded-2xl p-8 mb-8">
+        <div class="text-center mb-6">
+          <h2 class="text-2xl font-bold text-white mb-2">Interested in this product?</h2>
+          <p class="text-white/70">Contact us for a personalized quote and consultation</p>
         </div>
-
-        <div class="py-8">
-          <!-- Specifications Tab -->
-          <div v-show="activeTab === 'specs'">
-            <div class="overflow-x-auto">
-              <table class="w-full">
-                <thead>
-                  <tr class="bg-slate-100">
-                    <th class="px-6 py-4 text-left font-semibold text-primary">Parameter</th>
-                    <th
-                      v-for="model in product.models"
-                      :key="model.name"
-                      class="px-6 py-4 text-center font-semibold text-primary"
-                    >
-                      {{ model.name }}
-                    </th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr v-for="(row, idx) in product.specsTable" :key="idx" class="border-b border-border">
-                    <td class="px-6 py-4 text-slate-600">{{ row.parameter }}</td>
-                    <td
-                      v-for="model in product.models"
-                      :key="model.name"
-                      class="px-6 py-4 text-center font-medium text-primary"
-                    >
-                      {{ row.values[model.name] || '-' }}
-                    </td>
-                  </tr>
-                </tbody>
-              </table>
-            </div>
-          </div>
-
-          <!-- Features Tab -->
-          <div v-show="activeTab === 'features'" class="grid md:grid-cols-2 gap-6">
-            <div
-              v-for="feature in product.featureDetails"
-              :key="feature.title"
-              class="bg-white rounded-xl p-6 shadow-md border border-border"
-            >
-              <div class="w-12 h-12 bg-accent/10 rounded-xl flex items-center justify-center mb-4">
-                <svg class="w-6 h-6 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
-                </svg>
-              </div>
-              <h3 class="font-bold text-primary mb-2">{{ feature.title }}</h3>
-              <p class="text-muted text-sm">{{ feature.description }}</p>
-            </div>
-          </div>
-
-          <!-- Applications Tab -->
-          <div v-show="activeTab === 'applications'">
-            <div class="grid grid-cols-2 md:grid-cols-4 gap-4">
-              <div
-                v-for="app in product.applications"
-                :key="app"
-                class="bg-white rounded-xl p-6 text-center shadow-md border border-border"
-              >
-                <div class="w-12 h-12 bg-slate-100 rounded-full flex items-center justify-center mx-auto mb-3">
-                  <svg class="w-6 h-6 text-slate-600" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 11H5m14 0a2 2 0 012 2v6a2 2 0 01-2 2H5a2 2 0 01-2-2v-6a2 2 0 012-2m14 0V9a2 2 0 00-2-2M5 11V9a2 2 0 012-2m0 0V5a2 2 0 012-2h6a2 2 0 012 2v2M7 7h10"/>
-                  </svg>
-                </div>
-                <span class="text-sm font-medium text-primary">{{ app }}</span>
-              </div>
-            </div>
-          </div>
+        <div class="flex flex-wrap justify-center gap-4">
+          <a href="#inquiry" class="bg-accent hover:bg-accent/90 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-colors">
+            Request Quote
+          </a>
+          <a href="tel:+864008328321" class="bg-white/10 hover:bg-white/20 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-colors">
+            Call Now
+          </a>
         </div>
       </div>
 
       <!-- Inquiry Form -->
-      <div id="inquiry" class="mt-16 bg-white rounded-2xl shadow-xl p-8">
-        <h2 class="text-2xl font-bold text-primary mb-2">Request a Quote</h2>
-        <p class="text-muted mb-6">Fill out the form below and we'll get back to you within 24 hours.</p>
-
+      <div id="inquiry" class="bg-white rounded-2xl p-8 mb-8">
+        <h2 class="text-2xl font-bold text-primary mb-6">Get a Quote</h2>
         <form @submit.prevent="submitForm" class="grid md:grid-cols-2 gap-6">
           <div>
             <label class="block text-sm font-medium text-slate-700 mb-2">Name *</label>
@@ -274,7 +161,7 @@ const submitForm = () => {
             <textarea v-model="form.message" rows="4" class="w-full px-4 py-3 rounded-lg border border-border focus:ring-2 focus:ring-accent outline-none resize-none" placeholder="Tell us about your requirements..."></textarea>
           </div>
           <div class="md:col-span-2">
-            <button type="submit" class="btn-primary w-full py-4 rounded-lg text-white font-semibold text-lg">
+            <button type="submit" class="w-full bg-accent hover:bg-accent/90 text-white py-4 rounded-lg font-semibold text-lg transition-colors">
               Submit Inquiry
             </button>
           </div>

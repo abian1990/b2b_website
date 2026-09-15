@@ -18,9 +18,9 @@ defineProps({
           <a href="#why-us" class="text-white/80 hover:text-accent transition-colors text-sm font-medium">Solutions</a>
           <a href="#contact" class="text-white/80 hover:text-accent transition-colors text-sm font-medium">Contact</a>
         </div>
-        <a href="#contact" class="bg-accent hover:bg-accent/90 text-white px-5 py-2 text-sm font-semibold transition-colors">
+        <!-- <a href="#contact" class="bg-accent hover:bg-accent/90 text-white px-5 py-2 text-sm font-semibold transition-colors">
           Request Quote
-        </a>
+        </a> -->
       </div>
     </div>
   </nav>

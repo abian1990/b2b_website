@@ -141,14 +141,14 @@ onUnmounted(() => {
           @mouseenter="isPaused = true"
           @mouseleave="isPaused = false"
         >
-          <div v-for="(product, index) in allProducts" :key="index" class="flex-shrink-0 cursor-pointer group" @click="goToDetail(product.id)">
+          <a v-for="(product, index) in allProducts" :key="index" :href="`/products/${product.id}`" target="_blank" class="flex-shrink-0 group">
             <div class="relative overflow-hidden shadow-sm transition-all duration-300 group-hover:shadow-lg" style="width: 240px; height: 140px;">
               <img :src="product.src" :alt="product.id" class="w-full h-full object-cover">
               <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-center pb-3">
                 <span class="text-white text-xs font-semibold">View Details →</span>
               </div>
             </div>
-          </div>
+          </a>
         </div>
       </div>
 
