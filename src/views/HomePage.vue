@@ -12,13 +12,13 @@ import ContactSection from '../components/ContactSection.vue'
 import FooterSection from '../components/FooterSection.vue'
 
 // Import images directly
-import logoImg from '../assets/logo.png'
+import logoImg from '../assets/logo_icon.png'
 import heroImg from '../assets/heroImage.png'
 
 // Site configuration
 const siteConfig = {
   logo: logoImg,
-  companyName: 'AORE LASER',
+  companyName: 'KAILASH ME',
   heroBadge: '20+ Years in Industrial Manufacturing',
   heroTitle1: 'PRECISION',
   heroTitle2: 'AT SCALE',

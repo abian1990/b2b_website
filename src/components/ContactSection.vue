@@ -48,7 +48,7 @@ const submitForm = () => {
 </script>
 
 <template>
-  <section id="contact" class="py-16 bg-primary">
+  <section id="contact" class="py-16 bg-primary" style="scroll-margin-top: 80px;">
     <div class="max-w-4xl mx-auto px-6">
       <div class="text-center mb-10">
         <span class="text-accent font-semibold text-sm tracking-wider uppercase">Contact Us</span>

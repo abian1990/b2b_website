@@ -42,23 +42,60 @@ const startScroll = () => {
   animationId = requestAnimationFrame(scroll)
 }
 
+const stopScroll = () => {
+  if (animationId) {
+    cancelAnimationFrame(animationId)
+    animationId = null
+  }
+}
+
+const scrollLeft = () => {
+  const container = scrollContainer.value
+  if (container) {
+    const cardWidth = 256
+    container.scrollBy({ left: -cardWidth, behavior: 'smooth' })
+  }
+}
+
+const scrollRight = () => {
+  const container = scrollContainer.value
+  if (container) {
+    const cardWidth = 256
+    container.scrollBy({ left: cardWidth, behavior: 'smooth' })
+  }
+}
+
 const goToDetail = (productId) => {
   router.push(`/products/${productId}`)
 }
 
+const handleWheel = (e) => {
+  const container = scrollContainer.value
+  if (container) {
+    e.preventDefault()
+    container.scrollLeft += e.deltaY * 2
+  }
+}
+
 onMounted(() => {
   startScroll()
+  const container = scrollContainer.value
+  if (container) {
+    container.addEventListener('wheel', handleWheel, { passive: false })
+  }
 })
 
 onUnmounted(() => {
-  if (animationId) {
-    cancelAnimationFrame(animationId)
+  stopScroll()
+  const container = scrollContainer.value
+  if (container) {
+    container.removeEventListener('wheel', handleWheel)
   }
 })
 </script>
 
 <template>
-  <section id="products" class="py-16 bg-surface">
+  <section id="products" class="py-16 bg-surface" style="scroll-margin-top: 80px;">
     <div class="max-w-7xl mx-auto px-6">
       <div class="text-center mb-10">
         <span class="text-accent font-semibold text-sm tracking-wider uppercase">Our Products</span>
@@ -71,8 +108,32 @@ onUnmounted(() => {
     <div class="flex h-[280px]">
       <!-- Left: Scrolling Images -->
       <div class="w-3/4 relative">
-        <div class="absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-surface to-transparent z-10 pointer-events-none"></div>
-        <div class="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-surface to-transparent z-10 pointer-events-none"></div>
+        <div class="absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-surface to-transparent z-20 pointer-events-none"></div>
+        <div class="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-surface to-transparent z-20 pointer-events-none"></div>
+
+        <!-- Left Arrow -->
+        <button
+          @click="scrollLeft"
+          @mouseenter="isPaused = true"
+          @mouseleave="isPaused = false"
+          class="absolute left-2 top-1/2 -translate-y-1/2 z-30 w-10 h-10 bg-white/90 hover:bg-white shadow-lg rounded-full flex items-center justify-center text-primary hover:text-accent transition-all hover:scale-110 opacity-0 hover:opacity-100"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+          </svg>
+        </button>
+
+        <!-- Right Arrow -->
+        <button
+          @click="scrollRight"
+          @mouseenter="isPaused = true"
+          @mouseleave="isPaused = false"
+          class="absolute right-2 top-1/2 -translate-y-1/2 z-30 w-10 h-10 bg-white/90 hover:bg-white shadow-lg rounded-full flex items-center justify-center text-primary hover:text-accent transition-all hover:scale-110 opacity-0 hover:opacity-100"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+          </svg>
+        </button>
 
         <div
           ref="scrollContainer"

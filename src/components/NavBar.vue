@@ -13,9 +13,9 @@ defineProps({
           <span class="text-white font-bold text-xl tracking-tight">{{ config.companyName }}</span>
         </div>
         <div class="hidden md:flex items-center gap-8">
+          <a href="#factory" class="text-white/80 hover:text-accent transition-colors text-sm font-medium">Factory</a>
           <a href="#products" class="text-white/80 hover:text-accent transition-colors text-sm font-medium">Products</a>
           <a href="#why-us" class="text-white/80 hover:text-accent transition-colors text-sm font-medium">Solutions</a>
-          <a href="#factory" class="text-white/80 hover:text-accent transition-colors text-sm font-medium">Factory</a>
           <a href="#contact" class="text-white/80 hover:text-accent transition-colors text-sm font-medium">Contact</a>
         </div>
         <a href="#contact" class="bg-accent hover:bg-accent/90 text-white px-5 py-2 text-sm font-semibold transition-colors">

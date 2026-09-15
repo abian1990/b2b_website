@@ -6,6 +6,9 @@ import factory3 from '../assets/factory3.png'
 import factory4 from '../assets/factory4.png'
 import factory5 from '../assets/factory5.png'
 import factory6 from '../assets/factory6.png'
+import part1 from '../assets/part1.jpg'
+import part2 from '../assets/part2.jpg'
+import part3 from '../assets/part3.jpg' 
 import bg1 from '../assets/bg1.png'
 
 const scrollContainer = ref(null)
@@ -18,7 +21,10 @@ const factoryImages = [
   { src: factory3, title: 'Quality Control', subtitle: '精密质量检测' },
   { src: factory4, title: 'R&D Center', subtitle: '研发中心' },
   { src: factory5, title: 'Warehouse', subtitle: '智能仓储系统' },
-  { src: factory6, title: 'Testing Facility', subtitle: '出厂测试中心' }
+  { src: factory6, title: 'Testing Facility', subtitle: '出厂测试中心' },
+  { src: part1, title: 'Precision Parts', subtitle: '精密零部件' },
+  { src: part2, title: 'Precision Parts', subtitle: '精密零部件' },
+  { src: part3, title: 'Precision Parts', subtitle: '精密零部件' }
 ]
 
 const duplicatedImages = [...factoryImages, ...factoryImages]
@@ -73,7 +79,7 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <section id="factory" class="bg-white">
+  <section id="factory" class="bg-white" style="scroll-margin-top: 80px;">
     <!-- Section Title -->
     <div class="bg-white pt-8 pb-4">
       <div class="max-w-7xl mx-auto px-6 text-center">
@@ -106,15 +112,15 @@ onUnmounted(() => {
     <!-- Factory Carousel - Full Width -->
     <div class="bg-white pb-4">
       <div class="relative">
-        <div class="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-white to-transparent z-20 pointer-events-none"></div>
-        <div class="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-white to-transparent z-20 pointer-events-none"></div>
+        <div class="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none"></div>
+        <div class="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none"></div>
 
         <!-- Left Arrow -->
         <button
           @click="scrollLeft"
           @mouseenter="isPaused = true"
           @mouseleave="isPaused = false"
-          class="absolute left-4 top-1/2 -translate-y-1/2 z-30 w-12 h-12 bg-white/90 hover:bg-white shadow-lg rounded-full flex items-center justify-center text-primary hover:text-accent transition-all hover:scale-110"
+          class="absolute left-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 bg-white/90 hover:bg-white shadow-lg rounded-full flex items-center justify-center text-primary hover:text-accent transition-all hover:scale-110"
         >
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
@@ -126,7 +132,7 @@ onUnmounted(() => {
           @click="scrollRight"
           @mouseenter="isPaused = true"
           @mouseleave="isPaused = false"
-          class="absolute right-4 top-1/2 -translate-y-1/2 z-30 w-12 h-12 bg-white/90 hover:bg-white shadow-lg rounded-full flex items-center justify-center text-primary hover:text-accent transition-all hover:scale-110"
+          class="absolute right-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 bg-white/90 hover:bg-white shadow-lg rounded-full flex items-center justify-center text-primary hover:text-accent transition-all hover:scale-110"
         >
           <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>

@@ -24,7 +24,7 @@ const whyUsItems = [
 </script>
 
 <template>
-  <section id="why-us" class="py-16 bg-primary">
+  <section id="why-us" class="py-16 bg-primary" style="scroll-margin-top: 80px;">
     <div class="max-w-7xl mx-auto px-6">
       <div class="text-center mb-10">
         <span class="text-accent font-semibold text-sm tracking-wider uppercase">Why Choose Us</span>

@@ -11,7 +11,7 @@ const industries = [
 </script>
 
 <template>
-  <section class="py-16 bg-surface">
+  <section class="py-16 bg-surface" style="scroll-margin-top: 80px;">
     <div class="max-w-7xl mx-auto px-6">
       <div class="text-center mb-10">
         <span class="text-accent font-semibold text-sm tracking-wider uppercase">Industries</span>
