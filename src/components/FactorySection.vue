@@ -40,14 +40,35 @@ const startScroll = () => {
   animationId = requestAnimationFrame(scroll)
 }
 
+const stopScroll = () => {
+  if (animationId) {
+    cancelAnimationFrame(animationId)
+    animationId = null
+  }
+}
+
+const scrollLeft = () => {
+  const container = scrollContainer.value
+  if (container) {
+    const cardWidth = container.querySelector('div').offsetWidth + 16
+    container.scrollBy({ left: -cardWidth, behavior: 'smooth' })
+  }
+}
+
+const scrollRight = () => {
+  const container = scrollContainer.value
+  if (container) {
+    const cardWidth = container.querySelector('div').offsetWidth + 16
+    container.scrollBy({ left: cardWidth, behavior: 'smooth' })
+  }
+}
+
 onMounted(() => {
   startScroll()
 })
 
 onUnmounted(() => {
-  if (animationId) {
-    cancelAnimationFrame(animationId)
-  }
+  stopScroll()
 })
 </script>
 
@@ -83,10 +104,34 @@ onUnmounted(() => {
     </div>
 
     <!-- Factory Carousel - Full Width -->
-    <div class="bg-white">
+    <div class="bg-white pb-4">
       <div class="relative">
-        <div class="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none"></div>
-        <div class="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none"></div>
+        <div class="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-white to-transparent z-20 pointer-events-none"></div>
+        <div class="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-white to-transparent z-20 pointer-events-none"></div>
+
+        <!-- Left Arrow -->
+        <button
+          @click="scrollLeft"
+          @mouseenter="isPaused = true"
+          @mouseleave="isPaused = false"
+          class="absolute left-4 top-1/2 -translate-y-1/2 z-30 w-12 h-12 bg-white/90 hover:bg-white shadow-lg rounded-full flex items-center justify-center text-primary hover:text-accent transition-all hover:scale-110"
+        >
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+          </svg>
+        </button>
+
+        <!-- Right Arrow -->
+        <button
+          @click="scrollRight"
+          @mouseenter="isPaused = true"
+          @mouseleave="isPaused = false"
+          class="absolute right-4 top-1/2 -translate-y-1/2 z-30 w-12 h-12 bg-white/90 hover:bg-white shadow-lg rounded-full flex items-center justify-center text-primary hover:text-accent transition-all hover:scale-110"
+        >
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+          </svg>
+        </button>
 
         <div
           ref="scrollContainer"
