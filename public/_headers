@@ -1,0 +1,1 @@
+compatibility_flags = ["preserve_imported_manifest_imports"]
