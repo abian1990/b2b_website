@@ -1,4 +1,7 @@
 // Product data based on AORE LASER catalog PPT
+import gmbMachine from '../assets/gmb-machine.png'
+import gmbRail from '../assets/gmb-rail.png'
+
 export const products = [
   {
     id: 'f-series',
@@ -277,6 +280,78 @@ export const products = [
       { title: 'Versatile Applications', description: 'Handles both flat sheet and round/square tubes with single machine.' }
     ],
     applications: ['Fitness Equipment', 'Furniture', 'Automotive', 'Advertising', 'Kitchen', 'Bicycle', 'Handrail', 'Construction']
+  },
+  {
+    id: 'gmb-series',
+    series: 'GMB',
+    category: 'Gantry Machining Center',
+    name: 'GMB Series Gantry Type CNC Machining Center',
+    description: 'High-rigidity gantry structure with 4-box-way Z-axis linear guide rails, Taiwan Syntec control system and 24-tool disc magazine as standard. Four models cover worktables from 1200×900mm to 2000×1200mm for precision milling, drilling and boring.',
+    image: gmbMachine,
+    gallery: [
+      gmbMachine,
+      gmbRail
+    ],
+    badge: 'NEW',
+    powerRange: 'BT40 / BT50',
+    standardConfig: [
+      'Taiwan Syntec Control System',
+      '24-Tool Disc Magazine',
+      'Spindle Oil Cooler',
+      'Double Helix Chip Conveyor',
+      'Taiwan Spindle 8000 rpm'
+    ],
+    optionalConfig: [
+      'FANUC OI MF / Plus System',
+      'Mitsubishi / Siemens / KND / GSK / Huazhong',
+      'Through-Spindle Coolant',
+      '4th Axis / 5th Axis'
+    ],
+    models: [
+      { name: 'GMB1390', power: 'Table 1200×900mm' },
+      { name: 'GMB1214', power: 'Table 1400×1100mm' },
+      { name: 'GMB1417', power: 'Table 1600×1200mm' },
+      { name: 'GMB2014', power: 'Table 2000×1200mm' }
+    ],
+    keySpecs: [
+      { label: 'Worktable', value: '1200×900 - 2000×1200mm' },
+      { label: 'X-Axis Travel', value: '1300 - 2200mm' },
+      { label: 'Spindle Speed', value: '8000 - 10000 rpm' },
+      { label: 'Machine Weight', value: '6.5 - 16 T' }
+    ],
+    features: [
+      '4-Box-Way Z-Axis Rails',
+      'High Rigidity Gantry',
+      '24-Tool Magazine',
+      'Double Chip Conveyor',
+      'Through-Spindle Coolant Ready'
+    ],
+    specsTable: [
+      { parameter: 'Worktable Size (mm)', values: { 'GMB1390': '1200×900', 'GMB1214': '1400×1100', 'GMB1417': '1600×1200', 'GMB2014': '2000×1200' } },
+      { parameter: 'Max Table Load (T)', values: { 'GMB1390': '3', 'GMB1214': '4', 'GMB1417': '5', 'GMB2014': '6' } },
+      { parameter: 'X-Axis Travel (mm)', values: { 'GMB1390': '1300', 'GMB1214': '1400', 'GMB1417': '1700', 'GMB2014': '2200' } },
+      { parameter: 'Y-Axis Travel (mm)', values: { 'GMB1390': '900', 'GMB1214': '1200', 'GMB1417': '1400', 'GMB2014': '1300' } },
+      { parameter: 'Z-Axis Travel (mm)', values: { 'GMB1390': '600', 'GMB1214': '600', 'GMB1417': '700', 'GMB2014': '700' } },
+      { parameter: 'Gantry Width (mm)', values: { 'GMB1390': '1300', 'GMB1214': '1200', 'GMB1417': '1400', 'GMB2014': '1300' } },
+      { parameter: 'Spindle Speed (r/min)', values: { 'GMB1390': '10000', 'GMB1214': '8000/10000', 'GMB1417': '8000', 'GMB2014': '8000' } },
+      { parameter: 'Spindle Motor Power (kW)', values: { 'GMB1390': '11/15', 'GMB1214': '11/15', 'GMB1417': '15/18.5', 'GMB2014': '15/18.5' } },
+      { parameter: 'Spindle-to-Table Min/Max (mm)', values: { 'GMB1390': '150-750', 'GMB1214': '130-730', 'GMB1417': '150-850', 'GMB2014': '150-850' } },
+      { parameter: 'Spindle Taper', values: { 'GMB1390': 'BT40/150', 'GMB1214': 'BT40/150', 'GMB1417': 'BT50/155', 'GMB2014': 'BT50/155' } },
+      { parameter: '3-Axis Motor Torque (N·M)', values: { 'GMB1390': '28/18/18', 'GMB1214': '28/18/18', 'GMB1417': '35/28/28', 'GMB2014': '35/28/28' } },
+      { parameter: 'Rapid Traverse X/Y/Z (m/min)', values: { 'GMB1390': '24/24/24', 'GMB1214': '24/24/24', 'GMB1417': '16/16/12', 'GMB2014': '16/16/12' } },
+      { parameter: 'Max Cutting Feed (mm/min)', values: { 'GMB1390': '6000', 'GMB1214': '6000', 'GMB1417': '10000', 'GMB2014': '10000' } },
+      { parameter: 'Positioning Accuracy X/Y/Z (mm)', values: { 'GMB1390': '±0.005/300', 'GMB1214': '±0.005/300', 'GMB1417': '0.02/0.018/0.015', 'GMB2014': '0.02/0.018/0.015' } },
+      { parameter: 'Repeatability X/Y/Z (mm)', values: { 'GMB1390': '±0.008/±0.007/±0.005', 'GMB1214': '±0.008/±0.007/±0.005', 'GMB1417': '0.016/0.014/0.010', 'GMB2014': '0.016/0.014/0.010' } },
+      { parameter: 'Verticality X/Y Axis (mm)', values: { 'GMB1390': '±0.015/300', 'GMB1214': '±0.015/300', 'GMB1417': '±0.015/300', 'GMB2014': '±0.015/300' } },
+      { parameter: 'Machine Weight (T)', values: { 'GMB1390': '6.5', 'GMB1214': '8.5', 'GMB1417': '13', 'GMB2014': '16' } }
+    ],
+    featureDetails: [
+      { title: '4-Box-Way Z-Axis Guide Rails', description: 'Four-box-way linear guide on the Z-axis delivers high rigidity, low friction and long-term geometric accuracy for heavy cutting.' },
+      { title: 'High-Rigidity Gantry Structure', description: 'Box-welded and stress-relieved gantry frame with reinforced cross rail dampens vibration and ensures stable precision under continuous load.' },
+      { title: '24-Tool Disc Magazine', description: 'Standard 24-position tool changer supports automatic tool exchange for continuous milling, drilling and boring cycles.' },
+      { title: 'Double Helix Chip Conveyor', description: 'Twin screw-type chip removal efficiently evacuates swarf for clean work zone and reduced coolant contamination.' }
+    ],
+    applications: ['Mold & Die', 'Aerospace', 'Automotive Parts', 'Machine Base', 'Fixture & Jig', 'Hydraulic Components', 'Energy Equipment', 'General Precision Machining']
   }
 ]
 

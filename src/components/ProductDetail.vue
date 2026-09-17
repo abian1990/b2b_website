@@ -1,11 +1,16 @@
 <script setup>
-import { ref, reactive } from 'vue'
+import { ref, reactive, computed } from 'vue'
 
 const props = defineProps({
   product: {
     type: Object,
     required: true
   }
+})
+
+const modelNames = computed(() => {
+  if (!props.product.specsTable || !props.product.specsTable.length) return []
+  return Object.keys(props.product.specsTable[0].values)
 })
 
 const form = reactive({
@@ -102,6 +107,68 @@ const getSeriesBadge = (series) => {
         </div>
       </div>
 
+      <!-- Configuration: Standard vs Optional -->
+      <div v-if="product.standardConfig" class="grid md:grid-cols-2 gap-4 mb-8">
+        <div class="bg-white rounded-2xl p-8 border-t-4 border-accent">
+          <h2 class="text-xl font-bold text-primary mb-5 flex items-center gap-2">
+            <span class="w-2 h-2 bg-accent rounded-full"></span>
+            Standard Configuration
+          </h2>
+          <ul class="space-y-3">
+            <li v-for="item in product.standardConfig" :key="item" class="flex items-start gap-3">
+              <svg class="w-5 h-5 text-accent flex-shrink-0 mt-0.5" fill="currentColor" viewBox="0 0 20 20">
+                <path fill-rule="evenodd" d="M16.707 5.293a1 1 0 010 1.414l-8 8a1 1 0 01-1.414 0l-4-4a1 1 0 011.414-1.414L8 12.586l7.293-7.293a1 1 0 011.414 0z" clip-rule="evenodd"/>
+              </svg>
+              <span class="text-slate-700">{{ item }}</span>
+            </li>
+          </ul>
+        </div>
+        <div class="bg-white rounded-2xl p-8 border-t-4 border-secondary">
+          <h2 class="text-xl font-bold text-primary mb-5 flex items-center gap-2">
+            <span class="w-2 h-2 bg-secondary rounded-full"></span>
+            Optional Configuration
+          </h2>
+          <ul class="space-y-3">
+            <li v-for="item in product.optionalConfig" :key="item" class="flex items-start gap-3">
+              <svg class="w-5 h-5 text-secondary flex-shrink-0 mt-0.5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 6v6m0 4h.01M21 12a9 9 0 11-18 0 9 9 0 0118 0z"/>
+              </svg>
+              <span class="text-slate-700">{{ item }}</span>
+            </li>
+          </ul>
+        </div>
+      </div>
+
+      <!-- Technical Specifications Table -->
+      <div v-if="product.specsTable && product.specsTable.length" class="bg-white rounded-2xl p-8 mb-8">
+        <h2 class="text-2xl font-bold text-primary mb-2">Technical Specifications</h2>
+        <p class="text-muted text-sm mb-6">All dimensions in millimeters unless otherwise noted. Subject to change without notice.</p>
+        <div class="overflow-x-auto -mx-2 px-2">
+          <table class="w-full text-sm border-collapse min-w-[640px]">
+            <thead>
+              <tr class="bg-primary text-white">
+                <th class="text-left font-semibold px-4 py-3 rounded-l-lg">Parameter</th>
+                <th v-for="model in modelNames" :key="model" class="text-center font-semibold px-4 py-3">{{ model }}</th>
+              </tr>
+            </thead>
+            <tbody>
+              <tr
+                v-for="(row, idx) in product.specsTable"
+                :key="row.parameter"
+                :class="idx % 2 === 0 ? 'bg-slate-50' : 'bg-white'"
+              >
+                <td class="px-4 py-3 font-medium text-primary border-b border-border">{{ row.parameter }}</td>
+                <td
+                  v-for="model in modelNames"
+                  :key="model"
+                  class="px-4 py-3 text-center text-slate-700 border-b border-border tabular-nums"
+                >{{ row.values[model] }}</td>
+              </tr>
+            </tbody>
+          </table>
+        </div>
+      </div>
+
       <!-- Models -->
       <div class="bg-white rounded-2xl p-8 mb-8">
         <h2 class="text-2xl font-bold text-primary mb-6">Available Models</h2>
@@ -110,6 +177,34 @@ const getSeriesBadge = (series) => {
             <div class="text-xl font-bold text-primary mb-1">{{ model.name }}</div>
             <div class="text-muted">{{ model.power }}</div>
           </div>
+        </div>
+      </div>
+
+      <!-- Feature Details -->
+      <div v-if="product.featureDetails && product.featureDetails.length" class="bg-white rounded-2xl p-8 mb-8">
+        <h2 class="text-2xl font-bold text-primary mb-6">Why This Machine</h2>
+        <div class="grid md:grid-cols-2 gap-6">
+          <div v-for="(feat, i) in product.featureDetails" :key="i" class="flex gap-4">
+            <div class="flex-shrink-0 w-10 h-10 bg-accent/10 text-accent rounded-lg flex items-center justify-center font-bold">
+              {{ String(i + 1).padStart(2, '0') }}
+            </div>
+            <div>
+              <h3 class="font-semibold text-primary mb-1">{{ feat.title }}</h3>
+              <p class="text-muted text-sm leading-relaxed">{{ feat.description }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Applications -->
+      <div v-if="product.applications && product.applications.length" class="bg-white rounded-2xl p-8 mb-8">
+        <h2 class="text-2xl font-bold text-primary mb-6">Typical Applications</h2>
+        <div class="flex flex-wrap gap-3">
+          <span
+            v-for="app in product.applications"
+            :key="app"
+            class="bg-surface text-primary border border-border px-4 py-2 rounded-lg text-sm font-medium"
+          >{{ app }}</span>
         </div>
       </div>
 
