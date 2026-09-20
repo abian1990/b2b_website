@@ -91,7 +91,7 @@ onUnmounted(() => {
 
     <!-- Top Banner - Full Width -->
     <div class="relative overflow-hidden" style="height: 280px;">
-      <img :src="bg1" alt="Factory" class="w-full h-full object-cover">
+      <img :src="bg1" alt="ZZSKY laser cutting machine factory workshop in Henan China" class="w-full h-full object-cover">
       <div class="absolute inset-0 bg-gradient-to-r from-primary/90 via-primary/70 to-transparent"></div>
       <div class="absolute inset-0 flex items-center">
         <div class="max-w-7xl mx-auto px-8 w-full">

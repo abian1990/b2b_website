@@ -1,0 +1,28 @@
+# ZZSKY
+
+> ZZSKY supplies SEG series fiber laser tube and sheet cutting machines for industrial manufacturers worldwide. Factory: Mengzhuang Industrial Park, Huixian, Xinxiang, Henan, China.
+
+## Contact
+- Email: sales@aorelaser.cn
+- Phone: +86-400-832-8321
+- Address: Mengzhuang Industrial Park, Huixian, Xinxiang, Henan, China
+
+## Products
+- [SEG-T120 / T120Q](/products/seg-t120): Standard round & square tube laser, 10–120mm
+- [SEG-T160](/products/seg-t160): Standard tube laser, 10–160mm (bestseller)
+- [SEG-T240](/products/seg-t240): Heavy tube laser, 15–230mm
+- [SEG-T130Y](/products/seg-t130y): Offside tube laser with smart assist features
+- [SEG-T100M](/products/seg-t100m): Dual-pneumatic no-CAD tube laser
+- [SEG-100MZ](/products/seg-t100mz): Compact tube laser
+- [SEG-2513](/products/seg-2513): Sheet fiber laser, 2500×1300mm
+- [SEG-3015](/products/seg-3015): Sheet fiber laser, 3000×1500mm
+
+## Key facts
+- Categories: tube fiber laser, sheet fiber laser, no-CAD tube cutting, offside tube laser
+- Typical power class: 1.5kW class (upgradable options)
+- Applications: furniture, fitness equipment, automotive parts, sanitary ware, sheet metal shops
+- Quote response: typically within 24 hours
+
+## Optional
+- Sitemap: /sitemap.xml
+- Robots: /robots.txt

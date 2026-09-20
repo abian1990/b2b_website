@@ -33,7 +33,7 @@ const socials = [
       <div class="grid md:grid-cols-4 gap-12 mb-12">
         <div>
           <div class="flex items-center gap-3 mb-4">
-            <img :src="config.logo" alt="Logo" class="h-8">
+            <img :src="config.logo" :alt="`${config.companyName} logo`" class="h-8">
             <span class="text-white font-bold text-xl">{{ config.companyName }}</span>
           </div>
           <p class="text-white/60 text-sm">{{ config.footerDesc }}</p>
@@ -73,7 +73,7 @@ const socials = [
       </div>
 
       <div class="border-t border-white/10 pt-8 flex flex-col md:flex-row justify-between items-center gap-4">
-        <p class="text-white/40 text-sm">© 2024 {{ config.companyName }}. All Rights Reserved.</p>
+        <p class="text-white/40 text-sm">© {{ new Date().getFullYear() }} {{ config.companyName }}. All Rights Reserved.</p>
         <div class="flex gap-6 text-sm">
           <a href="#" class="text-white/40 hover:text-white transition-colors">Privacy Policy</a>
           <a href="#" class="text-white/40 hover:text-white transition-colors">Terms of Service</a>

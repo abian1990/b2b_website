@@ -7,22 +7,25 @@ import ProductsShowcase from '../components/ProductsShowcase.vue'
 import WhyUsSection from '../components/WhyUsSection.vue'
 import IndustriesSection from '../components/IndustriesSection.vue'
 import FactorySection from '../components/FactorySection.vue'
-import TestimonialSection from '../components/TestimonialSection.vue'
-import ProcessSection from '../components/ProcessSection.vue'
+import FaqSection from '../components/FaqSection.vue'
 import ContactSection from '../components/ContactSection.vue'
 import FooterSection from '../components/FooterSection.vue'
-
-// Import images directly
 import logoImg from '../assets/logo_icon.png'
 import heroImg from '../assets/heroImage.png'
+import { siteMeta, homeFaqs } from '../seo/siteMeta.js'
+import {
+  applyPageSeo,
+  buildOrganizationLd,
+  buildWebSiteLd,
+  buildFaqLd
+} from '../seo/applyPageSeo.js'
 
 const route = useRoute()
 const router = useRouter()
 
-// Site configuration
 const siteConfig = {
   logo: logoImg,
-  companyName: 'ZZSKY',
+  companyName: siteMeta.brand,
   heroBadge: '20+ Years in Industrial Manufacturing',
   heroTitle1: 'PRECISION',
   heroTitle2: 'AT SCALE',
@@ -30,10 +33,10 @@ const siteConfig = {
   heroCta1: 'Get Free Quote',
   heroCta2: 'View Products',
   heroImage: heroImg,
-  footerDesc: 'Precision laser cutting solutions for industrial manufacturing worldwide.',
-  contactEmail: 'sales@aorelaser.cn',
-  contactPhone: '+86 400-832-8321',
-  contactAddress: 'Huixian, Xinxiang, Henan, China'
+  footerDesc: siteMeta.description,
+  contactEmail: siteMeta.contactEmail,
+  contactPhone: siteMeta.contactPhone,
+  contactAddress: `${siteMeta.address.locality}, ${siteMeta.address.region}, ${siteMeta.address.countryName}`
 }
 
 const stats = [
@@ -43,10 +46,23 @@ const stats = [
   { value: '99%', label: 'Client Satisfaction' }
 ]
 
+const applyHomeSeo = () => {
+  applyPageSeo({
+    title: siteMeta.tagline,
+    description: siteMeta.description,
+    path: '/',
+    type: 'website',
+    jsonLd: [
+      { id: 'seo-ld-org', data: buildOrganizationLd() },
+      { id: 'seo-ld-website', data: buildWebSiteLd() },
+      { id: 'seo-ld-faq', data: buildFaqLd(homeFaqs) }
+    ]
+  })
+}
+
 const scrollToSection = async (sectionId) => {
   if (!sectionId) return
   await nextTick()
-  // wait a tick for layout after route change from detail page
   requestAnimationFrame(() => {
     const el = document.getElementById(sectionId)
     if (!el) return
@@ -64,8 +80,9 @@ watch(
   }
 )
 
-// Scroll reveal
 onMounted(() => {
+  applyHomeSeo()
+
   const observer = new IntersectionObserver((entries) => {
     entries.forEach(entry => {
       if (entry.isIntersecting) {
@@ -85,12 +102,15 @@ onMounted(() => {
 <template>
   <div class="min-h-screen bg-surface">
     <NavBar :config="siteConfig" />
-    <HeroSection :config="siteConfig" :stats="stats" />
-    <FactorySection />
-    <ProductsShowcase />
-    <WhyUsSection />
-    <IndustriesSection />
-    <ContactSection />
+    <main>
+      <HeroSection :config="siteConfig" :stats="stats" />
+      <FactorySection />
+      <ProductsShowcase />
+      <WhyUsSection />
+      <IndustriesSection />
+      <FaqSection />
+      <ContactSection />
+    </main>
     <FooterSection :config="siteConfig" />
   </div>
 </template>

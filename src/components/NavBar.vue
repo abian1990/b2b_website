@@ -47,7 +47,7 @@ const goToSection = async (sectionId) => {
     <div class="max-w-7xl mx-auto px-6 py-4">
       <div class="flex items-center justify-between">
         <router-link to="/" class="flex items-center gap-3">
-          <img :src="config.logo" alt="Logo" class="h-8">
+          <img :src="config.logo" :alt="`${config.companyName} logo`" class="h-8">
           <span class="text-white font-bold text-xl tracking-tight">{{ config.companyName }}</span>
         </router-link>
         <div class="hidden md:flex items-center gap-8">
