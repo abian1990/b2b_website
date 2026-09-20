@@ -25,20 +25,8 @@ const submitForm = () => {
   alert('Quote request submitted! We will contact you within 24 hours.')
 }
 
-const getSeriesBadge = (series) => {
-  const badges = {
-    'S': '性能款',
-    'F': '经典款',
-    'FT': '经典款',
-    'GR': '经典款',
-    'GR-Pro': '经典款',
-    'GR-C': '火焰款',
-    'GR-H': '领航款',
-    'FB': '性能款',
-    'PGT': '经典款',
-    'TZ': '旗舰款'
-  }
-  return badges[series] || 'Standard'
+const getSeriesBadge = (product) => {
+  return product.badgeZh || product.badge || product.series || 'Standard'
 }
 </script>
 
@@ -49,7 +37,7 @@ const getSeriesBadge = (series) => {
       <img
         :src="product.image"
         :alt="product.name"
-        class="w-full h-full object-cover"
+        class="w-full h-full object-contain bg-slate-900"
       >
       <div class="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/40 to-transparent"></div>
 
@@ -58,16 +46,17 @@ const getSeriesBadge = (series) => {
         <div class="max-w-7xl mx-auto">
           <div class="flex items-center gap-3 mb-4">
             <span class="bg-accent text-white text-sm font-bold px-4 py-1.5 rounded-full">
-              {{ product.series }} Series
+              SEG-{{ product.series }}
             </span>
             <span class="bg-white/20 backdrop-blur-sm text-white text-sm font-bold px-4 py-1.5 rounded-full">
-              {{ getSeriesBadge(product.series) }}
+              {{ getSeriesBadge(product) }}
             </span>
             <span class="bg-white/20 backdrop-blur-sm text-white text-sm font-bold px-4 py-1.5 rounded-full">
               {{ product.powerRange }}
             </span>
           </div>
-          <h1 class="text-4xl md:text-5xl font-bold text-white mb-4">{{ product.name }}</h1>
+          <h1 class="text-3xl md:text-5xl font-bold text-white mb-2">{{ product.nameZh || product.name }}</h1>
+          <p v-if="product.nameZh" class="text-white/70 text-base md:text-lg mb-3">{{ product.name }}</p>
           <p class="text-white/80 text-lg max-w-2xl">{{ product.description }}</p>
         </div>
       </div>
@@ -87,6 +76,20 @@ const getSeriesBadge = (series) => {
         <div v-for="spec in product.keySpecs" :key="spec.label" class="bg-white rounded-xl p-5 shadow-lg">
           <div class="text-muted text-sm mb-1">{{ spec.label }}</div>
           <div class="text-xl font-bold text-primary">{{ spec.value }}</div>
+        </div>
+      </div>
+
+      <!-- Gallery -->
+      <div v-if="product.gallery && product.gallery.length > 1" class="bg-white rounded-2xl p-6 mb-8">
+        <h2 class="text-2xl font-bold text-primary mb-4">Product Gallery</h2>
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
+          <div
+            v-for="(img, i) in product.gallery"
+            :key="i"
+            class="aspect-[4/3] bg-slate-50 rounded-xl overflow-hidden border border-border"
+          >
+            <img :src="img" :alt="`${product.name} ${i + 1}`" class="w-full h-full object-contain p-2">
+          </div>
         </div>
       </div>
 

@@ -3,7 +3,12 @@ defineProps({
   config: Object
 })
 
-const footerProducts = ['Fiber Laser Cutter', 'CO2 Laser Cutter', 'Tube Laser Cutter', 'Welding Systems']
+const footerProducts = [
+  { label: 'SEG-T120 / T160 Tube Laser', id: 'seg-t160' },
+  { label: 'SEG-T130Y Offside', id: 'seg-t130y' },
+  { label: 'SEG-T100M No-CAD', id: 'seg-t100m' },
+  { label: 'SEG-2513 / 3015 Sheet Laser', id: 'seg-2513' }
+]
 const footerSupport = ['Download Catalog', 'FAQ', 'Warranty', 'Spare Parts']
 
 const socials = [
@@ -37,8 +42,8 @@ const socials = [
         <div>
           <h4 class="text-white font-semibold mb-4">Products</h4>
           <ul class="space-y-2">
-            <li v-for="p in footerProducts" :key="p">
-              <a href="#" class="text-white/60 hover:text-accent transition-colors text-sm">{{ p }}</a>
+            <li v-for="p in footerProducts" :key="p.id">
+              <router-link :to="{ name: 'Product', params: { id: p.id } }" class="text-white/60 hover:text-accent transition-colors text-sm">{{ p.label }}</router-link>
             </li>
           </ul>
         </div>

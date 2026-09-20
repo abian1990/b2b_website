@@ -33,7 +33,7 @@ const siteConfig = {
   footerDesc: 'Precision laser cutting solutions for industrial manufacturing worldwide.',
   contactEmail: 'sales@aorelaser.cn',
   contactPhone: '+86 400-832-8321',
-  contactAddress: 'Jinan, Shandong, China'
+  contactAddress: 'Huixian, Xinxiang, Henan, China'
 }
 
 const stats = [

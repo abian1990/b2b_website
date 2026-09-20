@@ -1,26 +1,21 @@
 <script setup>
-import { ref, onMounted, onUnmounted } from 'vue'
-import product1 from '../assets/product1.png'
-import product2 from '../assets/product2.png'
-import product3 from '../assets/product3.png'
-import product4 from '../assets/product4.png'
-import product5 from '../assets/product5.png'
-import product6 from '../assets/product6.png'
+import { computed, ref, onMounted, onUnmounted } from 'vue'
+import { products } from '../data/products.js'
 
 const scrollContainer = ref(null)
 let animationId = null
 let isPaused = false
 
-const productImages = [
-  { src: product1, id: 'f-series' },
-  { src: product2, id: 's-series' },
-  { src: product3, id: 'gr-series' },
-  { src: product4, id: 'tz-series' },
-  { src: product5, id: 'gr-h-series' },
-  { src: product6, id: 'pgt-series' }
-]
+const productImages = computed(() =>
+  products.map((p) => ({
+    src: p.image,
+    id: p.id,
+    name: p.nameZh || p.name,
+    badge: p.badgeZh || p.badge
+  }))
+)
 
-const allProducts = [...productImages, ...productImages]
+const allProducts = computed(() => [...productImages.value, ...productImages.value])
 const scrollSpeed = 0.8
 
 const startScroll = () => {
@@ -93,8 +88,8 @@ onUnmounted(() => {
     <div class="max-w-7xl mx-auto px-6">
       <div class="text-center mb-10">
         <span class="text-accent font-semibold text-sm tracking-wider uppercase">Our Products</span>
-        <h2 class="text-4xl font-bold text-primary mt-3">核心产品线</h2>
-        <p class="text-muted mt-3">Industrial-grade laser cutting solutions</p>
+        <h2 class="text-4xl font-bold text-primary mt-3">赛格核心产品线</h2>
+        <p class="text-muted mt-3">Tube & sheet fiber laser cutting machines · SEG Series</p>
       </div>
     </div>
 
@@ -105,7 +100,6 @@ onUnmounted(() => {
         <div class="absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-surface to-transparent z-20 pointer-events-none"></div>
         <div class="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-surface to-transparent z-20 pointer-events-none"></div>
 
-        <!-- Left Arrow -->
         <button
           @click="scrollLeft"
           @mouseenter="isPaused = true"
@@ -117,7 +111,6 @@ onUnmounted(() => {
           </svg>
         </button>
 
-        <!-- Right Arrow -->
         <button
           @click="scrollRight"
           @mouseenter="isPaused = true"
@@ -142,10 +135,11 @@ onUnmounted(() => {
             class="flex-shrink-0 group cursor-pointer"
             @click="isPaused = true"
           >
-            <div class="relative overflow-hidden shadow-sm transition-all duration-300 group-hover:shadow-lg" style="width: 240px; height: 140px;">
-              <img :src="product.src" :alt="product.id" class="w-full h-full object-cover">
-              <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-center pb-3">
-                <span class="text-white text-xs font-semibold">View Details →</span>
+            <div class="relative overflow-hidden shadow-sm transition-all duration-300 group-hover:shadow-lg bg-slate-100" style="width: 240px; height: 140px;">
+              <img :src="product.src" :alt="product.name" class="w-full h-full object-contain p-2">
+              <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-end pb-3 px-2">
+                <span class="text-white/80 text-[10px] uppercase tracking-wider mb-0.5">{{ product.badge }}</span>
+                <span class="text-white text-xs font-semibold text-center leading-tight">{{ product.name }}</span>
               </div>
             </div>
           </router-link>
@@ -163,9 +157,9 @@ onUnmounted(() => {
       <!-- Right: Text -->
       <div class="w-1/4 flex items-center justify-center bg-white px-4">
         <div class="text-center">
-          <div class="text-accent text-xs font-semibold tracking-wider uppercase mb-2">Precision Engineering</div>
-          <h3 class="text-lg font-bold text-primary mb-2">Industrial Laser Solutions</h3>
-          <p class="text-muted text-xs mb-3">Advanced fiber laser cutting technology</p>
+          <div class="text-accent text-xs font-semibold tracking-wider uppercase mb-2">Henan Saige</div>
+          <h3 class="text-lg font-bold text-primary mb-2">Tube & Sheet Laser</h3>
+          <p class="text-muted text-xs mb-3">Standard · Offside · No-CAD · Flat sheet</p>
           <a href="#contact" class="inline-flex items-center gap-2 bg-primary text-white px-4 py-2 font-semibold text-xs">
             Get Quote
             <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">

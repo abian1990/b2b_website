@@ -6,20 +6,8 @@ defineProps({
   }
 })
 
-const getSeriesBadge = (series) => {
-  const badges = {
-    'S': '性能款',
-    'F': '经典款',
-    'FT': '经典款',
-    'GR': '经典款',
-    'GR-Pro': '经典款',
-    'GR-C': '火焰款',
-    'GR-H': '领航款',
-    'FB': '性能款',
-    'PGT': '经典款',
-    'TZ': '旗舰款'
-  }
-  return badges[series] || 'Standard'
+const getSeriesBadge = (product) => {
+  return product.badgeZh || product.badge || product.series || 'Standard'
 }
 </script>
 
@@ -33,14 +21,14 @@ const getSeriesBadge = (series) => {
       <img
         :src="product.image"
         :alt="product.name"
-        class="w-full h-full object-cover transition-transform duration-500 group-hover:scale-105"
+        class="w-full h-full object-contain p-4 transition-transform duration-500 group-hover:scale-105"
       >
       <div class="absolute top-4 left-4 flex gap-2">
         <span v-if="product.badge" class="bg-accent text-white text-xs font-bold px-3 py-1 rounded-full">
           {{ product.badge }}
         </span>
         <span class="bg-primary text-white text-xs font-bold px-3 py-1 rounded-full">
-          {{ getSeriesBadge(product.series) }}
+          {{ getSeriesBadge(product) }}
         </span>
       </div>
       <div class="absolute bottom-4 right-4">
@@ -52,10 +40,11 @@ const getSeriesBadge = (series) => {
 
     <!-- Content -->
     <div class="p-6">
-      <div class="text-accent text-sm font-semibold mb-2">{{ product.series }} Series</div>
-      <h3 class="text-xl font-bold text-primary mb-2 group-hover:text-accent transition-colors">
-        {{ product.name }}
+      <div class="text-accent text-sm font-semibold mb-2">{{ product.series }} · {{ product.category }}</div>
+      <h3 class="text-xl font-bold text-primary mb-1 group-hover:text-accent transition-colors">
+        {{ product.nameZh || product.name }}
       </h3>
+      <p v-if="product.nameZh" class="text-muted text-xs mb-2 line-clamp-1">{{ product.name }}</p>
       <p class="text-muted text-sm mb-4 line-clamp-2">{{ product.description }}</p>
 
       <!-- Key Specs -->
@@ -97,6 +86,12 @@ const getSeriesBadge = (series) => {
 .line-clamp-2 {
   display: -webkit-box;
   -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.line-clamp-1 {
+  display: -webkit-box;
+  -webkit-line-clamp: 1;
   -webkit-box-orient: vertical;
   overflow: hidden;
 }
