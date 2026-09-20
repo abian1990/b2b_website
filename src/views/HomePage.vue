@@ -22,7 +22,7 @@ const router = useRouter()
 // Site configuration
 const siteConfig = {
   logo: logoImg,
-  companyName: 'KAILASH ME',
+  companyName: 'ZZSKY',
   heroBadge: '20+ Years in Industrial Manufacturing',
   heroTitle1: 'PRECISION',
   heroTitle2: 'AT SCALE',

@@ -32,20 +32,20 @@ const scrollToContact = () => {
 </script>
 
 <template>
-  <div class="min-h-screen bg-surface pt-20">
+  <div class="min-h-screen bg-surface pt-2">
     <!-- Hero Image -->
-    <div class="relative" style="height: 60vh; min-height: 400px;">
+    <div class="relative min-h-[420px] md:min-h-[520px] h-[58vh]">
       <img
         :src="product.image"
         :alt="product.name"
         class="w-full h-full object-contain bg-slate-900"
       >
-      <div class="absolute inset-0 bg-gradient-to-t from-primary/90 via-primary/40 to-transparent"></div>
+      <div class="absolute inset-0 bg-gradient-to-t from-primary via-primary/50 to-transparent pointer-events-none"></div>
 
-      <!-- Content overlay -->
-      <div class="absolute bottom-0 left-0 right-0 p-8">
-        <div class="max-w-7xl mx-auto">
-          <div class="flex items-center gap-3 mb-4">
+      <!-- Content overlay：预留下方空间，避免被规格卡片遮挡 -->
+      <div class="absolute bottom-0 left-0 right-0 px-6 pt-8 pb-24 md:px-8 md:pb-28 pointer-events-none">
+        <div class="max-w-7xl mx-auto pointer-events-auto">
+          <div class="flex flex-wrap items-center gap-3 mb-4">
             <span class="bg-accent text-white text-sm font-bold px-4 py-1.5 rounded-full">
               SEG-{{ product.series }}
             </span>
@@ -58,14 +58,15 @@ const scrollToContact = () => {
           </div>
           <h1 class="text-3xl md:text-5xl font-bold text-white mb-2">{{ product.nameZh || product.name }}</h1>
           <p v-if="product.nameZh" class="text-white/70 text-base md:text-lg mb-3">{{ product.name }}</p>
-          <p class="text-white/80 text-lg max-w-2xl">{{ product.description }}</p>
+          <p class="text-white/80 text-base md:text-lg max-w-2xl leading-relaxed">{{ product.description }}</p>
         </div>
       </div>
 
-      <!-- Back button -->
+      <!-- Back button：放在导航栏下方，避免被遮挡 -->
       <button
         type="button"
-        class="absolute top-6 left-6 flex items-center gap-2 text-white bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full hover:bg-white/20 transition-all"
+        style="top: 64px; left: 16px;"
+        class="absolute top-4 left-4 md:top-6 md:left-6 z-30 flex items-center gap-2 text-white bg-black/40 hover:bg-black/55 backdrop-blur-sm px-4 py-2 rounded-full transition-all shadow-lg"
         @click="goBack"
       >
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
@@ -76,7 +77,7 @@ const scrollToContact = () => {
     </div>
 
     <!-- Product Info Cards -->
-    <div class="max-w-7xl mx-auto px-6 -mt-16 relative z-10">
+    <div class="max-w-7xl mx-auto px-6 -mt-14 relative z-10">
       <div class="grid md:grid-cols-4 gap-4 mb-8">
         <div v-for="spec in product.keySpecs" :key="spec.label" class="bg-white rounded-xl p-5 shadow-lg">
           <div class="text-muted text-sm mb-1">{{ spec.label }}</div>
