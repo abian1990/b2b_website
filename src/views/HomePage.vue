@@ -90,10 +90,7 @@ onMounted(() => {
     <ProductsShowcase />
     <WhyUsSection />
     <IndustriesSection />
-    
-    <!-- <TestimonialSection /> -->
-    <!-- <ProcessSection /> -->
-    <!-- <ContactSection /> -->
+    <ContactSection />
     <FooterSection :config="siteConfig" />
   </div>
 </template>

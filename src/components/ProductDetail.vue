@@ -1,5 +1,7 @@
 <script setup>
-import { ref, reactive, computed } from 'vue'
+import { computed } from 'vue'
+import { useRouter } from 'vue-router'
+import { RESTORE_SCROLL_KEY } from '../utils/scrollMemory.js'
 
 const props = defineProps({
   product: {
@@ -8,25 +10,24 @@ const props = defineProps({
   }
 })
 
+const router = useRouter()
+
 const modelNames = computed(() => {
   if (!props.product.specsTable || !props.product.specsTable.length) return []
   return Object.keys(props.product.specsTable[0].values)
 })
 
-const form = reactive({
-  name: '',
-  email: '',
-  company: '',
-  country: '',
-  message: ''
-})
-
-const submitForm = () => {
-  alert('Quote request submitted! We will contact you within 24 hours.')
-}
-
 const getSeriesBadge = (product) => {
   return product.badgeZh || product.badge || product.series || 'Standard'
+}
+
+const goBack = () => {
+  sessionStorage.setItem(RESTORE_SCROLL_KEY, '1')
+  router.push({ name: 'Home' })
+}
+
+const scrollToContact = () => {
+  document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })
 }
 </script>
 
@@ -62,12 +63,16 @@ const getSeriesBadge = (product) => {
       </div>
 
       <!-- Back button -->
-      <router-link to="/" class="absolute top-6 left-6 flex items-center gap-2 text-white bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full hover:bg-white/20 transition-all">
+      <button
+        type="button"
+        class="absolute top-6 left-6 flex items-center gap-2 text-white bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full hover:bg-white/20 transition-all"
+        @click="goBack"
+      >
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
         </svg>
         Back
-      </router-link>
+      </button>
     </div>
 
     <!-- Product Info Cards -->
@@ -212,59 +217,21 @@ const getSeriesBadge = (product) => {
       </div>
 
       <!-- CTA -->
-      <div class="bg-primary rounded-2xl p-8 mb-8">
+      <!-- <div class="bg-primary rounded-2xl p-8 mb-8">
         <div class="text-center mb-6">
           <h2 class="text-2xl font-bold text-white mb-2">Interested in this product?</h2>
           <p class="text-white/70">Contact us for a personalized quote and consultation</p>
         </div>
         <div class="flex flex-wrap justify-center gap-4">
-          <a href="#inquiry" class="bg-accent hover:bg-accent/90 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-colors">
+          <button
+            type="button"
+            class="bg-accent hover:bg-accent/90 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-colors"
+            @click="scrollToContact"
+          >
             Request Quote
-          </a>
-          <a href="tel:+864008328321" class="bg-white/10 hover:bg-white/20 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-colors">
-            Call Now
-          </a>
+          </button>
         </div>
-      </div>
-
-      <!-- Inquiry Form -->
-      <div id="inquiry" class="bg-white rounded-2xl p-8 mb-8">
-        <h2 class="text-2xl font-bold text-primary mb-6">Get a Quote</h2>
-        <form @submit.prevent="submitForm" class="grid md:grid-cols-2 gap-6">
-          <div>
-            <label class="block text-sm font-medium text-slate-700 mb-2">Name *</label>
-            <input v-model="form.name" type="text" required class="w-full px-4 py-3 rounded-lg border border-border focus:ring-2 focus:ring-accent outline-none" placeholder="Your name">
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-slate-700 mb-2">Email *</label>
-            <input v-model="form.email" type="email" required class="w-full px-4 py-3 rounded-lg border border-border focus:ring-2 focus:ring-accent outline-none" placeholder="your@email.com">
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-slate-700 mb-2">Company</label>
-            <input v-model="form.company" type="text" class="w-full px-4 py-3 rounded-lg border border-border focus:ring-2 focus:ring-accent outline-none" placeholder="Company name">
-          </div>
-          <div>
-            <label class="block text-sm font-medium text-slate-700 mb-2">Country</label>
-            <select v-model="form.country" class="w-full px-4 py-3 rounded-lg border border-border focus:ring-2 focus:ring-accent outline-none bg-white">
-              <option value="">Select Country</option>
-              <option value="US">United States</option>
-              <option value="DE">Germany</option>
-              <option value="UK">United Kingdom</option>
-              <option value="JP">Japan</option>
-              <option value="Other">Other</option>
-            </select>
-          </div>
-          <div class="md:col-span-2">
-            <label class="block text-sm font-medium text-slate-700 mb-2">Message</label>
-            <textarea v-model="form.message" rows="4" class="w-full px-4 py-3 rounded-lg border border-border focus:ring-2 focus:ring-accent outline-none resize-none" placeholder="Tell us about your requirements..."></textarea>
-          </div>
-          <div class="md:col-span-2">
-            <button type="submit" class="w-full bg-accent hover:bg-accent/90 text-white py-4 rounded-lg font-semibold text-lg transition-colors">
-              Submit Inquiry
-            </button>
-          </div>
-        </form>
-      </div>
+      </div> -->
     </div>
   </div>
 </template>

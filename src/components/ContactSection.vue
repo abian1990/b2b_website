@@ -13,7 +13,10 @@ const countries = [
 ]
 
 const productOptions = [
-  'Fiber Laser Cutter', 'CO2 Laser Cutter', 'Tube Laser Cutter', 'Handheld Welder'
+  'SEG-T120 / T160 Tube Laser',
+  'SEG-T130Y Offside',
+  'SEG-T100M No-CAD',
+  'SEG-2513 / 3015 Sheet Laser'
 ]
 
 const form = reactive({

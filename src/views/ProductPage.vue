@@ -3,6 +3,7 @@ import { computed } from 'vue'
 import { useRoute } from 'vue-router'
 import NavBar from '../components/NavBar.vue'
 import ProductDetail from '../components/ProductDetail.vue'
+import ContactSection from '../components/ContactSection.vue'
 import FooterSection from '../components/FooterSection.vue'
 import { getProductById } from '../data/products.js'
 import logoImg from '../assets/logo_icon.png'
@@ -30,6 +31,7 @@ const siteConfig = {
         <router-link to="/" class="text-accent hover:underline">Back to Home</router-link>
       </div>
     </div>
+    <ContactSection />
     <FooterSection :config="siteConfig" />
   </div>
 </template>

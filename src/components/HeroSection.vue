@@ -9,6 +9,10 @@ const props = defineProps({
 const displayStats = ref([])
 const hasAnimated = ref(false)
 
+const scrollToSection = (id) => {
+  document.getElementById(id)?.scrollIntoView({ behavior: 'smooth' })
+}
+
 const animateNumber = (target, key) => {
   const duration = 2000
   const startTime = performance.now()
@@ -80,15 +84,23 @@ onMounted(() => {
             {{ config.heroSubtitle }}
           </p>
           <div class="flex flex-wrap gap-4">
-            <a href="#contact" class="bg-accent hover:bg-accent/90 text-white px-8 py-4 font-semibold inline-flex items-center gap-2 transition-colors">
+            <button
+              type="button"
+              class="bg-accent hover:bg-accent/90 text-white px-8 py-4 font-semibold inline-flex items-center gap-2 transition-colors"
+              @click="scrollToSection('contact')"
+            >
               {{ config.heroCta1 }}
               <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
               </svg>
-            </a>
-            <a href="#products" class="px-8 py-4 border-2 border-white/30 text-white font-semibold hover:bg-white/10 transition-all">
+            </button>
+            <button
+              type="button"
+              class="px-8 py-4 border-2 border-white/30 text-white font-semibold hover:bg-white/10 transition-all"
+              @click="scrollToSection('products')"
+            >
               {{ config.heroCta2 }}
-            </a>
+            </button>
           </div>
         </div>
 

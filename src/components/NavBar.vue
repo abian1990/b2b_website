@@ -1,4 +1,5 @@
 <script setup>
+import { computed } from 'vue'
 import { useRouter, useRoute } from 'vue-router'
 
 defineProps({
@@ -8,18 +9,35 @@ defineProps({
 const router = useRouter()
 const route = useRoute()
 
-const navItems = [
-  { id: 'factory', label: 'Factory' },
-  { id: 'products', label: 'Products' },
-  { id: 'why-us', label: 'Solutions' },
-  { id: 'contact', label: 'Contact' }
+const isProductPage = computed(() => route.name === 'Product')
+
+const allNavItems = [
+  { id: 'factory', label: 'Factory', homeOnly: true },
+  { id: 'products', label: 'Products', homeOnly: true },
+  { id: 'why-us', label: 'Solutions', homeOnly: true },
+  { id: 'contact', label: 'Contact', homeOnly: false }
 ]
 
+const navItems = computed(() =>
+  allNavItems.filter((item) => {
+    if (isProductPage.value) {
+      return !item.homeOnly
+    }
+    return true
+  })
+)
+
 const goToSection = async (sectionId) => {
+  if (isProductPage.value && sectionId === 'contact') {
+    document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })
+    return
+  }
+
   if (route.name === 'Home') {
     document.getElementById(sectionId)?.scrollIntoView({ behavior: 'smooth' })
     return
   }
+
   await router.push({ name: 'Home', query: { section: sectionId } })
 }
 </script>

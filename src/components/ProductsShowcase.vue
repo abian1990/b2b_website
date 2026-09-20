@@ -66,6 +66,10 @@ const handleWheel = (e) => {
   }
 }
 
+const scrollToContact = () => {
+  document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })
+}
+
 onMounted(() => {
   startScroll()
   const container = scrollContainer.value
@@ -160,12 +164,16 @@ onUnmounted(() => {
           <div class="text-accent text-xs font-semibold tracking-wider uppercase mb-2">Henan Saige</div>
           <h3 class="text-lg font-bold text-primary mb-2">Tube & Sheet Laser</h3>
           <p class="text-muted text-xs mb-3">Standard · Offside · No-CAD · Flat sheet</p>
-          <a href="#contact" class="inline-flex items-center gap-2 bg-primary text-white px-4 py-2 font-semibold text-xs">
+          <button
+            type="button"
+            class="inline-flex items-center gap-2 bg-primary text-white px-4 py-2 font-semibold text-xs"
+            @click="scrollToContact"
+          >
             Get Quote
             <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
             </svg>
-          </a>
+          </button>
         </div>
       </div>
     </div>
