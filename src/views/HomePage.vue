@@ -1,5 +1,6 @@
 <script setup>
-import { onMounted } from 'vue'
+import { onMounted, nextTick, watch } from 'vue'
+import { useRoute, useRouter } from 'vue-router'
 import NavBar from '../components/NavBar.vue'
 import HeroSection from '../components/HeroSection.vue'
 import ProductsShowcase from '../components/ProductsShowcase.vue'
@@ -14,6 +15,9 @@ import FooterSection from '../components/FooterSection.vue'
 // Import images directly
 import logoImg from '../assets/logo_icon.png'
 import heroImg from '../assets/heroImage.png'
+
+const route = useRoute()
+const router = useRouter()
 
 // Site configuration
 const siteConfig = {
@@ -39,6 +43,27 @@ const stats = [
   { value: '99%', label: 'Client Satisfaction' }
 ]
 
+const scrollToSection = async (sectionId) => {
+  if (!sectionId) return
+  await nextTick()
+  // wait a tick for layout after route change from detail page
+  requestAnimationFrame(() => {
+    const el = document.getElementById(sectionId)
+    if (!el) return
+    el.scrollIntoView({ behavior: 'smooth' })
+    if (route.query.section) {
+      router.replace({ query: {} })
+    }
+  })
+}
+
+watch(
+  () => route.query.section,
+  (section) => {
+    if (section) scrollToSection(section)
+  }
+)
+
 // Scroll reveal
 onMounted(() => {
   const observer = new IntersectionObserver((entries) => {
@@ -50,6 +75,10 @@ onMounted(() => {
   }, { threshold: 0.1 })
 
   document.querySelectorAll('.section-reveal').forEach(el => observer.observe(el))
+
+  if (route.query.section) {
+    scrollToSection(route.query.section)
+  }
 })
 </script>
 

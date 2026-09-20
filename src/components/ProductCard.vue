@@ -24,7 +24,10 @@ const getSeriesBadge = (series) => {
 </script>
 
 <template>
-  <div class="card-hover bg-white rounded-2xl overflow-hidden shadow-lg border border-border group">
+  <router-link
+    :to="{ name: 'Product', params: { id: product.id } }"
+    class="card-hover bg-white rounded-2xl overflow-hidden shadow-lg border border-border group block"
+  >
     <!-- Image -->
     <div class="relative h-64 overflow-hidden bg-slate-100">
       <img
@@ -76,21 +79,18 @@ const getSeriesBadge = (series) => {
 
       <!-- CTA -->
       <div class="flex items-center justify-between pt-4 border-t border-border">
-        <router-link
-          :to="`/products/${product.id}`"
-          class="text-accent font-semibold text-sm inline-flex items-center gap-2 hover:gap-3 transition-all"
-        >
+        <span class="text-accent font-semibold text-sm inline-flex items-center gap-2 group-hover:gap-3 transition-all">
           View Details
           <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
           </svg>
-        </router-link>
-        <a href="#contact" class="btn-primary px-4 py-2 rounded-lg text-white text-sm font-semibold">
+        </span>
+        <span class="btn-primary px-4 py-2 rounded-lg text-white text-sm font-semibold">
           Get Quote
-        </a>
+        </span>
       </div>
     </div>
-  </div>
+  </router-link>
 </template>
 
 <style scoped>

@@ -73,12 +73,12 @@ const getSeriesBadge = (series) => {
       </div>
 
       <!-- Back button -->
-      <a href="/" class="absolute top-6 left-6 flex items-center gap-2 text-white bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full hover:bg-white/20 transition-all">
+      <router-link to="/" class="absolute top-6 left-6 flex items-center gap-2 text-white bg-white/10 backdrop-blur-sm px-4 py-2 rounded-full hover:bg-white/20 transition-all">
         <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
           <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
         </svg>
         Back
-      </a>
+      </router-link>
     </div>
 
     <!-- Product Info Cards -->

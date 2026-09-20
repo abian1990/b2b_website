@@ -1,6 +1,5 @@
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue'
-import { useRouter } from 'vue-router'
 import product1 from '../assets/product1.png'
 import product2 from '../assets/product2.png'
 import product3 from '../assets/product3.png'
@@ -8,7 +7,6 @@ import product4 from '../assets/product4.png'
 import product5 from '../assets/product5.png'
 import product6 from '../assets/product6.png'
 
-const router = useRouter()
 const scrollContainer = ref(null)
 let animationId = null
 let isPaused = false
@@ -63,10 +61,6 @@ const scrollRight = () => {
     const cardWidth = 256
     container.scrollBy({ left: cardWidth, behavior: 'smooth' })
   }
-}
-
-const goToDetail = (productId) => {
-  router.push(`/products/${productId}`)
 }
 
 const handleWheel = (e) => {
@@ -141,14 +135,20 @@ onUnmounted(() => {
           @mouseenter="isPaused = true"
           @mouseleave="isPaused = false"
         >
-          <a v-for="(product, index) in allProducts" :key="index" :href="`/products/${product.id}`" target="_blank" class="flex-shrink-0 group">
+          <router-link
+            v-for="(product, index) in allProducts"
+            :key="index"
+            :to="{ name: 'Product', params: { id: product.id } }"
+            class="flex-shrink-0 group cursor-pointer"
+            @click="isPaused = true"
+          >
             <div class="relative overflow-hidden shadow-sm transition-all duration-300 group-hover:shadow-lg" style="width: 240px; height: 140px;">
               <img :src="product.src" :alt="product.id" class="w-full h-full object-cover">
               <div class="absolute inset-0 bg-gradient-to-t from-black/60 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex items-end justify-center pb-3">
                 <span class="text-white text-xs font-semibold">View Details →</span>
               </div>
             </div>
-          </a>
+          </router-link>
         </div>
       </div>
 

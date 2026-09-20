@@ -18,7 +18,11 @@ const routes = [
 const router = createRouter({
   history: createWebHashHistory(),
   routes,
-  scrollBehavior() {
+  scrollBehavior(to) {
+    // 由首页根据 ?section= 自行定位，避免先滚到顶部再抢滚动
+    if (to.query.section) {
+      return false
+    }
     return { top: 0 }
   }
 })
