@@ -23,10 +23,15 @@
 
 ### Turnstile
 1. Turnstile → Add site，域名填你的线上域名（可加 `*.pages.dev`）
-2. 复制 **Site Key** → Pages 构建环境变量 `VITE_TURNSTILE_SITE_KEY`
-3. 复制 **Secret Key** → Pages 运行时 Secret `TURNSTILE_SECRET_KEY`
+2. **两套 Key 都要配到 Pages（Runtime Variables / Secrets）**：
+   - `TURNSTILE_SITE_KEY` = **Site Key**（公开，给前端用，经 `/api/config` 下发）
+   - `TURNSTILE_SECRET_KEY` = **Secret Key**（仅服务端）
+3. （可选）构建变量 `VITE_TURNSTILE_SITE_KEY` = 同一个 Site Key  
+   若不配构建变量，前端会自动请求 `/api/config` 获取 Site Key。
 
-本地测试可用 Cloudflare 官方 Always Pass 密钥：
+> 常见错误：只配了 Secret，没配 Site Key → 页面不出现验证框，提交报 `Missing Turnstile token`。
+
+本地测试可用 Cloudflare Always Pass：
 - Site: `1x00000000000000000000AA`
 - Secret: `1x0000000000000000000000000000000AA`
 ### '0x4AAAAAAE-i7PHTYZ7drGSe'  '0x4AAAAAAE-i7BNFQMVmB87KYrqA15kwuw0'
@@ -44,9 +49,10 @@
 ### 其它环境变量
 | 变量 | 位置 | 说明 |
 |------|------|------|
-| `VITE_TURNSTILE_SITE_KEY` | Build | 前端 Turnstile |
+| `TURNSTILE_SITE_KEY` | Runtime | **公开** Site Key，`/api/config` 返回 |
+| `VITE_TURNSTILE_SITE_KEY` | Build（可选） | 同 Site Key；不配则走 `/api/config` |
 | `VITE_SITE_URL` | Build | SEO 域名 |
-| `TURNSTILE_SECRET_KEY` | Runtime Secret | 校验 |
+| `TURNSTILE_SECRET_KEY` | Runtime Secret | 服务端校验 |
 | `RESEND_API_KEY` | Runtime Secret | 发信 |
 | `EMAIL_FROM` | Runtime | 发件人 |
 | `NOTIFY_EMAIL` | Runtime | 销售收件 |

@@ -1,8 +1,8 @@
 <script setup>
-import { ref, reactive, onMounted, onBeforeUnmount, nextTick } from 'vue'
+import { ref, reactive, onMounted, onBeforeUnmount, nextTick, watch } from 'vue'
 
-const TURNSTILE_SITE_KEY = import.meta.env.VITE_TURNSTILE_SITE_KEY || ''
 const QUOTE_API = import.meta.env.VITE_QUOTE_API_URL || '/api/quote'
+const CONFIG_API = import.meta.env.VITE_CONFIG_API_URL || '/api/config'
 
 const countries = [
   'United States', 'Germany', 'United Kingdom', 'France', 'Japan',
@@ -48,49 +48,72 @@ const submitting = ref(false)
 const submitError = ref('')
 const submitSuccess = ref(false)
 const quoteId = ref('')
+const siteKey = ref(import.meta.env.VITE_TURNSTILE_SITE_KEY || '')
 const turnstileWidgetId = ref(null)
 const turnstileToken = ref('')
-const turnstileReady = ref(false)
 const turnstileEl = ref(null)
+const configLoaded = ref(false)
 
-let turnstileScript = null
-
-const loadTurnstile = () =>
+const loadTurnstileScript = () =>
   new Promise((resolve, reject) => {
     if (window.turnstile) {
       resolve(window.turnstile)
       return
     }
-    turnstileScript = document.createElement('script')
-    turnstileScript.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit'
-    turnstileScript.async = true
-    turnstileScript.onload = () => resolve(window.turnstile)
-    turnstileScript.onerror = () => reject(new Error('Failed to load Turnstile'))
-    document.head.appendChild(turnstileScript)
+    const existing = document.querySelector('script[data-turnstile]')
+    if (existing) {
+      existing.addEventListener('load', () => resolve(window.turnstile))
+      existing.addEventListener('error', () => reject(new Error('Failed to load Turnstile')))
+      return
+    }
+    const script = document.createElement('script')
+    script.src = 'https://challenges.cloudflare.com/turnstile/v0/api.js?render=explicit'
+    script.async = true
+    script.defer = true
+    script.dataset.turnstile = '1'
+    script.onload = () => resolve(window.turnstile)
+    script.onerror = () => reject(new Error('Failed to load Turnstile'))
+    document.head.appendChild(script)
   })
 
-const renderTurnstile = async () => {
-  if (!TURNSTILE_SITE_KEY || !turnstileEl.value) return
-  try {
-    const turnstile = await loadTurnstile()
-    await nextTick()
-    if (turnstileWidgetId.value != null) {
-      turnstile.remove(turnstileWidgetId.value)
+const destroyTurnstile = () => {
+  if (window.turnstile && turnstileWidgetId.value != null) {
+    try {
+      window.turnstile.remove(turnstileWidgetId.value)
+    } catch {
+      /* ignore */
     }
+  }
+  turnstileWidgetId.value = null
+  turnstileToken.value = ''
+}
+
+const renderTurnstile = async () => {
+  if (!siteKey.value) return
+  await nextTick()
+  if (!turnstileEl.value) return
+
+  try {
+    const turnstile = await loadTurnstileScript()
+    destroyTurnstile()
+    // 清空容器，避免重复 iframe
+    turnstileEl.value.innerHTML = ''
+
     turnstileWidgetId.value = turnstile.render(turnstileEl.value, {
-      sitekey: TURNSTILE_SITE_KEY,
+      sitekey: siteKey.value,
       theme: 'light',
+      appearance: 'always',
       callback: (token) => {
-        turnstileToken.value = token
-        turnstileReady.value = true
+        turnstileToken.value = token || ''
       },
       'expired-callback': () => {
         turnstileToken.value = ''
-        turnstileReady.value = false
       },
       'error-callback': () => {
         turnstileToken.value = ''
-        turnstileReady.value = false
+      },
+      'timeout-callback': () => {
+        turnstileToken.value = ''
       }
     })
   } catch (e) {
@@ -99,11 +122,33 @@ const renderTurnstile = async () => {
   }
 }
 
+/** 提交瞬间再取一次 token，避免 callback 未触发 */
+const readTurnstileToken = () => {
+  let token = turnstileToken.value || ''
+  if (!token && window.turnstile && turnstileWidgetId.value != null) {
+    try {
+      token = window.turnstile.getResponse(turnstileWidgetId.value) || ''
+    } catch {
+      /* ignore */
+    }
+  }
+  if (!token) {
+    const input = turnstileEl.value?.querySelector?.('input[name="cf-turnstile-response"]')
+      || document.querySelector('input[name="cf-turnstile-response"]')
+    token = input?.value || ''
+  }
+  turnstileToken.value = token
+  return token
+}
+
 const resetTurnstile = () => {
   turnstileToken.value = ''
-  turnstileReady.value = false
   if (window.turnstile && turnstileWidgetId.value != null) {
-    window.turnstile.reset(turnstileWidgetId.value)
+    try {
+      window.turnstile.reset(turnstileWidgetId.value)
+    } catch {
+      /* ignore */
+    }
   }
 }
 
@@ -126,8 +171,10 @@ const submitForm = async () => {
     submitError.value = 'Please select at least one product.'
     return
   }
-  if (TURNSTILE_SITE_KEY && !turnstileToken.value) {
-    submitError.value = 'Please complete the human verification.'
+
+  const token = readTurnstileToken()
+  if (siteKey.value && !token) {
+    submitError.value = 'Please complete the human verification (Turnstile), then submit again.'
     return
   }
 
@@ -138,13 +185,15 @@ const submitForm = async () => {
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({
         ...form,
-        turnstileToken: turnstileToken.value,
+        turnstileToken: token,
+        'cf-turnstile-response': token,
         source: 'website-contact'
       })
     })
     const data = await res.json().catch(() => ({}))
     if (!res.ok || !data.ok) {
-      throw new Error(data.error || `Submit failed (${res.status})`)
+      const detail = Array.isArray(data.details) ? data.details.join(', ') : data.details
+      throw new Error([data.error, detail].filter(Boolean).join(' — ') || `Submit failed (${res.status})`)
     }
     quoteId.value = data.id || ''
     submitSuccess.value = true
@@ -157,24 +206,47 @@ const submitForm = async () => {
   }
 }
 
-const submitAnother = () => {
+const submitAnother = async () => {
   submitSuccess.value = false
   quoteId.value = ''
-  nextTick(() => renderTurnstile())
+  await nextTick()
+  await renderTurnstile()
 }
 
-onMounted(() => {
-  renderTurnstile()
+const loadPublicConfig = async () => {
+  // 构建期没有 VITE_ 变量时，从 Functions 运行时拿公开 Site Key
+  if (siteKey.value) {
+    configLoaded.value = true
+    return
+  }
+  try {
+    const res = await fetch(CONFIG_API, { credentials: 'omit' })
+    const data = await res.json().catch(() => ({}))
+    if (data?.turnstileSiteKey) {
+      siteKey.value = data.turnstileSiteKey
+    }
+  } catch (e) {
+    console.warn('Failed to load /api/config', e)
+  } finally {
+    configLoaded.value = true
+  }
+}
+
+watch(siteKey, async (key) => {
+  if (key && !submitSuccess.value) {
+    await renderTurnstile()
+  }
+})
+
+onMounted(async () => {
+  await loadPublicConfig()
+  if (siteKey.value) {
+    await renderTurnstile()
+  }
 })
 
 onBeforeUnmount(() => {
-  if (window.turnstile && turnstileWidgetId.value != null) {
-    try {
-      window.turnstile.remove(turnstileWidgetId.value)
-    } catch {
-      /* ignore */
-    }
-  }
+  destroyTurnstile()
 })
 </script>
 
@@ -187,7 +259,6 @@ onBeforeUnmount(() => {
         <p class="text-white/60 mt-3">24小时内回复 · 专业团队对接</p>
       </div>
 
-      <!-- Success panel -->
       <div v-if="submitSuccess" class="bg-white rounded-2xl p-10 shadow-2xl text-center">
         <div class="w-16 h-16 mx-auto mb-5 rounded-full bg-green-100 text-green-600 flex items-center justify-center">
           <svg class="w-8 h-8" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
@@ -203,7 +274,6 @@ onBeforeUnmount(() => {
         </button>
       </div>
 
-      <!-- Quote form -->
       <form v-else @submit.prevent="submitForm" class="bg-white rounded-2xl p-8 shadow-2xl">
         <div class="grid md:grid-cols-2 gap-6 mb-6">
           <div>
@@ -262,12 +332,13 @@ onBeforeUnmount(() => {
           <textarea v-model="form.message" rows="4" required maxlength="5000" class="w-full px-4 py-3 rounded-lg border border-border focus:ring-2 focus:ring-accent focus:border-transparent outline-none transition-all resize-none" placeholder="Tube size, material, thickness, power preference, delivery country..."></textarea>
         </div>
 
-        <div v-if="TURNSTILE_SITE_KEY" class="mb-6 flex justify-center">
-          <div ref="turnstileEl"></div>
+        <!-- Turnstile 容器始终保留，避免 v-if 导致 ref 丢失 -->
+        <div class="mb-6 flex flex-col items-center gap-2 min-h-[70px]">
+          <div ref="turnstileEl" class="cf-turnstile"></div>
+          <p v-if="configLoaded && !siteKey" class="text-xs text-amber-600 text-center">
+            Turnstile Site Key 未配置。请在 Cloudflare 设置 <code>TURNSTILE_SITE_KEY</code>（运行时）或构建变量 <code>VITE_TURNSTILE_SITE_KEY</code>。
+          </p>
         </div>
-        <p v-else class="mb-4 text-xs text-amber-600 text-center">
-          Turnstile site key not set — add <code>VITE_TURNSTILE_SITE_KEY</code> before production.
-        </p>
 
         <div v-if="submitError" class="mb-4 p-4 bg-red-50 text-red-700 rounded-lg text-sm text-center">
           {{ submitError }}
