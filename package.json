@@ -6,7 +6,9 @@
   "scripts": {
     "dev": "vite",
     "build": "vite build",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "pages:dev": "npm run build && wrangler pages dev dist --kv=QUOTES_KV",
+    "cf-typegen": "wrangler types"
   },
   "dependencies": {
     "vue": "^3.4.0",

@@ -1,0 +1,17 @@
+# Cloudflare Pages + Functions
+name = "zzsky-site"
+compatibility_date = "2024-11-01"
+pages_build_output_dir = "dist"
+
+# 在 Cloudflare Dashboard 创建 KV 后，把 id 填到这里（本地 pages dev 也可用）
+# [[kv_namespaces]]
+# binding = "QUOTES_KV"
+# id = "your_kv_namespace_id"
+
+[vars]
+# 非敏感配置可放这里；密钥请用 Dashboard Secrets / wrangler pages secret
+# ALLOWED_ORIGINS = "https://www.zzsky.com,http://localhost:5173"
+# EMAIL_FROM = "ZZSKY Quote <noreply@your-verified-domain.com>"
+# NOTIFY_EMAIL = "sales@aorelaser.cn"
+# CUSTOMER_AUTO_REPLY = "true"
+# RATE_LIMIT = "5"
