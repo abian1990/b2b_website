@@ -7,7 +7,7 @@ defineProps({
 })
 
 const getSeriesBadge = (product) => {
-  return product.badgeZh || product.badge || product.series || 'Standard'
+  return product.badge || product.series || 'Standard'
 }
 </script>
 
@@ -41,10 +41,9 @@ const getSeriesBadge = (product) => {
     <!-- Content -->
     <div class="p-6">
       <div class="text-accent text-sm font-semibold mb-2">{{ product.series }} · {{ product.category }}</div>
-      <h3 class="text-xl font-bold text-primary mb-1 group-hover:text-accent transition-colors">
-        {{ product.nameZh || product.name }}
+      <h3 class="text-xl font-bold text-primary mb-2 group-hover:text-accent transition-colors">
+        {{ product.name }}
       </h3>
-      <p v-if="product.nameZh" class="text-muted text-xs mb-2 line-clamp-1">{{ product.name }}</p>
       <p class="text-muted text-sm mb-4 line-clamp-2">{{ product.description }}</p>
 
       <!-- Key Specs -->

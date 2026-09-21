@@ -3,13 +3,13 @@ name = "zzsky-site"
 compatibility_date = "2024-11-01"
 pages_build_output_dir = "dist"
 
-# 在 Cloudflare Dashboard 创建 KV 后，把 id 填到这里（本地 pages dev 也可用）
+# After creating KV in the Cloudflare Dashboard, put the id here (also used by local pages dev)
 # [[kv_namespaces]]
 # binding = "QUOTES_KV"
 # id = "your_kv_namespace_id"
 
 [vars]
-# 非敏感配置可放这里；密钥请用 Dashboard Secrets / wrangler pages secret
+# Non-secret config can go here; put secrets in Dashboard Secrets / wrangler pages secret
 # ALLOWED_ORIGINS = "https://www.zzsky.com,http://localhost:5173"
 # EMAIL_FROM = "ZZSKY Quote <noreply@your-verified-domain.com>"
 # NOTIFY_EMAIL = "sales@aorelaser.cn"

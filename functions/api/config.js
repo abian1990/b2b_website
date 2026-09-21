@@ -1,8 +1,8 @@
 import { corsHeaders, json } from '../_lib/quoteHelpers.js'
 
 /**
- * 公开配置（可暴露给前端）
- * Site Key 是公开的；Secret 绝不能出现在这里
+ * Public config (safe to expose to the frontend)
+ * Site Key is public; never expose the Secret here
  */
 const onRequestGet = async (context) => {
   const { request, env } = context

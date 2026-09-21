@@ -1,14 +1,14 @@
 <script setup>
 const sectionTitle = {
   title: 'Process',
-  subtitle: '服务流程'
+  subtitle: 'Service Process'
 }
 
 const processSteps = [
-  { num: '01', title: 'Inquiry', desc: '询盘咨询' },
-  { num: '02', title: 'Design', desc: '方案设计' },
-  { num: '03', title: 'Produce', desc: '生产制造' },
-  { num: '04', title: 'Delivery', desc: '发货安装' }
+  { num: '01', title: 'Inquiry', desc: 'Send inquiry' },
+  { num: '02', title: 'Design', desc: 'Solution design' },
+  { num: '03', title: 'Produce', desc: 'Manufacturing' },
+  { num: '04', title: 'Delivery', desc: 'Delivery & install' }
 ]
 </script>
 

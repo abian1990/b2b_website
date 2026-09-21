@@ -29,7 +29,7 @@ const siteConfig = {
   heroBadge: '20+ Years in Industrial Manufacturing',
   heroTitle1: 'PRECISION',
   heroTitle2: 'AT SCALE',
-  heroSubtitle: '精密制造 · 高效生产 · 值得信赖',
+  heroSubtitle: 'Precision Manufacturing · Efficient Production · Trusted Partner',
   heroCta1: 'Get Free Quote',
   heroCta2: 'View Products',
   heroImage: heroImg,

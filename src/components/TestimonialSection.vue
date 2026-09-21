@@ -1,6 +1,6 @@
 <script setup>
 const testimonial = {
-  quote: 'AORUI 的设备让我们的生产效率提升了 40%，切割精度达到 ±0.01mm。专业的技术支持让我们完全没有后顾之忧。',
+  quote: 'ZZSKY machines improved our productivity by 40%, with cutting accuracy of ±0.01mm. Professional support gives us complete peace of mind.',
   avatar: 'TM',
   name: 'Thomas Müller',
   title: 'CTO, MetalTech GmbH (Germany)'

@@ -17,8 +17,8 @@
   </style>
 </head>
 <body>
-  <h1>询价记录导出</h1>
-  <p class="hint">使用 Cloudflare 配置的 <code>ADMIN_API_KEY</code>。此页仅方便内部下载，请勿公开分享链接。</p>
+  <h1>Quote Export</h1>
+  <p class="hint">Use the <code>ADMIN_API_KEY</code> from Cloudflare. Internal use only — do not share this link publicly.</p>
   <label for="key">Admin API Key</label>
   <input id="key" type="password" placeholder="ADMIN_API_KEY" autocomplete="off" />
   <div>
@@ -32,7 +32,7 @@
     async function download(format) {
       err.textContent = ''
       const key = keyInput.value.trim()
-      if (!key) { err.textContent = '请填写 Admin API Key'; return }
+      if (!key) { err.textContent = 'Please enter Admin API Key'; return }
       try {
         const res = await fetch('/api/quotes?format=' + format + '&limit=2000', {
           headers: { Authorization: 'Bearer ' + key }

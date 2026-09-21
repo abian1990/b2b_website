@@ -38,7 +38,7 @@ const setJsonLd = (id, data) => {
   el.textContent = JSON.stringify(data)
 }
 
-/** 更新页面 SEO / GEO 相关 head 标签与 JSON-LD */
+/** Update page SEO / GEO head tags and JSON-LD */
 export function applyPageSeo({
   title,
   description,
@@ -79,7 +79,7 @@ export function applyPageSeo({
 
   ensureLink('canonical', url)
 
-  // 清理旧业务 JSON-LD，再写入本页
+  // Clear previous business JSON-LD, then write current page data
   ;['seo-ld-org', 'seo-ld-website', 'seo-ld-product', 'seo-ld-faq', 'seo-ld-breadcrumb'].forEach((id) => {
     const keep = jsonLd.find((item) => item.id === id)
     if (!keep) setJsonLd(id, null)
@@ -122,7 +122,7 @@ export function buildWebSiteLd() {
     name: siteMeta.brand,
     url: SITE_URL,
     description: siteMeta.description,
-    inLanguage: ['en', 'zh-CN'],
+    inLanguage: ['en'],
     publisher: { '@type': 'Organization', name: siteMeta.brand }
   }
 }
@@ -147,8 +147,7 @@ export function buildProductLd(product, path) {
   return {
     '@context': 'https://schema.org',
     '@type': 'Product',
-    name: product.nameZh || product.name,
-    alternateName: product.name,
+    name: product.name,
     description: product.description,
     image: typeof product.image === 'string' ? product.image : undefined,
     sku: product.id,

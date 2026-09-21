@@ -10,8 +10,8 @@ const productImages = computed(() =>
   products.map((p) => ({
     src: p.image,
     id: p.id,
-    name: p.nameZh || p.name,
-    badge: p.badgeZh || p.badge
+    name: p.name,
+    badge: p.badge
   }))
 )
 
@@ -92,7 +92,7 @@ onUnmounted(() => {
     <div class="max-w-7xl mx-auto px-6">
       <div class="text-center mb-10">
         <span class="text-accent font-semibold text-sm tracking-wider uppercase">Our Products</span>
-        <h2 class="text-4xl font-bold text-primary mt-3">赛格核心产品线</h2>
+        <h2 class="text-4xl font-bold text-primary mt-3">Core Product Line</h2>
         <p class="text-muted mt-3">Tube & sheet fiber laser cutting machines · SEG Series</p>
       </div>
     </div>

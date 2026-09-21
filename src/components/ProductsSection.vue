@@ -4,7 +4,7 @@ import { products } from '../data/products.js'
 
 const sectionTitle = {
   title: 'Our Products',
-  subtitle: '核心产品线',
+  subtitle: 'Core Product Line',
   desc: 'Industrial-grade laser cutting solutions for precision manufacturing'
 }
 </script>

@@ -1,4 +1,4 @@
-/** 站点 SEO / GEO 基础配置 — 部署前请按实际域名修改 VITE_SITE_URL */
+/** Site SEO / GEO config — set VITE_SITE_URL to your production domain before deploy */
 export const SITE_URL = (import.meta.env.VITE_SITE_URL || 'https://www.zzsky.com').replace(/\/$/, '')
 
 export const siteMeta = {
@@ -7,8 +7,6 @@ export const siteMeta = {
   tagline: 'Precision Tube & Sheet Fiber Laser Cutting Machines',
   description:
     'ZZSKY supplies SEG series fiber laser tube and sheet cutting machines — standard, offside, no-CAD and flat-sheet models for furniture, fitness, automotive and metal fabrication. Factory in Huixian, Xinxiang, Henan, China.',
-  descriptionZh:
-    'ZZSKY 提供 SEG 系列光纤激光切管机与切板机，覆盖标准款、越位款、免画图与平板切割，服务家具、健身器材、汽车配件与钣金加工。工厂位于河南新乡辉县。',
   keywords: [
     'fiber laser tube cutter',
     'laser pipe cutting machine',
@@ -18,11 +16,10 @@ export const siteMeta = {
     'no-CAD tube laser',
     'ZZSKY',
     'Henan laser cutting machine',
-    '光纤激光切管机',
-    '激光切板机'
+    'laser sheet cutter'
   ].join(', '),
   locale: 'en_US',
-  alternateLocale: 'zh_CN',
+  alternateLocale: 'en_GB',
   contactEmail: 'sales@aorelaser.cn',
   contactPhone: '+86-400-832-8321',
   address: {

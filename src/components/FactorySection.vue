@@ -16,15 +16,15 @@ let animationId = null
 let isPaused = false
 
 const factoryImages = [
-  { src: factory1, title: 'Production Workshop', subtitle: '智能化生产车间' },
-  { src: factory2, title: 'Assembly Line', subtitle: '自动化装配线' },
-  { src: factory3, title: 'Quality Control', subtitle: '精密质量检测' },
-  { src: factory4, title: 'R&D Center', subtitle: '研发中心' },
-  { src: factory5, title: 'Warehouse', subtitle: '智能仓储系统' },
-  { src: factory6, title: 'Testing Facility', subtitle: '出厂测试中心' },
-  { src: part1, title: 'Precision Parts', subtitle: '精密零部件' },
-  { src: part2, title: 'Precision Parts', subtitle: '精密零部件' },
-  { src: part3, title: 'Precision Parts', subtitle: '精密零部件' }
+  { src: factory1, title: 'Production Workshop', subtitle: 'Smart Manufacturing Floor' },
+  { src: factory2, title: 'Assembly Line', subtitle: 'Automated Assembly' },
+  { src: factory3, title: 'Quality Control', subtitle: 'Precision Inspection' },
+  { src: factory4, title: 'R&D Center', subtitle: 'Research & Development' },
+  { src: factory5, title: 'Warehouse', subtitle: 'Smart Warehousing' },
+  { src: factory6, title: 'Testing Facility', subtitle: 'Outgoing Test Center' },
+  { src: part1, title: 'Precision Parts', subtitle: 'Precision Components' },
+  { src: part2, title: 'Precision Parts', subtitle: 'Precision Components' },
+  { src: part3, title: 'Precision Parts', subtitle: 'Precision Components' }
 ]
 
 const duplicatedImages = [...factoryImages, ...factoryImages]
@@ -84,8 +84,8 @@ onUnmounted(() => {
     <div class="bg-white pt-8 pb-4">
       <div class="max-w-7xl mx-auto px-6 text-center">
         <span class="text-accent font-semibold text-sm tracking-wider uppercase">Our Factory</span>
-        <h2 class="text-3xl font-bold text-primary mt-2">智造实力</h2>
-        <p class="text-muted mt-2">智能化生产 · 精密制造 · 品质保障</p>
+        <h2 class="text-3xl font-bold text-primary mt-2">Manufacturing Strength</h2>
+        <p class="text-muted mt-2">Smart production · Precision manufacturing · Quality assurance</p>
       </div>
     </div>
 
@@ -180,20 +180,20 @@ onUnmounted(() => {
               <svg class="w-6 h-6 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
               </svg>
-              生产规模
+              Production Scale
             </h3>
             <div class="grid grid-cols-3 gap-6">
               <div class="text-center p-4 bg-slate-50">
                 <div class="text-3xl font-bold text-accent">50,000<span class="text-base">㎡</span></div>
-                <div class="text-muted text-sm mt-1">生产面积</div>
+                <div class="text-muted text-sm mt-1">Floor Area</div>
               </div>
               <div class="text-center p-4 bg-slate-50">
                 <div class="text-3xl font-bold text-accent">200<span class="text-base">+</span></div>
-                <div class="text-muted text-sm mt-1">生产设备</div>
+                <div class="text-muted text-sm mt-1">Machines</div>
               </div>
               <div class="text-center p-4 bg-slate-50">
                 <div class="text-3xl font-bold text-accent">500<span class="text-base">+</span></div>
-                <div class="text-muted text-sm mt-1">员工数量</div>
+                <div class="text-muted text-sm mt-1">Employees</div>
               </div>
             </div>
           </div>
@@ -204,7 +204,7 @@ onUnmounted(() => {
               <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
                 <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
               </svg>
-              国际认证
+              International Certifications
             </h3>
             <div class="flex flex-wrap gap-3">
               <span class="bg-primary text-white px-5 py-2.5 font-bold text-sm">CE</span>

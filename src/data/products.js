@@ -1,4 +1,4 @@
-// Product data synced from 赛格机械 catalog (产品详解8.18 + model PDFs)
+// Product data synced from SEG / Saige machine catalog
 import imgT120 from '../assets/saige/seg-t120q.jpg'
 import imgT120g1 from '../assets/saige/seg-t120q_g1.jpg'
 import imgT160 from '../assets/saige/seg-t160.jpg'
@@ -25,12 +25,10 @@ export const products = [
     series: 'T120',
     category: 'Tube Fiber Laser Cutting Machine',
     name: 'SEG-T120 / T120Q Standard Round & Square Tube Laser Cutter',
-    nameZh: '标准型方圆一体激光切管机 SEG-T120Q',
     description: 'Standard dual-chuck pneumatic tube laser for round, square, rectangular, oval tubes and angle steel. Wide working range with follow-up cutting head, path import, and servo-driven precision square rails.',
     image: imgT120,
     gallery: [imgT120, imgT120g1],
     badge: 'STANDARD',
-    badgeZh: '标准款',
     powerRange: '1.5kW class',
     standardConfig: [
       'Fiber Laser Source (Raycus / Caplin options)',
@@ -89,12 +87,10 @@ export const products = [
     series: 'T160',
     category: 'Tube Fiber Laser Cutting Machine',
     name: 'SEG-T160 Standard Round & Square Tube Laser Cutter',
-    nameZh: '标准型方圆一体激光切管机 SEG-T160',
     description: 'Mid-range standard tube laser with Ø160mm capacity. Same industrial dual-pneumatic chuck platform as T120 with larger working diameter for thicker sections and broader job mix.',
     image: imgT160,
     gallery: [imgT160, imgT160g1],
     badge: 'BESTSELLER',
-    badgeZh: '热销款',
     powerRange: '1.5kW class',
     standardConfig: [
       'Fiber Laser Source (Raycus / Caplin options)',
@@ -153,12 +149,10 @@ export const products = [
     series: 'T240',
     category: 'Tube Fiber Laser Cutting Machine',
     name: 'SEG-T240 Heavy Tube Laser Cutter',
-    nameZh: '标准型方圆一体激光切管机 SEG-T240',
     description: 'Large-diameter standard tube platform with chuck capacity up to Ø230mm for heavy round/square/profile tubes in steel structure and equipment manufacturing.',
     image: imgT240,
     gallery: [imgT240, imgT160g1],
     badge: 'HEAVY',
-    badgeZh: '大管径',
     powerRange: '1.5kW class',
     standardConfig: [
       'Fiber Laser Source (Caplin CW15 class)',
@@ -212,12 +206,10 @@ export const products = [
     series: 'T130Y',
     category: 'Offside Tube Laser Cutting Machine',
     name: 'SEG-T130Y Offside Tube Laser Cutter',
-    nameZh: '越位激光切管机 SEG-T130Y',
     description: 'Compact offside tube laser with dual pneumatic chucks, laser-dedicated reducer wheels, modular split bed and smart software (auto center find, one-key end align, follow-up). Ideal for shops needing fast fly-cutting with minimal operator skill.',
     image: imgT130y,
     gallery: [imgT130y, imgT130y1, imgT130y2, imgT130y3, imgT130y4],
     badge: 'OFFSIDE',
-    badgeZh: '越位款',
     powerRange: '1.5kW class',
     standardConfig: [
       'Laser Source: Max / Caplin',
@@ -277,12 +269,10 @@ export const products = [
     series: 'T100M',
     category: 'No-CAD Tube Laser Cutting Machine',
     name: 'SEG-T100M Dual-Pneumatic No-CAD Tube Laser Cutter',
-    nameZh: '方圆一体激光切管机（双气动免画图）SEG-T100M',
     description: '10\" full touchscreen dual-pneumatic tube laser with upgraded no-CAD system — built-in column/guardrail modes, auto wall-thickness compensation on miters, and travel up to 800mm/s. Front chuck 5-axis dual linkage with laser reducer wheels.',
     image: imgT100m,
     gallery: [imgT100m, imgT100mg1],
     badge: 'NO-CAD',
-    badgeZh: '免画图',
     powerRange: '1.5kW class',
     standardConfig: [
       'Fiber Laser Source',
@@ -343,12 +333,10 @@ export const products = [
     series: 'T100MZ',
     category: 'Tube Fiber Laser Cutting Machine',
     name: 'SEG-100MZ Compact Tube Laser Cutter',
-    nameZh: '方圆一体激光切管机 SEG-100MZ',
     description: 'Compact 100-class tube laser with SEG control, Caplin CW15-class source and dual chuck options (100 / 130). Balanced choice for shops stepping up from entry no-CAD machines.',
     image: imgT100mz,
     gallery: [imgT100mz, imgT100mg1],
     badge: 'COMPACT',
-    badgeZh: '紧凑款',
     powerRange: '1.5kW class',
     standardConfig: [
       'Caplin CW15-class Fiber Source',
@@ -402,12 +390,10 @@ export const products = [
     series: '2513',
     category: 'Sheet Fiber Laser Cutting Machine',
     name: 'SEG-2513B Sheet Fiber Laser Cutter',
-    nameZh: '激光切板机 SEG-2513B',
     description: 'Flat-sheet fiber laser for stainless and carbon steel plates. 2500×1300mm working area with rack-and-pinion drive, precision square rails and SEG control — entry sheet platform for workshops.',
     image: img2513,
     gallery: [img2513, img2513g1, img2513g2, img2513g3, img2513g4],
     badge: 'SHEET',
-    badgeZh: '切板机',
     powerRange: '1.5kW class',
     standardConfig: [
       'Fiber Laser Source',
@@ -461,12 +447,10 @@ export const products = [
     series: '3015',
     category: 'Sheet Fiber Laser Cutting Machine',
     name: 'SEG-3015 Sheet Fiber Laser Cutter',
-    nameZh: '激光切板机 SEG-3015',
     description: 'Larger 3000×1500mm sheet fiber laser for stainless and carbon plates. Same SEG drive architecture as 2513 with expanded format for bigger panels.',
     image: img3015,
     gallery: [img3015, img2513g2, img2513g3, img2513g4],
     badge: 'SHEET',
-    badgeZh: '切板机',
     powerRange: '1.5kW class',
     standardConfig: [
       'Caplin CW15-class Fiber Source',

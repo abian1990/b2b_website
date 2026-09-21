@@ -23,7 +23,7 @@ const routes = [
 ]
 
 const router = createRouter({
-  // History 模式利于 Google SEO（需配合 public/_redirects SPA fallback）
+  // History mode is better for Google SEO (requires SPA fallback via public/_redirects)
   history: createWebHistory(import.meta.env.BASE_URL),
   routes,
   scrollBehavior(to, from) {

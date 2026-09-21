@@ -18,7 +18,7 @@ const modelNames = computed(() => {
 })
 
 const getSeriesBadge = (product) => {
-  return product.badgeZh || product.badge || product.series || 'Standard'
+  return product.badge || product.series || 'Standard'
 }
 
 const goBack = () => {
@@ -42,7 +42,7 @@ const scrollToContact = () => {
       >
       <div class="absolute inset-0 bg-gradient-to-t from-primary via-primary/50 to-transparent pointer-events-none"></div>
 
-      <!-- Content overlay：预留下方空间，避免被规格卡片遮挡 -->
+      <!-- Content overlay: bottom padding so text is not covered by spec cards -->
       <div class="absolute bottom-0 left-0 right-0 px-6 pt-8 pb-24 md:px-8 md:pb-28 pointer-events-none">
         <div class="max-w-7xl mx-auto pointer-events-auto">
           <div class="flex flex-wrap items-center gap-3 mb-4">
@@ -56,13 +56,12 @@ const scrollToContact = () => {
               {{ product.powerRange }}
             </span>
           </div>
-          <h1 class="text-3xl md:text-5xl font-bold text-white mb-2">{{ product.nameZh || product.name }}</h1>
-          <p v-if="product.nameZh" class="text-white/70 text-base md:text-lg mb-3">{{ product.name }}</p>
+          <h1 class="text-3xl md:text-5xl font-bold text-white mb-2">{{ product.name }}</h1>
           <p class="text-white/80 text-base md:text-lg max-w-2xl leading-relaxed">{{ product.description }}</p>
         </div>
       </div>
 
-      <!-- Back button：放在导航栏下方，避免被遮挡 -->
+      <!-- Back button: below fixed navbar -->
       <button
         type="button"
         style="top: 64px; left: 16px;"

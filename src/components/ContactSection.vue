@@ -96,7 +96,7 @@ const renderTurnstile = async () => {
   try {
     const turnstile = await loadTurnstileScript()
     destroyTurnstile()
-    // 清空容器，避免重复 iframe
+    // Clear container to avoid duplicate iframes
     turnstileEl.value.innerHTML = ''
 
     turnstileWidgetId.value = turnstile.render(turnstileEl.value, {
@@ -122,7 +122,7 @@ const renderTurnstile = async () => {
   }
 }
 
-/** 提交瞬间再取一次 token，避免 callback 未触发 */
+/** Re-read token at submit time in case callback did not fire */
 const readTurnstileToken = () => {
   let token = turnstileToken.value || ''
   if (!token && window.turnstile && turnstileWidgetId.value != null) {
@@ -214,7 +214,7 @@ const submitAnother = async () => {
 }
 
 const loadPublicConfig = async () => {
-  // 构建期没有 VITE_ 变量时，从 Functions 运行时拿公开 Site Key
+  // If build-time VITE_ key is missing, load public site key from Functions
   if (siteKey.value) {
     configLoaded.value = true
     return
@@ -255,8 +255,8 @@ onBeforeUnmount(() => {
     <div class="max-w-4xl mx-auto px-6">
       <div class="text-center mb-10">
         <span class="text-accent font-semibold text-sm tracking-wider uppercase">Contact Us</span>
-        <h2 id="contact-heading" class="text-4xl font-bold text-white mt-3">获取报价</h2>
-        <p class="text-white/60 mt-3">24小时内回复 · 专业团队对接</p>
+        <h2 id="contact-heading" class="text-4xl font-bold text-white mt-3">Get a Quote</h2>
+        <p class="text-white/60 mt-3">Reply within 24 hours · Dedicated sales support</p>
       </div>
 
       <div v-if="submitSuccess" class="bg-white rounded-2xl p-10 shadow-2xl text-center">
@@ -265,7 +265,7 @@ onBeforeUnmount(() => {
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 13l4 4L19 7"/>
           </svg>
         </div>
-        <h3 class="text-2xl font-bold text-primary mb-3">报价请求已收到</h3>
+        <h3 class="text-2xl font-bold text-primary mb-3">Quote Request Received</h3>
         <p class="text-muted mb-2">Thank you! Our sales team will contact you within <strong>24 hours</strong>.</p>
         <p v-if="quoteId" class="text-sm text-slate-500 mb-6">Reference ID: <code class="bg-slate-100 px-2 py-1 rounded">{{ quoteId }}</code></p>
         <p class="text-sm text-muted mb-8">A confirmation email has been sent to your inbox (if configured).</p>
@@ -332,11 +332,11 @@ onBeforeUnmount(() => {
           <textarea v-model="form.message" rows="4" required maxlength="5000" class="w-full px-4 py-3 rounded-lg border border-border focus:ring-2 focus:ring-accent focus:border-transparent outline-none transition-all resize-none" placeholder="Tube size, material, thickness, power preference, delivery country..."></textarea>
         </div>
 
-        <!-- Turnstile 容器始终保留，避免 v-if 导致 ref 丢失 -->
+        <!-- Keep Turnstile mount node always present -->
         <div class="mb-6 flex flex-col items-center gap-2 min-h-[70px]">
           <div ref="turnstileEl" class="cf-turnstile"></div>
           <p v-if="configLoaded && !siteKey" class="text-xs text-amber-600 text-center">
-            Turnstile Site Key 未配置。请在 Cloudflare 设置 <code>TURNSTILE_SITE_KEY</code>（运行时）或构建变量 <code>VITE_TURNSTILE_SITE_KEY</code>。
+            Turnstile Site Key is not configured. Set <code>TURNSTILE_SITE_KEY</code> (runtime) or <code>VITE_TURNSTILE_SITE_KEY</code> (build) in Cloudflare.
           </p>
         </div>
 

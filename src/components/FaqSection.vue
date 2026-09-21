@@ -9,7 +9,7 @@ const faqs = homeFaqs
     <div class="max-w-3xl mx-auto px-6">
       <div class="text-center mb-10">
         <span class="text-accent font-semibold text-sm tracking-wider uppercase">FAQ</span>
-        <h2 id="faq-heading" class="text-3xl md:text-4xl font-bold text-primary mt-3">常见问题</h2>
+        <h2 id="faq-heading" class="text-3xl md:text-4xl font-bold text-primary mt-3">Frequently Asked Questions</h2>
         <p class="text-muted mt-3">Quick answers about ZZSKY SEG laser cutting machines</p>
       </div>
 

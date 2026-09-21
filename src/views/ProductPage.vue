@@ -47,7 +47,7 @@ const applyProductSeo = () => {
   }
 
   const path = `/products/${p.id}`
-  const title = `${p.nameZh || p.name} — ${p.category}`
+  const title = `${p.name} — ${p.category}`
   const description = p.description
   const image = absoluteAsset(p.image)
 
@@ -70,7 +70,7 @@ const applyProductSeo = () => {
         id: 'seo-ld-breadcrumb',
         data: buildBreadcrumbLd([
           { name: 'Home', path: '/' },
-          { name: p.nameZh || p.name, path }
+          { name: p.name, path }
         ])
       }
     ]
@@ -86,7 +86,7 @@ onMounted(applyProductSeo)
     <NavBar :config="siteConfig" />
     <main>
       <article v-if="product" itemscope itemtype="https://schema.org/Product">
-        <meta itemprop="name" :content="product.nameZh || product.name" />
+        <meta itemprop="name" :content="product.name" />
         <meta itemprop="description" :content="product.description" />
         <meta itemprop="sku" :content="product.id" />
         <ProductDetail :product="product" />
