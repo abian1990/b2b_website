@@ -34,9 +34,8 @@
 本地测试可用 Cloudflare Always Pass：
 - Site: `1x00000000000000000000AA`
 - Secret: `1x0000000000000000000000000000000AA`
-### '0x4AAAAAAE-i7PHTYZ7drGSe'  '0x4AAAAAAE-i7BNFQMVmB87KYrqA15kwuw0'
 
-### Resend 邮件
+### Resend 邮件（销售通知）
 1. 注册 [Resend](https://resend.com)，验证发信域名
 2. 创建 API Key
 3. Pages Secrets / Env：
