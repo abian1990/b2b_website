@@ -6,7 +6,7 @@ import ProductDetail from '../components/ProductDetail.vue'
 import ContactSection from '../components/ContactSection.vue'
 import FooterSection from '../components/FooterSection.vue'
 import { getProductById } from '../data/products.js'
-import logoImg from '../assets/logo_icon.png'
+import logoImg from '../assets/logo_icon.webp'
 import { siteMeta, SITE_URL } from '../seo/siteMeta.js'
 import {
   applyPageSeo,

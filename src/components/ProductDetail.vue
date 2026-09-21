@@ -38,6 +38,8 @@ const scrollToContact = () => {
       <img
         :src="product.image"
         :alt="product.name"
+        fetchpriority="high"
+        decoding="async"
         class="w-full h-full object-contain bg-slate-900"
       >
       <div class="absolute inset-0 bg-gradient-to-t from-primary via-primary/50 to-transparent pointer-events-none"></div>
@@ -93,7 +95,7 @@ const scrollToContact = () => {
             :key="i"
             class="aspect-[4/3] bg-slate-50 rounded-xl overflow-hidden border border-border"
           >
-            <img :src="img" :alt="`${product.name} ${i + 1}`" class="w-full h-full object-contain p-2">
+            <img :src="img" :alt="`${product.name} ${i + 1}`" loading="lazy" decoding="async" class="w-full h-full object-contain p-2">
           </div>
         </div>
       </div>

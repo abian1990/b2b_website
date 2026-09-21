@@ -3,10 +3,11 @@ name = "zzsky-site"
 compatibility_date = "2024-11-01"
 pages_build_output_dir = "dist"
 
-# After creating KV in the Cloudflare Dashboard, put the id here (also used by local pages dev)
+# Optional: after creating KV in Dashboard, uncomment and paste the namespace id
+# (Dashboard binding is still required for Pages Production/Preview)
 # [[kv_namespaces]]
 # binding = "QUOTES_KV"
-# id = "your_kv_namespace_id"
+# id = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
 
 [vars]
 # Non-secret config can go here; put secrets in Dashboard Secrets / wrangler pages secret

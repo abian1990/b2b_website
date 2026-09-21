@@ -65,7 +65,7 @@ onMounted(() => {
 <template>
   <section class="relative min-h-screen bg-primary overflow-hidden">
     <div class="absolute inset-0">
-      <img :src="config.heroImage" :alt="`${config.companyName} industrial fiber laser cutting machines`" class="w-full h-full object-cover">
+      <img :src="config.heroImage" :alt="`${config.companyName} industrial fiber laser cutting machines`" fetchpriority="high" decoding="async" class="w-full h-full object-cover">
       <div class="absolute inset-0 bg-gradient-to-b from-primary/70 via-primary/50 to-primary"></div>
     </div>
 

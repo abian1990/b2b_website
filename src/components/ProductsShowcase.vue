@@ -140,7 +140,7 @@ onUnmounted(() => {
             @click="isPaused = true"
           >
             <div class="relative overflow-hidden shadow-sm transition-all duration-300 group-hover:shadow-lg bg-slate-100" style="width: 240px; height: 140px;">
-              <img :src="product.src" :alt="product.name" class="w-full h-full object-contain p-2">
+              <img :src="product.src" :alt="product.name" loading="lazy" decoding="async" class="w-full h-full object-contain p-2">
               <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-end pb-3 px-2">
                 <span class="text-white/80 text-[10px] uppercase tracking-wider mb-0.5">{{ product.badge }}</span>
                 <span class="text-white text-xs font-semibold text-center leading-tight">{{ product.name }}</span>

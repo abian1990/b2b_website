@@ -1,15 +1,15 @@
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue'
-import factory1 from '../assets/factory1.png'
-import factory2 from '../assets/factory2.png'
-import factory3 from '../assets/factory3.png'
-import factory4 from '../assets/factory4.png'
-import factory5 from '../assets/factory5.png'
-import factory6 from '../assets/factory6.png'
-import part1 from '../assets/part1.jpg'
-import part2 from '../assets/part2.jpg'
-import part3 from '../assets/part3.jpg' 
-import bg1 from '../assets/bg1.png'
+import factory1 from '../assets/factory1.webp'
+import factory2 from '../assets/factory2.webp'
+import factory3 from '../assets/factory3.webp'
+import factory4 from '../assets/factory4.webp'
+import factory5 from '../assets/factory5.webp'
+import factory6 from '../assets/factory6.webp'
+import part1 from '../assets/part1.webp'
+import part2 from '../assets/part2.webp'
+import part3 from '../assets/part3.webp' 
+import bg1 from '../assets/bg1.webp'
 
 const scrollContainer = ref(null)
 let animationId = null
@@ -91,7 +91,7 @@ onUnmounted(() => {
 
     <!-- Top Banner - Full Width -->
     <div class="relative overflow-hidden" style="height: 280px;">
-      <img :src="bg1" alt="ZZSKY laser cutting machine factory workshop in Henan China" class="w-full h-full object-cover">
+      <img :src="bg1" alt="ZZSKY laser cutting machine factory workshop in Henan China" loading="lazy" decoding="async" class="w-full h-full object-cover">
       <div class="absolute inset-0 bg-gradient-to-r from-primary/90 via-primary/70 to-transparent"></div>
       <div class="absolute inset-0 flex items-center">
         <div class="max-w-7xl mx-auto px-8 w-full">
@@ -155,6 +155,8 @@ onUnmounted(() => {
             <img
               :src="img.src"
               :alt="img.title"
+              loading="lazy"
+              decoding="async"
               class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
             >
             <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent">

@@ -14,12 +14,24 @@
 
 ## 1. Cloudflare Dashboard
 
-### KV
-1. Workers & Pages → KV → Create namespace (e.g. `zzsky-quotes`)
-2. Open your Pages project → Settings → Bindings → Add → KV namespace  
-   - Variable name: **`QUOTES_KV`**  
-   - Namespace: the one you created  
-3. **Redeploy** after saving
+### KV（下载报价单必需）
+若导出时报 `QUOTES_KV binding missing`，说明 **Pages 项目还没绑 KV**，按下面做完后必须 **Redeploy** 才生效：
+
+1. Cloudflare Dashboard → **Workers & Pages** → **KV** → **Create a namespace**  
+   名称随意，例如 `zzsky-quotes`
+2. 打开你的 **Pages 项目** → **Settings** → **Functions** → **KV namespace bindings** → **Add binding**
+   - Variable name / Binding name：**`QUOTES_KV`**（必须完全一致，区分大小写）
+   - KV namespace：选上一步创建的 namespace
+3. **Production** 和 **Preview** 环境各绑一次（若两边都要用）
+4. **Deployments** → 对最新部署点 **Retry deployment**，或重新 push 触发构建  
+   （只改 Binding 不重新部署，线上 Functions 仍读不到 `env.QUOTES_KV`）
+
+本地开发：
+
+```bash
+npm run pages:dev
+# 等价于: npm run build && wrangler pages dev dist --kv=QUOTES_KV
+```
 
 ### Turnstile
 1. Turnstile → Add site (your production domain; you may also add `*.pages.dev`)

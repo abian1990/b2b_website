@@ -21,6 +21,8 @@ const getSeriesBadge = (product) => {
       <img
         :src="product.image"
         :alt="product.name"
+        loading="lazy"
+        decoding="async"
         class="w-full h-full object-contain p-4 transition-transform duration-500 group-hover:scale-105"
       >
       <div class="absolute top-4 left-4 flex gap-2">

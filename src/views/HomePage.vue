@@ -10,8 +10,8 @@ import FactorySection from '../components/FactorySection.vue'
 import FaqSection from '../components/FaqSection.vue'
 import ContactSection from '../components/ContactSection.vue'
 import FooterSection from '../components/FooterSection.vue'
-import logoImg from '../assets/logo_icon.png'
-import heroImg from '../assets/heroImage.png'
+import logoImg from '../assets/logo_icon.webp'
+import heroImg from '../assets/heroImage.webp'
 import { siteMeta, homeFaqs } from '../seo/siteMeta.js'
 import {
   applyPageSeo,
