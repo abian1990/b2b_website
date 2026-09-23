@@ -90,9 +90,9 @@ onUnmounted(() => {
     </div>
 
     <!-- Top Banner - Full Width -->
-    <div class="relative overflow-hidden" style="height: 280px;">
+    <div class="relative overflow-hidden" style="height: 480px;">
       <img :src="bg1" alt="ZZSKY laser cutting machine factory workshop in Henan China" loading="lazy" decoding="async" class="w-full h-full object-cover">
-      <div class="absolute inset-0 bg-gradient-to-r from-primary/90 via-primary/70 to-transparent"></div>
+      <div class="absolute inset-0 bg-gradient-to-r from-primary/40 via-primary/0 to-transparent"></div>
       <div class="absolute inset-0 flex items-center">
         <div class="max-w-7xl mx-auto px-8 w-full">
           <div class="inline-flex items-center gap-2 bg-accent/20 text-white px-4 py-1.5 text-sm mb-4">
