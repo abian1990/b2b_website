@@ -32,3 +32,6 @@ Thumbs.db
 
 # Test coverage
 coverage/
+
+# Local media masters (Cloudflare Pages max file = 25 MiB; keep large videos out of public/)
+media/

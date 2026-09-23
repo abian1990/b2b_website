@@ -145,28 +145,28 @@ PY
 
 ---
 
-## 工厂视频（`public/videos/`）
+## 工厂视频（Pages 单文件 ≤ 25 MiB）
 
-视频放在 **`public/videos/`**，在 `src/data/factoryVideos.js` 登记条目，不要放进 `src/assets`（避免 Vite 打包大文件）。
+**Cloudflare Pages 硬限制：单个静态文件不能超过 25 MiB。**  
+`factory-tour.mov`（约 40MB）不能放进 `public/`，否则部署会失败。
 
-性能约定（`FactoryVideoGallery.vue` 已实现）：
+| 方式 | 做法 |
+|------|------|
+| 压缩后放 Pages | 源片放 `media/videos/`（已 gitignore）→ ffmpeg 压成 ≤20MB 的 MP4 → 复制到 `public/videos/` → 在 `factoryVideos.js` 登记 |
+| R2 / 外链 CDN | 上传大文件到 R2 自定义域名，设置构建变量 `VITE_MEDIA_BASE=https://cdn...`，`src` 用 `mediaUrl('/videos/xxx.mp4')` |
+
+性能约定（`FactoryVideoGallery.vue`）：
 
 - 页面上只有 **一个** `<video>`，列表只用海报图
 - `preload="none"`，点击播放后才拉流
-- 切出视口自动暂停；切换条目会卸载旧 `src`
-- 建议转成 **H.264 MP4**（或 WebM），单条约 5–8MB；当前 `.mov` 约 40MB，外网建议用 HandBrake / ffmpeg 压缩后再替换
+- 切出视口自动暂停
 
-新增示例：
+压缩示例：
 
-```js
-{
-  id: 'assembly-line',
-  title: 'Assembly Line',
-  subtitle: 'Automated Build',
-  src: '/videos/assembly-line.mp4',
-  poster: posterAssembly,
-  type: 'video/mp4'
-}
+```bash
+ffmpeg -i media/videos/factory-tour.mov -c:v libx264 -crf 28 -preset medium \
+  -vf "scale='min(1280,iw)':-2" -c:a aac -b:a 96k -movflags +faststart \
+  public/videos/factory-tour.mp4
 ```
 
 ## 验收清单
