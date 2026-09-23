@@ -19,6 +19,11 @@
 /*.svg
   Cache-Control: public, max-age=604800
 
+# Factory tour videos (range requests + long cache)
+/videos/*
+  Cache-Control: public, max-age=604800
+  Accept-Ranges: bytes
+
 # HTML / SEO files: short cache so deploys take effect quickly
 /
   Cache-Control: public, max-age=0, must-revalidate

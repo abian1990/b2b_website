@@ -145,6 +145,30 @@ PY
 
 ---
 
+## 工厂视频（`public/videos/`）
+
+视频放在 **`public/videos/`**，在 `src/data/factoryVideos.js` 登记条目，不要放进 `src/assets`（避免 Vite 打包大文件）。
+
+性能约定（`FactoryVideoGallery.vue` 已实现）：
+
+- 页面上只有 **一个** `<video>`，列表只用海报图
+- `preload="none"`，点击播放后才拉流
+- 切出视口自动暂停；切换条目会卸载旧 `src`
+- 建议转成 **H.264 MP4**（或 WebM），单条约 5–8MB；当前 `.mov` 约 40MB，外网建议用 HandBrake / ffmpeg 压缩后再替换
+
+新增示例：
+
+```js
+{
+  id: 'assembly-line',
+  title: 'Assembly Line',
+  subtitle: 'Automated Build',
+  src: '/videos/assembly-line.mp4',
+  poster: posterAssembly,
+  type: 'video/mp4'
+}
+```
+
 ## 验收清单
 
 - [ ] 部署后 Network 面板：图片为 `image/webp`，体积明显小于改前  

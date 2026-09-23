@@ -1,5 +1,6 @@
 <script setup>
 import { ref, onMounted, onUnmounted } from 'vue'
+import FactoryVideoGallery from './FactoryVideoGallery.vue'
 import factory1 from '../assets/factory1.webp'
 import factory2 from '../assets/factory2.webp'
 import factory3 from '../assets/factory3.webp'
@@ -8,7 +9,7 @@ import factory5 from '../assets/factory5.webp'
 import factory6 from '../assets/factory6.webp'
 import part1 from '../assets/part1.webp'
 import part2 from '../assets/part2.webp'
-import part3 from '../assets/part3.webp' 
+import part3 from '../assets/part3.webp'
 import bg1 from '../assets/bg1.webp'
 
 const scrollContainer = ref(null)
@@ -171,6 +172,8 @@ onUnmounted(() => {
         </div>
       </div>
     </div>
+
+    <FactoryVideoGallery />
 
     <!-- Stats & Certifications -->
     <div class="bg-surface py-12">
