@@ -42,19 +42,19 @@ const stopScroll = () => {
   }
 }
 
+const CARD_STEP = 400
+
 const scrollLeft = () => {
   const container = scrollContainer.value
   if (container) {
-    const cardWidth = 256
-    container.scrollBy({ left: -cardWidth, behavior: 'smooth' })
+    container.scrollBy({ left: -CARD_STEP, behavior: 'smooth' })
   }
 }
 
 const scrollRight = () => {
   const container = scrollContainer.value
   if (container) {
-    const cardWidth = 256
-    container.scrollBy({ left: cardWidth, behavior: 'smooth' })
+    container.scrollBy({ left: CARD_STEP, behavior: 'smooth' })
   }
 }
 
@@ -98,7 +98,7 @@ onUnmounted(() => {
     </div>
 
     <!-- Image Scroll + Text -->
-    <div class="flex h-[280px]">
+    <div class="flex h-[420px] md:h-[460px]">
       <!-- Left: Scrolling Images -->
       <div class="w-3/4 relative">
         <div class="absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-surface to-transparent z-20 pointer-events-none"></div>
@@ -108,9 +108,9 @@ onUnmounted(() => {
           @click="scrollLeft"
           @mouseenter="isPaused = true"
           @mouseleave="isPaused = false"
-          class="absolute left-2 top-1/2 -translate-y-1/2 z-30 w-10 h-10 bg-white/90 hover:bg-white shadow-lg rounded-full flex items-center justify-center text-primary hover:text-accent transition-all hover:scale-110 opacity-0 hover:opacity-100"
+          class="absolute left-2 top-1/2 -translate-y-1/2 z-30 w-12 h-12 bg-white/95 hover:bg-white shadow-lg rounded-full flex items-center justify-center text-primary hover:text-accent transition-all hover:scale-110"
         >
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
           </svg>
         </button>
@@ -119,16 +119,16 @@ onUnmounted(() => {
           @click="scrollRight"
           @mouseenter="isPaused = true"
           @mouseleave="isPaused = false"
-          class="absolute right-2 top-1/2 -translate-y-1/2 z-30 w-10 h-10 bg-white/90 hover:bg-white shadow-lg rounded-full flex items-center justify-center text-primary hover:text-accent transition-all hover:scale-110 opacity-0 hover:opacity-100"
+          class="absolute right-2 top-1/2 -translate-y-1/2 z-30 w-12 h-12 bg-white/95 hover:bg-white shadow-lg rounded-full flex items-center justify-center text-primary hover:text-accent transition-all hover:scale-110"
         >
-          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
           </svg>
         </button>
 
         <div
           ref="scrollContainer"
-          class="flex gap-3 overflow-x-hidden py-3 px-3 h-full items-center"
+          class="flex gap-5 overflow-x-hidden py-4 px-4 h-full items-center"
           @mouseenter="isPaused = true"
           @mouseleave="isPaused = false"
         >
@@ -139,11 +139,20 @@ onUnmounted(() => {
             class="flex-shrink-0 group cursor-pointer"
             @click="isPaused = true"
           >
-            <div class="relative overflow-hidden shadow-sm transition-all duration-300 group-hover:shadow-lg bg-slate-100" style="width: 240px; height: 140px;">
-              <img :src="product.src" :alt="product.name" loading="lazy" decoding="async" class="w-full h-full object-contain p-2">
-              <div class="absolute inset-0 bg-gradient-to-t from-black/70 via-black/10 to-transparent opacity-0 group-hover:opacity-100 transition-opacity flex flex-col items-center justify-end pb-3 px-2">
-                <span class="text-white/80 text-[10px] uppercase tracking-wider mb-0.5">{{ product.badge }}</span>
-                <span class="text-white text-xs font-semibold text-center leading-tight">{{ product.name }}</span>
+            <div
+              class="relative overflow-hidden bg-white border border-border shadow-md transition-all duration-300 group-hover:shadow-xl group-hover:border-accent/40 group-hover:-translate-y-1"
+              style="width: 380px; height: 280px;"
+            >
+              <img
+                :src="product.src"
+                :alt="product.name"
+                loading="lazy"
+                decoding="async"
+                class="w-full h-full object-contain p-3 transition-transform duration-500 group-hover:scale-105"
+              >
+              <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/85 via-black/45 to-transparent pt-16 pb-4 px-4">
+                <span class="inline-block text-accent text-[11px] font-semibold uppercase tracking-wider mb-1">{{ product.badge }}</span>
+                <div class="text-white text-base font-bold leading-snug line-clamp-2">{{ product.name }}</div>
               </div>
             </div>
           </router-link>
@@ -152,25 +161,25 @@ onUnmounted(() => {
 
       <!-- Diagonal Divider -->
       <div class="relative w-12 flex-shrink-0 bg-surface">
-        <svg class="absolute inset-0 w-full h-full" viewBox="0 0 48 280" preserveAspectRatio="none">
-          <path d="M0 0 L30 0 L48 280 L18 280 Z" fill="white"/>
-          <path d="M28 0 L46 280" stroke="#e11d48" stroke-width="1.5" fill="none"/>
+        <svg class="absolute inset-0 w-full h-full" viewBox="0 0 48 460" preserveAspectRatio="none">
+          <path d="M0 0 L30 0 L48 460 L18 460 Z" fill="white"/>
+          <path d="M28 0 L46 460" stroke="#e11d48" stroke-width="1.5" fill="none"/>
         </svg>
       </div>
 
       <!-- Right: Text -->
-      <div class="w-1/4 flex items-center justify-center bg-white px-4">
+      <div class="w-1/4 flex items-center justify-center bg-white px-5">
         <div class="text-center">
-          <div class="text-accent text-xs font-semibold tracking-wider uppercase mb-2">Henan Saige</div>
-          <h3 class="text-lg font-bold text-primary mb-2">Tube & Sheet Laser</h3>
-          <p class="text-muted text-xs mb-3">Standard · Offside · No-CAD · Flat sheet</p>
+          <div class="text-accent text-sm font-semibold tracking-wider uppercase mb-2">Henan Saige</div>
+          <h3 class="text-xl font-bold text-primary mb-3">Tube & Sheet Laser</h3>
+          <p class="text-muted text-sm mb-5 leading-relaxed">Standard · Offside · No-CAD · Flat sheet</p>
           <button
             type="button"
-            class="inline-flex items-center gap-2 bg-primary text-white px-4 py-2 font-semibold text-xs"
+            class="inline-flex items-center gap-2 bg-primary text-white px-5 py-2.5 font-semibold text-sm hover:bg-accent transition-colors"
             @click="scrollToContact"
           >
             Get Quote
-            <svg class="w-3 h-3" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
               <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
             </svg>
           </button>
