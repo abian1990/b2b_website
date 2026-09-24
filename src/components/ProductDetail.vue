@@ -1,6 +1,7 @@
 <script setup>
 import { computed } from 'vue'
 import { useRouter } from 'vue-router'
+import { getProductVariants } from '../data/products.js'
 import { RESTORE_SCROLL_KEY } from '../utils/scrollMemory.js'
 
 const props = defineProps({
@@ -11,6 +12,12 @@ const props = defineProps({
 })
 
 const router = useRouter()
+
+const variants = computed(() => getProductVariants(props.product))
+const hasVariants = computed(() => variants.value.length > 1)
+const groupEyebrow = computed(() => props.product.groupEyebrow || 'Series')
+const groupSwitchHint = computed(() => props.product.groupSwitchHint || 'Choose model')
+const groupModelsTitle = computed(() => props.product.groupModelsTitle || 'Available Models')
 
 const modelNames = computed(() => {
   if (!props.product.specsTable || !props.product.specsTable.length) return []
@@ -32,7 +39,52 @@ const scrollToContact = () => {
 </script>
 
 <template>
-  <div class="min-h-screen bg-surface pt-2">
+  <div class="min-h-screen bg-surface pt-16">
+    <!-- Top bar: Back + optional model switcher (below fixed navbar) -->
+    <div class="sticky top-16 z-40 bg-white/95 backdrop-blur-md border-b border-border shadow-sm">
+      <div class="max-w-7xl mx-auto px-4 md:px-6 py-3">
+        <div class="flex flex-col gap-3 sm:flex-row sm:items-stretch sm:gap-4">
+          <button
+            type="button"
+            class="shrink-0 inline-flex items-center gap-3 self-stretch bg-white text-primary border border-border px-5 py-2.5 min-w-[7.5rem] text-left shadow-sm hover:border-primary hover:text-accent transition-all active:scale-[0.98]"
+            @click="goBack"
+          >
+            <span class="w-9 h-9 rounded-full bg-primary/10 text-primary flex items-center justify-center shrink-0">
+              <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M15 19l-7-7 7-7"/>
+              </svg>
+            </span>
+            <span class="text-sm font-bold leading-tight">Back to home</span>
+          </button>
+
+          <template v-if="hasVariants">
+            <div class="hidden sm:block w-px self-stretch bg-border shrink-0" aria-hidden="true"></div>
+            <div class="shrink-0 flex flex-col justify-center">
+              <div class="text-[11px] font-semibold uppercase tracking-wider text-accent">{{ groupEyebrow }}</div>
+              <div class="text-sm font-bold text-primary">{{ groupSwitchHint }}</div>
+            </div>
+            <div class="flex flex-1 gap-2 overflow-x-auto pb-0.5 items-stretch" style="-webkit-overflow-scrolling: touch;">
+              <router-link
+                v-for="v in variants"
+                :key="v.id"
+                :to="{ name: 'Product', params: { id: v.id } }"
+                class="flex-shrink-0 min-w-[7.5rem] px-4 py-2.5 text-center border transition-all flex flex-col justify-center"
+                :class="v.id === product.id
+                  ? 'bg-primary text-white border-primary shadow-md'
+                  : 'bg-surface text-primary border-border hover:border-accent hover:text-accent'"
+              >
+                <div class="text-sm font-bold leading-tight">{{ v.variantLabel || v.series }}</div>
+                <div
+                  class="text-[11px] mt-0.5 leading-tight"
+                  :class="v.id === product.id ? 'text-white/75' : 'text-muted'"
+                >{{ v.variantHint || v.keySpecs?.[0]?.value }}</div>
+              </router-link>
+            </div>
+          </template>
+        </div>
+      </div>
+    </div>
+
     <!-- Hero Image -->
     <div class="relative min-h-[420px] md:min-h-[520px] h-[58vh]">
       <img
@@ -62,19 +114,6 @@ const scrollToContact = () => {
           <p class="text-white/80 text-base md:text-lg max-w-2xl leading-relaxed">{{ product.description }}</p>
         </div>
       </div>
-
-      <!-- Back button: below fixed navbar -->
-      <button
-        type="button"
-        style="top: 64px; left: 16px;"
-        class="absolute top-4 left-4 md:top-6 md:left-6 z-30 flex items-center gap-2 text-white bg-black/40 hover:bg-black/55 backdrop-blur-sm px-4 py-2 rounded-full transition-all shadow-lg"
-        @click="goBack"
-      >
-        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-        </svg>
-        Back
-      </button>
     </div>
 
     <!-- Product Info Cards -->
@@ -179,14 +218,32 @@ const scrollToContact = () => {
         </div>
       </div>
 
-      <!-- Models -->
+      <!-- Models / sibling sizes -->
       <div class="bg-white rounded-2xl p-8 mb-8">
-        <h2 class="text-2xl font-bold text-primary mb-6">Available Models</h2>
+        <h2 class="text-2xl font-bold text-primary mb-6">
+          {{ hasVariants ? groupModelsTitle : 'Available Models' }}
+        </h2>
         <div class="grid md:grid-cols-3 gap-4">
-          <div v-for="model in product.models" :key="model.name" class="bg-slate-50 rounded-xl p-5 text-center">
-            <div class="text-xl font-bold text-primary mb-1">{{ model.name }}</div>
-            <div class="text-muted">{{ model.power }}</div>
-          </div>
+          <template v-if="hasVariants">
+            <router-link
+              v-for="v in variants"
+              :key="v.id"
+              :to="{ name: 'Product', params: { id: v.id } }"
+              class="rounded-xl p-5 text-center border transition-all"
+              :class="v.id === product.id
+                ? 'bg-primary text-white border-primary'
+                : 'bg-slate-50 text-primary border-transparent hover:border-accent'"
+            >
+              <div class="text-xl font-bold mb-1">SEG-{{ v.series }}</div>
+              <div :class="v.id === product.id ? 'text-white/80' : 'text-muted'">{{ v.variantHint || v.keySpecs?.[0]?.value }}</div>
+            </router-link>
+          </template>
+          <template v-else>
+            <div v-for="model in product.models" :key="model.name" class="bg-slate-50 rounded-xl p-5 text-center">
+              <div class="text-xl font-bold text-primary mb-1">{{ model.name }}</div>
+              <div class="text-muted">{{ model.power }}</div>
+            </div>
+          </template>
         </div>
       </div>
 

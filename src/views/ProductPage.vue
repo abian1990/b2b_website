@@ -94,7 +94,8 @@ onMounted(applyProductSeo)
       <div v-else class="min-h-screen flex items-center justify-center pt-20">
         <div class="text-center">
           <h1 class="text-2xl font-bold text-primary mb-4">Product Not Found</h1>
-          <router-link to="/" class="text-accent hover:underline">Back to Home</router-link>
+          <router-link to="/" class="text-accent hover:underline"></router-link>
+          <router-link to="/" class="text-accent hover:underline"></router-link>
         </div>
       </div>
       <ContactSection />

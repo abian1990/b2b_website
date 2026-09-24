@@ -1,17 +1,17 @@
 <script setup>
 import { computed, ref, onMounted, onUnmounted } from 'vue'
-import { products } from '../data/products.js'
+import { getShowcaseProducts } from '../data/products.js'
 
 const scrollContainer = ref(null)
 let animationId = null
 let isPaused = false
 
 const productImages = computed(() =>
-  products.map((p) => ({
+  getShowcaseProducts().map((p) => ({
     src: p.image,
     id: p.id,
-    name: p.name,
-    badge: p.badge
+    name: p.showcaseName || p.name,
+    badge: p.showcaseBadge || p.badge
   }))
 )
 

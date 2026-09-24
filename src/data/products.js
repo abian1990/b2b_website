@@ -23,6 +23,12 @@ export const products = [
   {
     id: 'seg-t120',
     series: 'T120',
+    variantGroup: 'seg-standard-tube',
+    variantLabel: 'T120',
+    variantHint: '10–120mm',
+    groupEyebrow: 'Standard Series',
+    groupSwitchHint: 'Choose chuck size',
+    groupModelsTitle: 'Available Chuck Sizes',
     category: 'Tube Fiber Laser Cutting Machine',
     name: 'SEG-T120 / T120Q Standard Round & Square Tube Laser Cutter',
     description: 'Standard dual-chuck pneumatic tube laser for round, square, rectangular, oval tubes and angle steel. Wide working range with follow-up cutting head, path import, and servo-driven precision square rails.',
@@ -85,6 +91,15 @@ export const products = [
   {
     id: 'seg-t160',
     series: 'T160',
+    variantGroup: 'seg-standard-tube',
+    variantLabel: 'T160',
+    variantHint: '10–160mm',
+    groupEyebrow: 'Standard Series',
+    groupSwitchHint: 'Choose chuck size',
+    groupModelsTitle: 'Available Chuck Sizes',
+    listPrimary: true,
+    showcaseName: 'SEG-T120 / T160 / T240 Standard Tube Laser',
+    showcaseBadge: 'STANDARD SERIES',
     category: 'Tube Fiber Laser Cutting Machine',
     name: 'SEG-T160 Standard Round & Square Tube Laser Cutter',
     description: 'Mid-range standard tube laser with Ø160mm capacity. Same industrial dual-pneumatic chuck platform as T120 with larger working diameter for thicker sections and broader job mix.',
@@ -147,11 +162,17 @@ export const products = [
   {
     id: 'seg-t240',
     series: 'T240',
+    variantGroup: 'seg-standard-tube',
+    variantLabel: 'T240',
+    variantHint: '15–230mm',
+    groupEyebrow: 'Standard Series',
+    groupSwitchHint: 'Choose chuck size',
+    groupModelsTitle: 'Available Chuck Sizes',
     category: 'Tube Fiber Laser Cutting Machine',
     name: 'SEG-T240 Heavy Tube Laser Cutter',
     description: 'Large-diameter standard tube platform with chuck capacity up to Ø230mm for heavy round/square/profile tubes in steel structure and equipment manufacturing.',
     image: imgT240,
-    gallery: [imgT240, imgT160g1],
+    gallery: [imgT240],
     badge: 'HEAVY',
     powerRange: '1.5kW class',
     standardConfig: [
@@ -267,6 +288,15 @@ export const products = [
   {
     id: 'seg-t100m',
     series: 'T100M',
+    variantGroup: 'seg-t100-series',
+    variantLabel: 'T100M',
+    variantHint: 'No-CAD · 19–100mm',
+    groupEyebrow: 'T100 Series',
+    groupSwitchHint: 'Choose model',
+    groupModelsTitle: 'Available Models',
+    listPrimary: true,
+    showcaseName: 'SEG-T100M / T100MZ Tube Laser',
+    showcaseBadge: 'T100 SERIES',
     category: 'No-CAD Tube Laser Cutting Machine',
     name: 'SEG-T100M Dual-Pneumatic No-CAD Tube Laser Cutter',
     description: '10\" full touchscreen dual-pneumatic tube laser with upgraded no-CAD system — built-in column/guardrail modes, auto wall-thickness compensation on miters, and travel up to 800mm/s. Front chuck 5-axis dual linkage with laser reducer wheels.',
@@ -331,6 +361,12 @@ export const products = [
   {
     id: 'seg-t100mz',
     series: 'T100MZ',
+    variantGroup: 'seg-t100-series',
+    variantLabel: 'T100MZ',
+    variantHint: 'Compact · 19–100mm',
+    groupEyebrow: 'T100 Series',
+    groupSwitchHint: 'Choose model',
+    groupModelsTitle: 'Available Models',
     category: 'Tube Fiber Laser Cutting Machine',
     name: 'SEG-100MZ Compact Tube Laser Cutter',
     description: 'Compact 100-class tube laser with SEG control, Caplin CW15-class source and dual chuck options (100 / 130). Balanced choice for shops stepping up from entry no-CAD machines.',
@@ -388,6 +424,15 @@ export const products = [
   {
     id: 'seg-2513',
     series: '2513',
+    variantGroup: 'seg-sheet',
+    variantLabel: '2513',
+    variantHint: '2500×1300mm',
+    groupEyebrow: 'Sheet Series',
+    groupSwitchHint: 'Choose bed size',
+    groupModelsTitle: 'Available Bed Sizes',
+    listPrimary: true,
+    showcaseName: 'SEG-2513 / 3015 Sheet Fiber Laser',
+    showcaseBadge: 'SHEET SERIES',
     category: 'Sheet Fiber Laser Cutting Machine',
     name: 'SEG-2513B Sheet Fiber Laser Cutter',
     description: 'Flat-sheet fiber laser for stainless and carbon steel plates. 2500×1300mm working area with rack-and-pinion drive, precision square rails and SEG control — entry sheet platform for workshops.',
@@ -445,6 +490,12 @@ export const products = [
   {
     id: 'seg-3015',
     series: '3015',
+    variantGroup: 'seg-sheet',
+    variantLabel: '3015',
+    variantHint: '3000×1500mm',
+    groupEyebrow: 'Sheet Series',
+    groupSwitchHint: 'Choose bed size',
+    groupModelsTitle: 'Available Bed Sizes',
     category: 'Sheet Fiber Laser Cutting Machine',
     name: 'SEG-3015 Sheet Fiber Laser Cutter',
     description: 'Larger 3000×1500mm sheet fiber laser for stainless and carbon plates. Same SEG drive architecture as 2513 with expanded format for bigger panels.',
@@ -504,3 +555,30 @@ export const products = [
 export const getProductById = (id) => products.find(p => p.id === id)
 
 export const getProductsByCategory = (category) => products.filter(p => p.category.includes(category))
+
+/** Sibling models that share one detail page with a top switcher */
+export const getProductVariants = (productOrId) => {
+  const product = typeof productOrId === 'string' ? getProductById(productOrId) : productOrId
+  if (!product?.variantGroup) return product ? [product] : []
+  return products.filter((p) => p.variantGroup === product.variantGroup)
+}
+
+/**
+ * Home carousel / list: collapse variant groups to one card (listPrimary preferred).
+ */
+export const getShowcaseProducts = () => {
+  const seenGroups = new Set()
+  const list = []
+  for (const p of products) {
+    if (p.variantGroup) {
+      if (seenGroups.has(p.variantGroup)) continue
+      seenGroups.add(p.variantGroup)
+      const group = products.filter((x) => x.variantGroup === p.variantGroup)
+      const primary = group.find((x) => x.listPrimary) || group[0]
+      list.push(primary)
+      continue
+    }
+    list.push(p)
+  }
+  return list
+}
