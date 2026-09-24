@@ -8,6 +8,7 @@ import FooterSection from '../components/FooterSection.vue'
 import { getProductById } from '../data/products.js'
 import logoImg from '../assets/logo_icon.webp'
 import { siteMeta, SITE_URL } from '../seo/siteMeta.js'
+import { SHOW_QUOTE } from '../config/features.js'
 import {
   applyPageSeo,
   buildOrganizationLd,
@@ -94,12 +95,10 @@ onMounted(applyProductSeo)
       <div v-else class="min-h-screen flex items-center justify-center pt-20">
         <div class="text-center">
           <h1 class="text-2xl font-bold text-primary mb-4">Product Not Found</h1>
-          <router-link to="/" class="text-accent hover:underline"></router-link>
-          <router-link to="/" class="text-accent hover:underline"></router-link>
+          <router-link to="/" class="text-accent hover:underline">Back to Home</router-link>
         </div>
       </div>
-      <ContactSection />
-      <ContactSection />
+      <ContactSection v-if="SHOW_QUOTE" />
     </main>
     <FooterSection :config="siteConfig" />
   </div>

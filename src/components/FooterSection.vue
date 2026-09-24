@@ -48,27 +48,27 @@ const socials = [
           </ul>
         </div>
 
-        <div>
+        <!-- <div>
           <h4 class="text-white font-semibold mb-4">Support</h4>
           <ul class="space-y-2">
             <li v-for="s in footerSupport" :key="s">
               <a href="#" class="text-white/60 hover:text-accent transition-colors text-sm">{{ s }}</a>
             </li>
           </ul>
-        </div>
+        </div> -->
 
         <div>
           <h4 class="text-white font-semibold mb-4">Contact</h4>
           <ul class="space-y-2 text-sm">
             <li class="text-white/60">📧 {{ config.contactEmail }}</li>
-            <li class="text-white/60">📞 {{ config.contactPhone }}</li>
+            <!-- <li class="text-white/60">📞 {{ config.contactPhone }}</li> -->
             <li class="text-white/60">📍 {{ config.contactAddress }}</li>
           </ul>
-          <div class="flex gap-4 mt-4">
+          <!-- <div class="flex gap-4 mt-4">
             <a v-for="social in socials" :key="social.name" href="#" class="w-10 h-10 bg-white/10 rounded-lg flex items-center justify-center text-white/60 hover:bg-accent hover:text-white transition-all">
               <svg class="w-5 h-5" fill="currentColor" viewBox="0 0 24 24"><path :d="social.icon"/></svg>
             </a>
-          </div>
+          </div> -->
         </div>
       </div>
 

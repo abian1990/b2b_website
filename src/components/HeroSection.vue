@@ -1,5 +1,6 @@
 <script setup>
 import { ref, onMounted } from 'vue'
+import { SHOW_QUOTE } from '../config/features.js'
 
 const props = defineProps({
   config: Object,
@@ -85,6 +86,7 @@ onMounted(() => {
           </p>
           <div class="flex flex-wrap gap-4">
             <button
+              v-if="SHOW_QUOTE"
               type="button"
               class="bg-accent hover:bg-accent/90 text-white px-8 py-4 font-semibold inline-flex items-center gap-2 transition-colors"
               @click="scrollToSection('contact')"

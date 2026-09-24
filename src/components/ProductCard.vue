@@ -1,4 +1,6 @@
 <script setup>
+import { SHOW_QUOTE } from '../config/features.js'
+
 defineProps({
   product: {
     type: Object,
@@ -75,7 +77,10 @@ const getSeriesBadge = (product) => {
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
           </svg>
         </span>
-        <span class="btn-primary px-4 py-2 rounded-lg text-white text-sm font-semibold">
+        <span
+          v-if="SHOW_QUOTE"
+          class="btn-primary px-4 py-2 rounded-lg text-white text-sm font-semibold"
+        >
           Get Quote
         </span>
       </div>

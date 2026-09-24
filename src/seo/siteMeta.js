@@ -6,7 +6,7 @@ export const siteMeta = {
   legalName: 'ZZSKY Industrial Equipment',
   tagline: 'Precision Tube & Sheet Fiber Laser Cutting Machines',
   description:
-    'ZZSKY supplies SEG series fiber laser tube and sheet cutting machines — standard, offside, no-CAD and flat-sheet models for furniture, fitness, automotive and metal fabrication. Factory in Huixian, Xinxiang, Henan, China.',
+    'ZZSKY supplies SEG series fiber laser tube and sheet cutting machines — standard, offside, no-CAD and flat-sheet models for furniture, fitness, automotive and metal fabrication. Factory in Zhengzhou, Henan, China.',
   keywords: [
     'fiber laser tube cutter',
     'laser pipe cutting machine',
@@ -20,12 +20,12 @@ export const siteMeta = {
   ].join(', '),
   locale: 'en_US',
   alternateLocale: 'en_GB',
-  contactEmail: 'sales@aorelaser.cn',
+  contactEmail: 'wudapeng135@gmail.com',
   contactPhone: '+86-400-832-8321',
   address: {
-    street: 'Mengzhuang Industrial Park',
-    locality: 'Huixian',
-    region: 'Xinxiang, Henan',
+    street: 'Zhengzhou High-Tech Industrial Development Zone',
+    locality: 'Zhengzhou',
+    region: 'Henan',
     country: 'CN',
     countryName: 'China'
   },

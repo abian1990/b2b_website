@@ -13,6 +13,7 @@ import FooterSection from '../components/FooterSection.vue'
 import logoImg from '../assets/logo_icon.webp'
 import heroImg from '../assets/heroImage.webp'
 import { siteMeta, homeFaqs } from '../seo/siteMeta.js'
+import { SHOW_QUOTE } from '../config/features.js'
 import {
   applyPageSeo,
   buildOrganizationLd,
@@ -109,8 +110,8 @@ onMounted(() => {
       <WhyUsSection />
       <IndustriesSection />
       <FaqSection />
-      <!-- <ContactSection /> -->
+      <ContactSection v-if="SHOW_QUOTE" />
     </main>
-    <!-- <FooterSection :config="siteConfig" /> -->
+    <FooterSection  :config="siteConfig" />
   </div>
 </template>

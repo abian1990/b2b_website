@@ -1,6 +1,7 @@
 <script setup>
 import { computed, ref, onMounted, onUnmounted } from 'vue'
 import { getShowcaseProducts } from '../data/products.js'
+import { SHOW_QUOTE } from '../config/features.js'
 
 const scrollContainer = ref(null)
 let animationId = null
@@ -174,6 +175,7 @@ onUnmounted(() => {
           <h3 class="text-xl font-bold text-primary mb-3">Tube & Sheet Laser</h3>
           <p class="text-muted text-sm mb-5 leading-relaxed">Standard · Offside · No-CAD · Flat sheet</p>
           <button
+            v-if="SHOW_QUOTE"
             type="button"
             class="inline-flex items-center gap-2 bg-primary text-white px-5 py-2.5 font-semibold text-sm hover:bg-accent transition-colors"
             @click="scrollToContact"
