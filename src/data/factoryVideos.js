@@ -30,6 +30,14 @@ export const factoryVideos = [
     src: mediaUrl('/videos/factory-tour.mp4'),
     poster: posterWorkshop,
     type: 'video/mp4'
+  },
+  {
+    id: 'factory-tour-2',
+    title: 'Sample available',
+    subtitle: 'Sample available for cutting',
+    src: mediaUrl('/videos/factory-tour-2.mp4'),
+    poster: posterAssembly,
+    type: 'video/mp4'
   }
 ]
 

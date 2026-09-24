@@ -99,6 +99,7 @@ onMounted(applyProductSeo)
         </div>
       </div>
       <ContactSection />
+      <ContactSection />
     </main>
     <FooterSection :config="siteConfig" />
   </div>
