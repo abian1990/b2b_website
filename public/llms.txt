@@ -16,9 +16,10 @@
 - [SEG-100MZ](/products/seg-t100mz): Compact tube laser
 - [SEG-2513](/products/seg-2513): Sheet fiber laser, 2500×1300mm
 - [SEG-3015](/products/seg-3015): Sheet fiber laser, 3000×1500mm
+- [AORE V12](/products/aore-v12): High-speed tube laser, Ø8–120mm, 2G feed, no-CAD
 
 ## Key facts
-- Categories: tube fiber laser, sheet fiber laser, no-CAD tube cutting, offside tube laser
+- Categories: tube fiber laser, sheet fiber laser, no-CAD tube cutting, offside tube laser, high-speed tube laser
 - Typical power class: 1.5kW class (upgradable options)
 - Applications: furniture, fitness equipment, automotive parts, sanitary ware, sheet metal shops
 - Quote response: typically within 24 hours

@@ -11,6 +11,7 @@ const countries = [
 ]
 
 const productOptions = [
+  'AORE V12 High-Speed Tube Laser',
   'SEG-T120 / T120Q Tube Laser',
   'SEG-T160 Tube Laser',
   'SEG-T240 Heavy Tube Laser',

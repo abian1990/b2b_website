@@ -18,6 +18,14 @@ import img2513g2 from '../assets/saige/seg-2513_g2.webp'
 import img2513g3 from '../assets/saige/seg-2513_g3.webp'
 import img2513g4 from '../assets/saige/seg-2513_g4.webp'
 import img3015 from '../assets/saige/seg-3015.webp'
+import imgV12 from '../assets/saige/seg-v12.webp'
+import imgV12Machine from '../assets/saige/seg-v12_machine.webp'
+import imgV12g1 from '../assets/saige/seg-v12_g1.webp'
+import imgV12g2 from '../assets/saige/seg-v12_g2.webp'
+import imgV12g3 from '../assets/saige/seg-v12_g3.webp'
+import imgV12g4 from '../assets/saige/seg-v12_g4.webp'
+import imgV12g5 from '../assets/saige/seg-v12_g5.webp'
+import imgV12g6 from '../assets/saige/seg-v12_g6.webp'
 
 export const products = [
   {
@@ -548,6 +556,109 @@ export const products = [
       { title: 'Production Sheet Cutting', description: 'Servo rack-and-pinion motion tuned for continuous plate cutting jobs.' }
     ],
     applications: ['Sheet Metal Shops', 'Cabinets', 'Equipment Housings', 'Signage', 'Light Fabrication']
+  },
+  {
+    id: 'aore-v12',
+    series: 'V12',
+    category: 'High-Speed Tube Fiber Laser Cutting Machine',
+    name: 'V12 High-Speed Tube Laser Cutter',
+    description:
+      'Next-generation high-efficiency tube laser — class-leading throughput with 2G feed acceleration, 200 r/min chuck speed, dual-zone follow-up support, flip-plate unloading, pneumatic front-chuck travel and built-in no-CAD cutting. Round Ø8–120mm / square 8×8–120×120mm, cut length up to 6500mm.',
+    image: imgV12,
+    gallery: [imgV12, imgV12Machine, imgV12g1, imgV12g2, imgV12g3, imgV12g4, imgV12g5, imgV12g6],
+    badge: 'PERFORMANCE',
+    showcaseName: 'V12 Tube Fiber Laser Cutting Machine',
+    showcaseBadge: 'PERFORMANCE',
+    powerRange: 'High-speed class',
+    standardConfig: [
+      'Precision high-speed chuck (dual-roller cross clamp)',
+      'Pneumatic front-chuck travel',
+      'Dual-zone intelligent follow-up support',
+      'Follow-up flip-plate unloading (finished parts up to 2m)',
+      'Concave-wheel + follow-up dual support system',
+      'No-CAD one-key processing'
+    ],
+    optionalConfig: [
+      'Automatic loader (round 20–120mm / square 20–120×120mm)',
+      'Assist loader (round 8–120mm / square 8×8–120×120mm, ≤6 tubes)',
+      'Front-chuck free travel for near-zero remnant cutting',
+      'Weld-seam recognition & positioning',
+      'Inner-wall slag cleaning'
+    ],
+    models: [
+      { name: 'AORE V12', power: 'Ø8–120mm · 6500mm · 2G feed' }
+    ],
+    keySpecs: [
+      { label: 'Tube Range', value: 'Ø8–120mm' },
+      { label: 'Feed Accel', value: '2G max' },
+      { label: 'Chuck Speed', value: '200 r/min' },
+      { label: 'Tail Length', value: '≈30mm' }
+    ],
+    features: [
+      '2G Feed Acceleration',
+      'Dual-Zone Follow-up',
+      'No-CAD One-key Cut',
+      '≈30mm Short Tail'
+    ],
+    specsTable: [
+      { parameter: 'Tube Types', values: { 'AORE V12': 'Round / Square / Rect / Racetrack / Oval (+ sector / D-type with assist loader)' } },
+      { parameter: 'Round Tube Range', values: { 'AORE V12': 'Ø8–120mm (8mm under specific conditions)' } },
+      { parameter: 'Square Tube Range', values: { 'AORE V12': '8×8–120×120mm' } },
+      { parameter: 'Max Cutting Length', values: { 'AORE V12': '6500mm' } },
+      { parameter: 'Max Single Tube Load', values: { 'AORE V12': '80kg (peak ≈100kg)' } },
+      { parameter: 'Chuck Speed', values: { 'AORE V12': '200 r/min' } },
+      { parameter: 'Feed Acceleration', values: { 'AORE V12': '2G max' } },
+      { parameter: 'Feed Speed', values: { 'AORE V12': '150 m/min' } },
+      { parameter: 'Tail Length', values: { 'AORE V12': '≈30mm (optimized nesting; extreme cases for Ø80–120mm)' } },
+      { parameter: 'Front Chuck Travel', values: { 'AORE V12': 'Pneumatic — laser between front & rear chucks' } },
+      { parameter: 'Support System', values: { 'AORE V12': '1× lift correction + 2× follow-up + 1× concave wheel' } },
+      { parameter: 'Unloading', values: { 'AORE V12': 'Follow-up flip plate · finished parts up to 2m' } },
+      { parameter: 'No-CAD', values: { 'AORE V12': 'Parameter-based auto modeling · one-key cut' } },
+      { parameter: 'Auto Loader (opt.)', values: { 'AORE V12': 'Round 20–120 · Square 20–120×120 · Length 5500–6500mm · Magazine 1.5t' } },
+      { parameter: 'Assist Loader (opt.)', values: { 'AORE V12': 'Round 8–120 · Square 8×8–120×120 · ≤6 tubes · Cycle / single / low-stock alarm' } }
+    ],
+    featureDetails: [
+      {
+        title: 'Class-Leading Throughput',
+        description: '2G feed acceleration, 150 m/min feed speed and 200 r/min chuck rotation deliver faster cycle times than typical peer machines in the same size class.'
+      },
+      {
+        title: 'Precision High-Speed Chuck',
+        description: 'Professional high-speed chuck with dual-roller cross clamping — high RPM without slip, stable grip for round and square profiles.'
+      },
+      {
+        title: 'Dual-Zone Intelligent Follow-up',
+        description: 'Roller follow-up in the loading zone and flip-plate follow-up in unloading, servo-controlled for continuous dynamic support along the full tube.'
+      },
+      {
+        title: 'Full Wrap Dynamic Support',
+        description: 'Follow-up + concave-wheel dual support suppresses radial vibration and axial shift at high speed for consistent cut accuracy.'
+      },
+      {
+        title: 'Pneumatic Front-Chuck Travel',
+        description: 'Moves the front chuck so the laser works between front and rear chucks — better accuracy on long workpieces.'
+      },
+      {
+        title: 'Ultra-Short Remnant',
+        description: 'Optimized to ≈30mm tail length under proper nesting (Ø80–120mm inner-support cases); optional free-travel front chuck for near-zero remnant cutting.'
+      },
+      {
+        title: 'No-CAD One-Key Cutting',
+        description: 'Enter parameters to auto-model common jobs — no CAD drawing required for everyday column, rail and frame work.'
+      },
+      {
+        title: 'Flexible Loading Options',
+        description: 'Optional auto loader (1.5t magazine, cycle/single feed) or assist loader (≤6 tubes) for 20s-class rapid loading and mixed shop conditions.'
+      }
+    ],
+    applications: [
+      'Furniture Frames',
+      'Fitness Equipment',
+      'Guardrails & Handrails',
+      'Display Racks',
+      'Light Steel Structures',
+      'High-mix Tube Job Shops'
+    ]
   }
 ]
 
@@ -565,6 +676,7 @@ export const getProductVariants = (productOrId) => {
 
 /**
  * Home carousel / list: collapse variant groups to one card (listPrimary preferred).
+ * Pinned IDs stay at the front of the showcase.
  */
 export const getShowcaseProducts = () => {
   const seenGroups = new Set()
@@ -580,5 +692,15 @@ export const getShowcaseProducts = () => {
     }
     list.push(p)
   }
+
+  const pinned = ['aore-v12']
+  list.sort((a, b) => {
+    const ai = pinned.indexOf(a.id)
+    const bi = pinned.indexOf(b.id)
+    if (ai === -1 && bi === -1) return 0
+    if (ai === -1) return 1
+    if (bi === -1) return -1
+    return ai - bi
+  })
   return list
 }

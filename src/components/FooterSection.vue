@@ -4,6 +4,7 @@ defineProps({
 })
 
 const footerProducts = [
+  { label: 'AORE V12 High-Speed Tube', id: 'aore-v12' },
   { label: 'SEG-T120 / T160 Tube Laser', id: 'seg-t160' },
   { label: 'SEG-T130Y Offside', id: 'seg-t130y' },
   { label: 'SEG-T100M No-CAD', id: 'seg-t100m' },
