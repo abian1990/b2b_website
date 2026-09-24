@@ -15,7 +15,7 @@ const allNavItems = [
   { id: 'factory', label: 'Factory', homeOnly: true },
   { id: 'products', label: 'Products', homeOnly: true },
   { id: 'why-us', label: 'Solutions', homeOnly: true },
-  { id: 'contact', label: 'Contact', homeOnly: false }
+  // { id: 'contact', label: 'Contact', homeOnly: false }
 ]
 
 const navItems = computed(() =>

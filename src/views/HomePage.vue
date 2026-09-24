@@ -109,8 +109,8 @@ onMounted(() => {
       <WhyUsSection />
       <IndustriesSection />
       <FaqSection />
-      <ContactSection />
+      <!-- <ContactSection /> -->
     </main>
-    <FooterSection :config="siteConfig" />
+    <!-- <FooterSection :config="siteConfig" /> -->
   </div>
 </template>
