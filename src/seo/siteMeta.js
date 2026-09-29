@@ -58,6 +58,6 @@ export const homeFaqs = [
   {
     question: 'How can I get a quote?',
     answer:
-      'Submit the contact form on the website or email sales@aorelaser.cn. Our team typically responds within 24 hours with configuration and pricing guidance.'
+      'Submit the contact form on the website or email wudapeng135@gmail.com. Our team typically responds within 24 hours with configuration and pricing guidance.'
   }
 ]

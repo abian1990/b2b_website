@@ -13,6 +13,10 @@ pages_build_output_dir = "dist"
 # Non-secret config can go here; put secrets in Dashboard Secrets / wrangler pages secret
 # ALLOWED_ORIGINS = "https://www.zzsky.com,http://localhost:5173"
 # EMAIL_FROM = "ZZSKY Quote <noreply@your-verified-domain.com>"
-# NOTIFY_EMAIL = "sales@aorelaser.cn"
+# NOTIFY_EMAIL = "wudapeng135@gmail.com"
 # CUSTOMER_AUTO_REPLY = "true"
 # RATE_LIMIT = "5"
+# AI chat (LLM_API_KEY must be a Secret, not a var)
+# LLM_BASE_URL = "https://api.deepseek.com"
+# LLM_MODEL = "deepseek-flash"
+# CHAT_RATE_LIMIT = "30"

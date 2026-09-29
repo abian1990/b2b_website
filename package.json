@@ -4,7 +4,10 @@
   "version": "1.0.0",
   "type": "module",
   "scripts": {
+    "predev": "npm run knowledge",
     "dev": "vite",
+    "knowledge": "node scripts/build-knowledge.mjs",
+    "prebuild": "npm run knowledge",
     "build": "vite build",
     "preview": "vite preview",
     "pages:dev": "npm run build && wrangler pages dev dist --kv=QUOTES_KV",
