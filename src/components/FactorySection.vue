@@ -56,18 +56,18 @@ const stopScroll = () => {
 
 const scrollLeft = () => {
   const container = scrollContainer.value
-  if (container) {
-    const cardWidth = container.querySelector('div').offsetWidth + 16
-    container.scrollBy({ left: -cardWidth, behavior: 'smooth' })
-  }
+  if (!container) return
+  const card = container.querySelector('[data-factory-card]')
+  const step = card ? card.offsetWidth + 16 : 320
+  container.scrollBy({ left: -step, behavior: 'smooth' })
 }
 
 const scrollRight = () => {
   const container = scrollContainer.value
-  if (container) {
-    const cardWidth = container.querySelector('div').offsetWidth + 16
-    container.scrollBy({ left: cardWidth, behavior: 'smooth' })
-  }
+  if (!container) return
+  const card = container.querySelector('[data-factory-card]')
+  const step = card ? card.offsetWidth + 16 : 320
+  container.scrollBy({ left: step, behavior: 'smooth' })
 }
 
 onMounted(() => {
@@ -80,94 +80,98 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <section id="factory" class="bg-white" style="scroll-margin-top: 80px;">
-    <!-- Section Title -->
-    <div class="bg-white pt-8 pb-4">
-      <div class="max-w-7xl mx-auto px-6 text-center">
+  <section id="factory" class="py-16 bg-white" style="scroll-margin-top: 80px;" aria-labelledby="factory-heading">
+    <div class="max-w-7xl mx-auto px-6">
+      <div class="text-center mb-10">
         <span class="text-accent font-semibold text-sm tracking-wider uppercase">Our Factory</span>
-        <h2 class="text-3xl font-bold text-primary mt-2">Manufacturing Strength</h2>
-        <p class="text-muted mt-2">Smart production · Precision manufacturing · Quality assurance</p>
+        <h2 id="factory-heading" class="text-3xl md:text-4xl font-bold text-primary mt-3">Manufacturing Strength</h2>
+        <p class="text-muted mt-3">Smart production · Precision manufacturing · Quality assurance</p>
       </div>
-    </div>
 
-    <!-- Top Banner - Full Width -->
-    <div class="relative overflow-hidden" style="height: 480px;">
-      <img :src="bg1" alt="ZZSKY laser cutting machine factory workshop in Henan China" loading="lazy" decoding="async" class="w-full h-full object-cover">
-      <div class="absolute inset-0 bg-gradient-to-r from-primary/40 via-primary/0 to-transparent"></div>
-      <div class="absolute inset-0 flex items-center">
-        <div class="max-w-7xl mx-auto px-8 w-full">
-          <div class="inline-flex items-center gap-2 bg-accent/20 text-white px-4 py-1.5 text-sm mb-4">
-            <span class="w-2 h-2 bg-accent rounded-full animate-pulse"></span>
-            20+ Years Experience
+      <!-- Banner -->
+      <div class="relative overflow-hidden border border-border mb-6" style="height: min(420px, 55vw);">
+        <img
+          :src="bg1"
+          alt="ZZSKY laser cutting machine factory workshop in Henan China"
+          loading="lazy"
+          decoding="async"
+          class="w-full h-full object-cover"
+        >
+        <div class="absolute inset-0 bg-gradient-to-r from-primary/70 via-primary/35 to-transparent"></div>
+        <div class="absolute inset-0 flex items-center px-6 md:px-10">
+          <div class="max-w-xl">
+            <div class="inline-flex items-center gap-2 bg-white/10 text-white px-3 py-1 text-xs md:text-sm mb-4 border border-white/20">
+              <span class="w-1.5 h-1.5 bg-accent rounded-full"></span>
+              20+ Years Experience
+            </div>
+            <h3 class="text-2xl md:text-4xl font-bold text-white mb-3 leading-tight">
+              Precision Manufacturing <span class="text-accent">At Scale</span>
+            </h3>
+            <p class="text-white/80 text-sm md:text-base max-w-md leading-relaxed">
+              State-of-the-art production facilities with automated assembly lines
+            </p>
           </div>
-          <h2 class="text-4xl md:text-5xl font-bold text-white mb-3">
-            Precision Manufacturing <span class="text-accent">At Scale</span>
-          </h2>
-          <p class="text-white/80 text-lg max-w-lg">
-            State-of-the-art production facilities with automated assembly lines
-          </p>
         </div>
       </div>
-    </div>
 
-    <!-- Factory Carousel - Full Width -->
-    <div class="bg-white pb-4">
-      <div class="relative">
-        <div class="absolute left-0 top-0 bottom-0 w-24 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none"></div>
-        <div class="absolute right-0 top-0 bottom-0 w-24 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none"></div>
+      <!-- Factory image carousel -->
+      <div class="relative mb-10">
+        <div class="absolute left-0 top-0 bottom-0 w-12 md:w-16 bg-gradient-to-r from-white to-transparent z-10 pointer-events-none"></div>
+        <div class="absolute right-0 top-0 bottom-0 w-12 md:w-16 bg-gradient-to-l from-white to-transparent z-10 pointer-events-none"></div>
 
-        <!-- Left Arrow -->
         <button
+          type="button"
+          class="absolute left-2 top-1/2 -translate-y-1/2 z-20 w-10 h-10 bg-white/95 hover:bg-white shadow-md border border-border rounded-full flex items-center justify-center text-primary hover:text-accent transition-all"
+          aria-label="Previous factory photos"
           @click="scrollLeft"
           @mouseenter="isPaused = true"
           @mouseleave="isPaused = false"
-          class="absolute left-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 bg-white/90 hover:bg-white shadow-lg rounded-full flex items-center justify-center text-primary hover:text-accent transition-all hover:scale-110"
         >
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
           </svg>
         </button>
 
-        <!-- Right Arrow -->
         <button
+          type="button"
+          class="absolute right-2 top-1/2 -translate-y-1/2 z-20 w-10 h-10 bg-white/95 hover:bg-white shadow-md border border-border rounded-full flex items-center justify-center text-primary hover:text-accent transition-all"
+          aria-label="Next factory photos"
           @click="scrollRight"
           @mouseenter="isPaused = true"
           @mouseleave="isPaused = false"
-          class="absolute right-4 top-1/2 -translate-y-1/2 z-20 w-12 h-12 bg-white/90 hover:bg-white shadow-lg rounded-full flex items-center justify-center text-primary hover:text-accent transition-all hover:scale-110"
         >
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
           </svg>
         </button>
 
         <div
           ref="scrollContainer"
-          class="flex gap-4 overflow-x-hidden py-6"
-          style="height: 360px;"
+          class="flex gap-4 overflow-x-hidden py-1"
+          style="height: 300px;"
           @mouseenter="isPaused = true"
           @mouseleave="isPaused = false"
         >
           <div
             v-for="(img, index) in duplicatedImages"
             :key="index"
-            class="flex-shrink-0 relative overflow-hidden group cursor-pointer"
-            style="width: calc(50% - 8px);"
+            data-factory-card
+            class="flex-shrink-0 relative overflow-hidden border border-border group cursor-default"
+            style="width: min(420px, 75vw);"
           >
             <img
               :src="img.src"
               :alt="img.title"
               loading="lazy"
               decoding="async"
-              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-110"
+              class="w-full h-full object-cover transition-transform duration-700 group-hover:scale-105"
             >
-            <div class="absolute inset-0 bg-gradient-to-t from-black/80 via-black/20 to-transparent">
-              <div class="absolute bottom-6 left-6">
-                <span class="text-accent text-sm font-semibold uppercase tracking-wider">{{ img.subtitle }}</span>
-                <h4 class="text-white text-xl font-bold mt-1">{{ img.title }}</h4>
+            <div class="absolute inset-0 bg-gradient-to-t from-black/75 via-black/15 to-transparent">
+              <div class="absolute bottom-5 left-5 right-5">
+                <span class="text-accent text-xs font-semibold uppercase tracking-wider">{{ img.subtitle }}</span>
+                <h4 class="text-white text-lg font-bold mt-1">{{ img.title }}</h4>
               </div>
             </div>
-            <!-- Corner decoration -->
-            <div class="absolute top-4 right-4 w-8 h-8 border-t-2 border-r-2 border-white/50 opacity-0 group-hover:opacity-100 transition-opacity"></div>
           </div>
         </div>
       </div>
@@ -175,51 +179,47 @@ onUnmounted(() => {
 
     <FactoryVideoGallery />
 
-    <!-- Stats & Certifications -->
-    <div class="bg-surface py-12">
-      <div class="max-w-7xl mx-auto px-6">
-        <div class="grid md:grid-cols-2 gap-6">
-          <!-- Production Scale -->
-          <div class="bg-white p-8 border-l-4 border-accent">
-            <h3 class="text-xl font-bold text-primary mb-6 flex items-center gap-3">
-              <svg class="w-6 h-6 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
-              </svg>
-              Production Scale
-            </h3>
-            <div class="grid grid-cols-3 gap-6">
-              <div class="text-center p-4 bg-slate-50">
-                <div class="text-3xl font-bold text-accent">50,000<span class="text-base">㎡</span></div>
-                <div class="text-muted text-sm mt-1">Floor Area</div>
-              </div>
-              <div class="text-center p-4 bg-slate-50">
-                <div class="text-3xl font-bold text-accent">200<span class="text-base">+</span></div>
-                <div class="text-muted text-sm mt-1">Machines</div>
-              </div>
-              <div class="text-center p-4 bg-slate-50">
-                <div class="text-3xl font-bold text-accent">500<span class="text-base">+</span></div>
-                <div class="text-muted text-sm mt-1">Employees</div>
-              </div>
+    <!-- Stats -->
+    <div class="max-w-7xl mx-auto px-6 mt-10">
+      <div class="grid md:grid-cols-2 gap-6">
+        <div class="bg-surface p-6 md:p-8 border border-border border-l-4 border-l-accent">
+          <h3 class="text-lg font-bold text-primary mb-5 flex items-center gap-3">
+            <svg class="w-5 h-5 text-accent" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 21V5a2 2 0 00-2-2H7a2 2 0 00-2 2v16m14 0h2m-2 0h-5m-9 0H3m2 0h5M9 7h1m-1 4h1m4-4h1m-1 4h1m-5 10v-5a1 1 0 011-1h2a1 1 0 011 1v5m-4 0h4"/>
+            </svg>
+            Production Scale
+          </h3>
+          <div class="grid grid-cols-3 gap-3 md:gap-4">
+            <div class="text-center p-3 md:p-4 bg-white border border-border">
+              <div class="text-2xl md:text-3xl font-bold text-accent">50,000<span class="text-sm">㎡</span></div>
+              <div class="text-muted text-xs md:text-sm mt-1">Floor Area</div>
+            </div>
+            <div class="text-center p-3 md:p-4 bg-white border border-border">
+              <div class="text-2xl md:text-3xl font-bold text-accent">200<span class="text-sm">+</span></div>
+              <div class="text-muted text-xs md:text-sm mt-1">Machines</div>
+            </div>
+            <div class="text-center p-3 md:p-4 bg-white border border-border">
+              <div class="text-2xl md:text-3xl font-bold text-accent">500<span class="text-sm">+</span></div>
+              <div class="text-muted text-xs md:text-sm mt-1">Employees</div>
             </div>
           </div>
+        </div>
 
-          <!-- Certifications -->
-          <div class="bg-white p-8 border-l-4 border-primary">
-            <h3 class="text-xl font-bold text-primary mb-6 flex items-center gap-3">
-              <svg class="w-6 h-6 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
-              </svg>
-              International Certifications
-            </h3>
-            <div class="flex flex-wrap gap-3">
-              <span class="bg-primary text-white px-5 py-2.5 font-bold text-sm">CE</span>
-              <span class="bg-primary text-white px-5 py-2.5 font-bold text-sm">ISO 9001</span>
-              <span class="bg-primary text-white px-5 py-2.5 font-bold text-sm">SGS</span>
-              <span class="bg-primary text-white px-5 py-2.5 font-bold text-sm">TUV</span>
-              <span class="bg-primary text-white px-5 py-2.5 font-bold text-sm">FDA</span>
-            </div>
-            <p class="text-muted text-sm mt-4">Quality management system certified by international standards</p>
+        <div class="bg-surface p-6 md:p-8 border border-border border-l-4 border-l-primary">
+          <h3 class="text-lg font-bold text-primary mb-5 flex items-center gap-3">
+            <svg class="w-5 h-5 text-primary" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 12l2 2 4-4m5.618-4.016A11.955 11.955 0 0112 2.944a11.955 11.955 0 01-8.618 3.04A12.02 12.02 0 003 9c0 5.591 3.824 10.29 9 11.622 5.176-1.332 9-6.03 9-11.622 0-1.042-.133-2.052-.382-3.016z"/>
+            </svg>
+            International Certifications
+          </h3>
+          <div class="flex flex-wrap gap-2 md:gap-3">
+            <span class="bg-primary text-white px-4 py-2 font-bold text-sm">CE</span>
+            <span class="bg-primary text-white px-4 py-2 font-bold text-sm">ISO 9001</span>
+            <span class="bg-primary text-white px-4 py-2 font-bold text-sm">SGS</span>
+            <span class="bg-primary text-white px-4 py-2 font-bold text-sm">TUV</span>
+            <span class="bg-primary text-white px-4 py-2 font-bold text-sm">FDA</span>
           </div>
+          <p class="text-muted text-sm mt-4">Quality management system certified by international standards</p>
         </div>
       </div>
     </div>
