@@ -3,11 +3,12 @@ name = "zzsky-site"
 compatibility_date = "2024-11-01"
 pages_build_output_dir = "dist"
 
-# Optional: after creating KV in Dashboard, uncomment and paste the namespace id
-# (Dashboard binding is still required for Pages Production/Preview)
-# [[kv_namespaces]]
-# binding = "QUOTES_KV"
-# id = "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+# Local `wrangler pages dev` uses these. Pages Production/Preview still need
+# the same binding in Dashboard → Settings → Functions → KV namespace bindings.
+[[kv_namespaces]]
+binding = "QUOTES_KV"
+id = "428d2176c72d44bb83cc70a43e84359d"
+preview_id = "f553d4e921884e45a189d7930c09dad1"
 
 [vars]
 # Non-secret config can go here; put secrets in Dashboard Secrets / wrangler pages secret
