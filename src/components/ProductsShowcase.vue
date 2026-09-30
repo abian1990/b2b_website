@@ -1,192 +1,143 @@
 <script setup>
 import { computed, ref, onMounted, onUnmounted } from 'vue'
 import { getShowcaseProducts } from '../data/products.js'
-import { SHOW_QUOTE } from '../config/features.js'
 
-const scrollContainer = ref(null)
-let animationId = null
-let isPaused = false
+const products = computed(() => getShowcaseProducts())
 
-const productImages = computed(() =>
-  getShowcaseProducts().map((p) => ({
-    src: p.image,
-    id: p.id,
-    name: p.showcaseName || p.name,
-    badge: p.showcaseBadge || p.badge
-  }))
-)
+const lightbox = ref(null)
 
-const allProducts = computed(() => [...productImages.value, ...productImages.value])
-const scrollSpeed = 0.8
-
-const startScroll = () => {
-  const container = scrollContainer.value
-  if (!container) return
-
-  const scroll = () => {
-    if (!isPaused) {
-      container.scrollLeft += scrollSpeed
-      const halfWidth = container.scrollWidth / 2
-      if (container.scrollLeft >= halfWidth) {
-        container.scrollLeft = 0
-      }
-    }
-    animationId = requestAnimationFrame(scroll)
-  }
-  animationId = requestAnimationFrame(scroll)
+const openLightbox = (product) => {
+  lightbox.value = product
 }
 
-const stopScroll = () => {
-  if (animationId) {
-    cancelAnimationFrame(animationId)
-    animationId = null
-  }
+const closeLightbox = () => {
+  lightbox.value = null
 }
 
-const CARD_STEP = 400
-
-const scrollLeft = () => {
-  const container = scrollContainer.value
-  if (container) {
-    container.scrollBy({ left: -CARD_STEP, behavior: 'smooth' })
-  }
+const onKeydown = (e) => {
+  if (e.key === 'Escape') closeLightbox()
 }
 
-const scrollRight = () => {
-  const container = scrollContainer.value
-  if (container) {
-    container.scrollBy({ left: CARD_STEP, behavior: 'smooth' })
-  }
-}
-
-const handleWheel = (e) => {
-  const container = scrollContainer.value
-  if (container) {
-    e.preventDefault()
-    container.scrollLeft += e.deltaY * 2
-  }
-}
-
-const scrollToContact = () => {
-  document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })
-}
-
-onMounted(() => {
-  startScroll()
-  const container = scrollContainer.value
-  if (container) {
-    container.addEventListener('wheel', handleWheel, { passive: false })
-  }
-})
-
-onUnmounted(() => {
-  stopScroll()
-  const container = scrollContainer.value
-  if (container) {
-    container.removeEventListener('wheel', handleWheel)
-  }
-})
+onMounted(() => window.addEventListener('keydown', onKeydown))
+onUnmounted(() => window.removeEventListener('keydown', onKeydown))
 </script>
 
 <template>
-  <section id="products" class="py-16 bg-surface" style="scroll-margin-top: 80px;">
+  <section id="products" class="py-16 bg-surface" style="scroll-margin-top: 80px;" aria-labelledby="products-heading">
     <div class="max-w-7xl mx-auto px-6">
-      <div class="text-center mb-10">
+      <div class="text-center mb-12">
         <span class="text-accent font-semibold text-sm tracking-wider uppercase">Our Products</span>
-        <h2 class="text-4xl font-bold text-primary mt-3">Core Product Line</h2>
+        <h2 id="products-heading" class="text-3xl md:text-4xl font-bold text-primary mt-3">Core Product Line</h2>
         <p class="text-muted mt-3">Tube & sheet fiber laser cutting machines · SEG Series</p>
       </div>
-    </div>
 
-    <!-- Image Scroll + Text -->
-    <div class="flex h-[420px] md:h-[460px]">
-      <!-- Left: Scrolling Images -->
-      <div class="w-3/4 relative">
-        <div class="absolute left-0 top-0 bottom-0 w-16 bg-gradient-to-r from-surface to-transparent z-20 pointer-events-none"></div>
-        <div class="absolute right-0 top-0 bottom-0 w-16 bg-gradient-to-l from-surface to-transparent z-20 pointer-events-none"></div>
-
-        <button
-          @click="scrollLeft"
-          @mouseenter="isPaused = true"
-          @mouseleave="isPaused = false"
-          class="absolute left-2 top-1/2 -translate-y-1/2 z-30 w-12 h-12 bg-white/95 hover:bg-white shadow-lg rounded-full flex items-center justify-center text-primary hover:text-accent transition-all hover:scale-110"
+      <div class="grid sm:grid-cols-2 gap-6 lg:gap-8">
+        <article
+          v-for="product in products"
+          :key="product.id"
+          class="group bg-white border border-border overflow-hidden transition-shadow duration-300 hover:shadow-lg"
         >
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
-          </svg>
-        </button>
-
-        <button
-          @click="scrollRight"
-          @mouseenter="isPaused = true"
-          @mouseleave="isPaused = false"
-          class="absolute right-2 top-1/2 -translate-y-1/2 z-30 w-12 h-12 bg-white/95 hover:bg-white shadow-lg rounded-full flex items-center justify-center text-primary hover:text-accent transition-all hover:scale-110"
-        >
-          <svg class="w-6 h-6" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
-          </svg>
-        </button>
-
-        <div
-          ref="scrollContainer"
-          class="flex gap-5 overflow-x-hidden py-4 px-4 h-full items-center"
-          @mouseenter="isPaused = true"
-          @mouseleave="isPaused = false"
-        >
-          <router-link
-            v-for="(product, index) in allProducts"
-            :key="index"
-            :to="{ name: 'Product', params: { id: product.id } }"
-            class="flex-shrink-0 group cursor-pointer"
-            @click="isPaused = true"
+          <button
+            type="button"
+            class="relative block w-full aspect-[4/3] bg-slate-50 focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-inset"
+            :aria-label="`Enlarge ${product.showcaseName || product.name}`"
+            @click="openLightbox(product)"
           >
-            <div
-              class="relative overflow-hidden bg-white border border-border shadow-md transition-all duration-300 group-hover:shadow-xl group-hover:border-accent/40 group-hover:-translate-y-1"
-              style="width: 380px; height: 280px;"
+            <img
+              :src="product.image"
+              :alt="product.showcaseName || product.name"
+              loading="lazy"
+              decoding="async"
+              class="w-full h-full object-contain p-6 md:p-8 transition-transform duration-500 group-hover:scale-[1.03]"
             >
-              <img
-                :src="product.src"
-                :alt="product.name"
-                loading="lazy"
-                decoding="async"
-                class="w-full h-full object-contain p-3 transition-transform duration-500 group-hover:scale-105"
+            <span
+              v-if="product.showcaseBadge || product.badge"
+              class="absolute top-4 left-4 bg-primary/90 text-white text-[11px] font-semibold uppercase tracking-wider px-3 py-1"
+            >
+              {{ product.showcaseBadge || product.badge }}
+            </span>
+            <span
+              class="absolute bottom-4 right-4 w-9 h-9 rounded-full bg-white/95 border border-border text-muted flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity shadow-sm"
+              aria-hidden="true"
+            >
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"/>
+              </svg>
+            </span>
+          </button>
+
+          <div class="px-5 py-5 border-t border-border">
+            <p class="text-accent text-xs font-semibold uppercase tracking-wider mb-1.5">
+              {{ product.series }} · {{ product.powerRange }}
+            </p>
+            <h3 class="text-lg font-bold text-primary leading-snug mb-3">
+              {{ product.showcaseName || product.name }}
+            </h3>
+            <div class="flex flex-wrap gap-x-4 gap-y-1.5 mb-4">
+              <div
+                v-for="spec in product.keySpecs.slice(0, 3)"
+                :key="spec.label"
+                class="text-sm"
               >
-              <div class="absolute inset-x-0 bottom-0 bg-gradient-to-t from-black/85 via-black/45 to-transparent pt-16 pb-4 px-4">
-                <span class="inline-block text-accent text-[11px] font-semibold uppercase tracking-wider mb-1">{{ product.badge }}</span>
-                <div class="text-white text-base font-bold leading-snug line-clamp-2">{{ product.name }}</div>
+                <span class="text-muted">{{ spec.label }}</span>
+                <span class="text-primary font-semibold ml-1">{{ spec.value }}</span>
               </div>
             </div>
-          </router-link>
-        </div>
-      </div>
-
-      <!-- Diagonal Divider -->
-      <div class="relative w-12 flex-shrink-0 bg-surface">
-        <svg class="absolute inset-0 w-full h-full" viewBox="0 0 48 460" preserveAspectRatio="none">
-          <path d="M0 0 L30 0 L48 460 L18 460 Z" fill="white"/>
-          <path d="M28 0 L46 460" stroke="#e11d48" stroke-width="1.5" fill="none"/>
-        </svg>
-      </div>
-
-      <!-- Right: Text -->
-      <div class="w-1/4 flex items-center justify-center bg-white px-5">
-        <div class="text-center">
-          <div class="text-accent text-sm font-semibold tracking-wider uppercase mb-2">Henan Saige</div>
-          <h3 class="text-xl font-bold text-primary mb-3">Tube & Sheet Laser</h3>
-          <p class="text-muted text-sm mb-5 leading-relaxed">Standard · Offside · No-CAD · Flat sheet</p>
-          <button
-            v-if="SHOW_QUOTE"
-            type="button"
-            class="inline-flex items-center gap-2 bg-primary text-white px-5 py-2.5 font-semibold text-sm hover:bg-accent transition-colors"
-            @click="scrollToContact"
-          >
-            Get Quote
-            <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-              <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
-            </svg>
-          </button>
-        </div>
+            <router-link
+              :to="{ name: 'Product', params: { id: product.id } }"
+              class="inline-flex items-center gap-2 text-sm font-semibold text-accent hover:gap-3 transition-all"
+            >
+              View Details
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+              </svg>
+            </router-link>
+          </div>
+        </article>
       </div>
     </div>
+
+    <Teleport to="body">
+      <div
+        v-if="lightbox"
+        class="fixed inset-0 z-[100] bg-black/85 flex items-center justify-center p-4 md:p-8"
+        role="dialog"
+        aria-modal="true"
+        :aria-label="lightbox.showcaseName || lightbox.name"
+        @click="closeLightbox"
+      >
+        <button
+          type="button"
+          class="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/10 text-white hover:bg-white/20 flex items-center justify-center"
+          aria-label="Close"
+          @click="closeLightbox"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
+
+        <div class="max-w-5xl w-full flex flex-col items-center gap-4" @click.stop>
+          <img
+            :src="lightbox.image"
+            :alt="lightbox.showcaseName || lightbox.name"
+            class="max-w-full max-h-[75vh] object-contain bg-white rounded-lg shadow-2xl p-4 md:p-8"
+          >
+          <div class="text-center">
+            <p class="text-white font-semibold text-lg">{{ lightbox.showcaseName || lightbox.name }}</p>
+            <router-link
+              :to="{ name: 'Product', params: { id: lightbox.id } }"
+              class="inline-flex items-center gap-2 mt-2 text-sm text-accent hover:underline"
+              @click="closeLightbox"
+            >
+              View product details
+              <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17 8l4 4m0 0l-4 4m4-4H3"/>
+              </svg>
+            </router-link>
+          </div>
+        </div>
+      </div>
+    </Teleport>
   </section>
 </template>
