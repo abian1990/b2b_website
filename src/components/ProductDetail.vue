@@ -1,5 +1,5 @@
 <script setup>
-import { computed } from 'vue'
+import { computed, ref, onMounted, onUnmounted } from 'vue'
 import { useRouter } from 'vue-router'
 import { getProductVariants } from '../data/products.js'
 import { RESTORE_SCROLL_KEY } from '../utils/scrollMemory.js'
@@ -24,6 +24,46 @@ const modelNames = computed(() => {
   return Object.keys(props.product.specsTable[0].values)
 })
 
+const galleryImages = computed(() => {
+  const list = props.product.gallery?.length ? props.product.gallery : [props.product.image]
+  return list.filter(Boolean)
+})
+
+const lightboxIndex = ref(-1)
+const lightboxOpen = computed(() => lightboxIndex.value >= 0)
+const lightboxSrc = computed(() => galleryImages.value[lightboxIndex.value] || '')
+
+const openLightbox = (index = 0) => {
+  if (!galleryImages.value.length) return
+  lightboxIndex.value = Math.max(0, Math.min(index, galleryImages.value.length - 1))
+}
+
+const closeLightbox = () => {
+  lightboxIndex.value = -1
+}
+
+const prevLightbox = () => {
+  const n = galleryImages.value.length
+  if (!n) return
+  lightboxIndex.value = (lightboxIndex.value - 1 + n) % n
+}
+
+const nextLightbox = () => {
+  const n = galleryImages.value.length
+  if (!n) return
+  lightboxIndex.value = (lightboxIndex.value + 1) % n
+}
+
+const onKeydown = (e) => {
+  if (!lightboxOpen.value) return
+  if (e.key === 'Escape') closeLightbox()
+  if (e.key === 'ArrowLeft') prevLightbox()
+  if (e.key === 'ArrowRight') nextLightbox()
+}
+
+onMounted(() => window.addEventListener('keydown', onKeydown))
+onUnmounted(() => window.removeEventListener('keydown', onKeydown))
+
 const getSeriesBadge = (product) => {
   return product.badge || product.series || 'Standard'
 }
@@ -31,10 +71,6 @@ const getSeriesBadge = (product) => {
 const goBack = () => {
   sessionStorage.setItem(RESTORE_SCROLL_KEY, '1')
   router.push({ name: 'Home' })
-}
-
-const scrollToContact = () => {
-  document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' })
 }
 </script>
 
@@ -86,18 +122,32 @@ const scrollToContact = () => {
     </div>
 
     <!-- Hero Image -->
-    <div class="relative min-h-[420px] md:min-h-[520px] h-[58vh]">
+    <div class="relative min-h-[420px] md:min-h-[520px] h-[58vh] group">
+      <button
+        type="button"
+        class="absolute inset-0 z-[1] w-full h-full cursor-zoom-in focus:outline-none focus-visible:ring-2 focus-visible:ring-accent focus-visible:ring-inset"
+        aria-label="Enlarge product image"
+        @click="openLightbox(0)"
+      ></button>
       <img
         :src="product.image"
         :alt="product.name"
         fetchpriority="high"
         decoding="async"
-        class="w-full h-full object-contain bg-slate-900"
+        class="w-full h-full object-contain bg-slate-900 pointer-events-none"
       >
       <div class="absolute inset-0 bg-gradient-to-t from-primary via-primary/50 to-transparent pointer-events-none"></div>
+      <span
+        class="absolute top-4 right-4 z-[2] w-9 h-9 rounded-full bg-white/90 text-primary flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity shadow pointer-events-none"
+        aria-hidden="true"
+      >
+        <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"/>
+        </svg>
+      </span>
 
       <!-- Content overlay: bottom padding so text is not covered by spec cards -->
-      <div class="absolute bottom-0 left-0 right-0 px-6 pt-8 pb-24 md:px-8 md:pb-28 pointer-events-none">
+      <div class="absolute bottom-0 left-0 right-0 z-[2] px-6 pt-8 pb-24 md:px-8 md:pb-28 pointer-events-none">
         <div class="max-w-7xl mx-auto pointer-events-auto">
           <div class="flex flex-wrap items-center gap-3 mb-4">
             <span class="bg-accent text-white text-sm font-bold px-4 py-1.5 rounded-full">
@@ -126,16 +176,38 @@ const scrollToContact = () => {
       </div>
 
       <!-- Gallery -->
-      <div v-if="product.gallery && product.gallery.length > 1" class="bg-white rounded-2xl p-6 mb-8">
-        <h2 class="text-2xl font-bold text-primary mb-4">Product Gallery</h2>
-        <div class="grid grid-cols-2 md:grid-cols-4 gap-3">
-          <div
-            v-for="(img, i) in product.gallery"
+      <div v-if="galleryImages.length" class="bg-white rounded-2xl p-6 mb-8">
+        <div class="flex items-end justify-between gap-3 mb-4">
+          <h2 class="text-2xl font-bold text-primary">Product Gallery</h2>
+          <p class="text-xs text-muted">Click to enlarge</p>
+        </div>
+        <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+          <button
+            v-for="(img, i) in galleryImages"
             :key="i"
-            class="aspect-[4/3] bg-slate-50 rounded-xl overflow-hidden border border-border"
+            type="button"
+            class="aspect-[4/3] bg-slate-50 rounded-xl overflow-hidden border border-border group relative focus:outline-none focus-visible:ring-2 focus-visible:ring-accent"
+            :aria-label="`Enlarge gallery image ${i + 1}`"
+            @click="openLightbox(i)"
           >
-            <img :src="img" :alt="`${product.name} ${i + 1}`" loading="lazy" decoding="async" class="w-full h-full object-contain p-2">
-          </div>
+            <img
+              :src="img"
+              :alt="`${product.name} ${i + 1}`"
+              loading="lazy"
+              decoding="async"
+              class="w-full h-full object-contain p-2 transition-transform duration-300 group-hover:scale-105"
+            >
+            <span
+              class="absolute inset-0 bg-black/0 group-hover:bg-black/10 transition-colors flex items-center justify-center"
+              aria-hidden="true"
+            >
+              <span class="w-8 h-8 rounded-full bg-white/90 text-primary flex items-center justify-center opacity-0 group-hover:opacity-100 transition-opacity shadow">
+                <svg class="w-4 h-4" fill="none" stroke="currentColor" viewBox="0 0 24 24">
+                  <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M21 21l-6-6m2-5a7 7 0 11-14 0 7 7 0 0114 0zM10 7v3m0 0v3m0-3h3m-3 0H7"/>
+                </svg>
+              </span>
+            </span>
+          </button>
         </div>
       </div>
 
@@ -275,22 +347,64 @@ const scrollToContact = () => {
         </div>
       </div>
 
-      <!-- CTA -->
-      <!-- <div class="bg-primary rounded-2xl p-8 mb-8">
-        <div class="text-center mb-6">
-          <h2 class="text-2xl font-bold text-white mb-2">Interested in this product?</h2>
-          <p class="text-white/70">Contact us for a personalized quote and consultation</p>
-        </div>
-        <div class="flex flex-wrap justify-center gap-4">
-          <button
-            type="button"
-            class="bg-accent hover:bg-accent/90 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-colors"
-            @click="scrollToContact"
-          >
-            Request Quote
-          </button>
-        </div>
-      </div> -->
     </div>
+
+    <!-- Image lightbox -->
+    <Teleport to="body">
+      <div
+        v-if="lightboxOpen"
+        class="fixed inset-0 z-[100] bg-black/90 flex items-center justify-center p-4 md:p-8"
+        role="dialog"
+        aria-modal="true"
+        aria-label="Product image enlarged"
+        @click="closeLightbox"
+      >
+        <button
+          type="button"
+          class="absolute top-4 right-4 w-10 h-10 rounded-full bg-white/10 text-white hover:bg-white/20 flex items-center justify-center z-10"
+          aria-label="Close"
+          @click="closeLightbox"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M6 18L18 6M6 6l12 12"/>
+          </svg>
+        </button>
+
+        <button
+          v-if="galleryImages.length > 1"
+          type="button"
+          class="absolute left-3 md:left-6 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/10 text-white hover:bg-white/20 flex items-center justify-center z-10"
+          aria-label="Previous image"
+          @click.stop="prevLightbox"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 19l-7-7 7-7"/>
+          </svg>
+        </button>
+
+        <button
+          v-if="galleryImages.length > 1"
+          type="button"
+          class="absolute right-3 md:right-6 top-1/2 -translate-y-1/2 w-10 h-10 rounded-full bg-white/10 text-white hover:bg-white/20 flex items-center justify-center z-10"
+          aria-label="Next image"
+          @click.stop="nextLightbox"
+        >
+          <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+            <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7"/>
+          </svg>
+        </button>
+
+        <div class="max-w-6xl w-full flex flex-col items-center gap-3" @click.stop>
+          <img
+            :src="lightboxSrc"
+            :alt="`${product.name} enlarged`"
+            class="max-w-full max-h-[82vh] object-contain bg-white rounded-lg shadow-2xl"
+          >
+          <p class="text-white/70 text-sm">
+            {{ lightboxIndex + 1 }} / {{ galleryImages.length }}
+          </p>
+        </div>
+      </div>
+    </Teleport>
   </div>
 </template>

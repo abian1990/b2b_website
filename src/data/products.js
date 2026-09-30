@@ -12,12 +12,15 @@ import imgT130y4 from '../assets/saige/seg-t130y_g4.webp'
 import imgT100m from '../assets/saige/seg-t100m.webp'
 import imgT100mg1 from '../assets/saige/seg-t100m_g1.webp'
 import imgT100mz from '../assets/saige/seg-t100mz.webp'
-import img2513 from '../assets/saige/seg-2513.webp'
-import img2513g1 from '../assets/saige/seg-2513_g1.webp'
-import img2513g2 from '../assets/saige/seg-2513_g2.webp'
-import img2513g3 from '../assets/saige/seg-2513_g3.webp'
-import img2513g4 from '../assets/saige/seg-2513_g4.webp'
-import img3015 from '../assets/saige/seg-3015.webp'
+import img2513 from '../assets/saige/sheet-01.webp'
+import img3015 from '../assets/saige/sheet-08.webp'
+import imgSheet02 from '../assets/saige/sheet-02.webp'
+import imgSheet03 from '../assets/saige/sheet-03.webp'
+import imgSheet04 from '../assets/saige/sheet-04.webp'
+import imgSheet05 from '../assets/saige/sheet-05.webp'
+import imgSheet06 from '../assets/saige/sheet-06.webp'
+import imgSheet07 from '../assets/saige/sheet-07.webp'
+import imgSheet09 from '../assets/saige/sheet-09.webp'
 import imgV12 from '../assets/saige/seg-v12.webp'
 import imgV12Machine from '../assets/saige/seg-v12_machine.webp'
 import imgV12g1 from '../assets/saige/seg-v12_g1.webp'
@@ -26,6 +29,18 @@ import imgV12g3 from '../assets/saige/seg-v12_g3.webp'
 import imgV12g4 from '../assets/saige/seg-v12_g4.webp'
 import imgV12g5 from '../assets/saige/seg-v12_g5.webp'
 import imgV12g6 from '../assets/saige/seg-v12_g6.webp'
+
+const sheetGallery = [
+  img2513,
+  img3015,
+  imgSheet02,
+  imgSheet03,
+  imgSheet04,
+  imgSheet05,
+  imgSheet06,
+  imgSheet07,
+  imgSheet09
+]
 
 export const products = [
   {
@@ -445,7 +460,7 @@ export const products = [
     name: 'SEG-2513B Sheet Fiber Laser Cutter',
     description: 'Flat-sheet fiber laser for stainless and carbon steel plates. 2500×1300mm working area with rack-and-pinion drive, precision square rails and SEG control — entry sheet platform for workshops.',
     image: img2513,
-    gallery: [img2513, img2513g1, img2513g2, img2513g3, img2513g4],
+    gallery: sheetGallery,
     badge: 'SHEET',
     powerRange: '1.5kW class',
     standardConfig: [
@@ -508,7 +523,7 @@ export const products = [
     name: 'SEG-3015 Sheet Fiber Laser Cutter',
     description: 'Larger 3000×1500mm sheet fiber laser for stainless and carbon plates. Same SEG drive architecture as 2513 with expanded format for bigger panels.',
     image: img3015,
-    gallery: [img3015, img2513g2, img2513g3, img2513g4],
+    gallery: sheetGallery,
     badge: 'SHEET',
     powerRange: '1.5kW class',
     standardConfig: [
