@@ -5,6 +5,7 @@ import NavBar from '../components/NavBar.vue'
 import HeroSection from '../components/HeroSection.vue'
 import ProductsShowcase from '../components/ProductsShowcase.vue'
 import WhyUsSection from '../components/WhyUsSection.vue'
+import CertificationsSection from '../components/CertificationsSection.vue'
 import IndustriesSection from '../components/IndustriesSection.vue'
 import FactorySection from '../components/FactorySection.vue'
 import FaqSection from '../components/FaqSection.vue'
@@ -108,6 +109,7 @@ onMounted(() => {
       <FactorySection />
       <ProductsShowcase />
       <WhyUsSection />
+      <CertificationsSection />
       <IndustriesSection />
       <FaqSection />
       <ContactSection v-if="SHOW_QUOTE" />
