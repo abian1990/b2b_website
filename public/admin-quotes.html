@@ -13,7 +13,7 @@
     button { margin-top: 16px; margin-right: 8px; padding: 10px 16px; border: 0; border-radius: 8px; background: #e11d48; color: #fff; font-weight: 600; cursor: pointer; }
     button.secondary { background: #0f172a; }
     .hint { color: #64748b; font-size: 0.85rem; margin-top: 8px; }
-    .err { color: #b91c1c; margin-top: 12px; }
+    .err { color: #b91c1c; margin-top: 12px; white-space: pre-wrap; word-break: break-word; }
   </style>
 </head>
 <body>
@@ -29,24 +29,48 @@
   <script>
     const err = document.getElementById('err')
     const keyInput = document.getElementById('key')
+
+    function explainError(status, text) {
+      const trimmed = (text || '').trim()
+      if (trimmed.startsWith('<!') || /cloudflare|cf-error|challenge-platform|Attention Required/i.test(trimmed)) {
+        return [
+          'Blocked by Cloudflare security page (not an API JSON response).',
+          'Fix: Cloudflare Dashboard → Security → Settings / WAF,',
+          'disable Bot Fight / lower Security Level for this zone,',
+          'or add a Skip rule for URI Path starts with /api/.',
+          'Also try: https://b2b-website-cmd.pages.dev/admin-quotes.html'
+        ].join('\n')
+      }
+      try {
+        const data = JSON.parse(trimmed)
+        return [data.error, data.hint].filter(Boolean).join('\n') || ('HTTP ' + status)
+      } catch {
+        return trimmed.slice(0, 180) || ('HTTP ' + status)
+      }
+    }
+
     async function download(format) {
       err.textContent = ''
       const key = keyInput.value.trim()
       if (!key) { err.textContent = 'Please enter Admin API Key'; return }
       try {
-        const res = await fetch('/api/quotes?format=' + format + '&limit=2000', {
+        const res = await fetch('/api/quotes?format=' + encodeURIComponent(format) + '&limit=2000', {
           headers: { Authorization: 'Bearer ' + key }
         })
-        if (!res.ok) {
-          const data = await res.json().catch(() => ({}))
-          throw new Error(data.error || ('HTTP ' + res.status))
+        const text = await res.text()
+        if (!res.ok) throw new Error(explainError(res.status, text))
+
+        const type = res.headers.get('Content-Type') || ''
+        if (type.includes('text/html') || text.trim().startsWith('<!')) {
+          throw new Error(explainError(res.status || 200, text))
         }
-        const blob = await res.blob()
+
+        const blob = new Blob([text], {
+          type: format === 'csv' ? 'text/csv;charset=utf-8' : 'application/json;charset=utf-8'
+        })
         const a = document.createElement('a')
         a.href = URL.createObjectURL(blob)
-        a.download = format === 'csv'
-          ? 'zzsky-quotes.csv'
-          : 'zzsky-quotes.json'
+        a.download = format === 'csv' ? 'zzsky-quotes.csv' : 'zzsky-quotes.json'
         a.click()
         URL.revokeObjectURL(a.href)
       } catch (e) {
