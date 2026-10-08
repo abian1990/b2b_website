@@ -54,7 +54,7 @@
       const key = keyInput.value.trim()
       if (!key) { err.textContent = 'Please enter Admin API Key'; return }
       try {
-        const res = await fetch('/api/quotes?format=' + encodeURIComponent(format) + '&limit=2000', {
+        const res = await fetch('/api/quotes?format=' + encodeURIComponent(format) + '&limit=1000', {
           headers: { Authorization: 'Bearer ' + key }
         })
         const text = await res.text()

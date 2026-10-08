@@ -54,11 +54,25 @@ const onRequestGet = async (context) => {
 
     const url = new URL(request.url)
     const format = (url.searchParams.get('format') || 'json').toLowerCase()
-    const limit = Math.min(Number(url.searchParams.get('limit') || 500), 2000)
+    // Workers KV list() allows at most 1000 keys per call
+    const limit = Math.min(Math.max(Number(url.searchParams.get('limit') || 500), 1), 1000)
 
-    const listed = await env.QUOTES_KV.list({ prefix: 'quote:', limit })
+    const keys = []
+    let cursor
+    while (keys.length < limit) {
+      const pageSize = Math.min(1000, limit - keys.length)
+      const listed = await env.QUOTES_KV.list({
+        prefix: 'quote:',
+        limit: pageSize,
+        ...(cursor ? { cursor } : {})
+      })
+      keys.push(...listed.keys)
+      if (listed.list_complete || !listed.cursor) break
+      cursor = listed.cursor
+    }
+
     const quotes = []
-    for (const key of listed.keys) {
+    for (const key of keys.slice(0, limit)) {
       const raw = await env.QUOTES_KV.get(key.name)
       if (!raw) continue
       try {
